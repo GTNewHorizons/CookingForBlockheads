@@ -21,15 +21,19 @@ public class GuiButtonSort extends GuiButton {
     private final int texCoordDisabledY;
     private final List<String> tooltipLines = new ArrayList<String>();
 
-    public GuiButtonSort(int buttonId, int x, int y, int texCoordX, String tooltipName) {
+    public GuiButtonSort(int buttonId, int x, int y, int texCoordX, int texCoordYOffset, String tooltipName) {
         super(buttonId, x, y, 20, 20, "");
         this.texCoordX = texCoordX;
         this.texCoordHoverX = texCoordX;
         this.texCoordDisabledX = texCoordX;
-        this.texCoordY = 0;
-        this.texCoordHoverY = 20;
-        this.texCoordDisabledY = 40;
+        this.texCoordY = texCoordYOffset;
+        this.texCoordHoverY = 20 + texCoordYOffset;
+        this.texCoordDisabledY = 40 + texCoordYOffset;
         this.tooltipLines.add(I18n.format(tooltipName));
+    }
+
+    public GuiButtonSort(int buttonId, int x, int y, int texCoordX, String tooltipName) {
+        this(buttonId, x, y, texCoordX, 0, tooltipName);
     }
 
     @Override

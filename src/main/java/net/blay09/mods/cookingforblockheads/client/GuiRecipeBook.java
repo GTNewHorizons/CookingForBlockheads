@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.client;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.blay09.mods.cookingforblockheads.container.ContainerRecipeBook;
@@ -20,6 +21,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import yalter.mousetweaks.api.IMTModGuiContainer;
+
+import javax.annotation.Nullable;
 
 @Optional.Interface(modid = "MouseTweaks", iface = "yalter.mousetweaks.api.IMTModGuiContainer")
 public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
@@ -52,11 +55,14 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 	private GuiButtonSort btnSortName;
 	private GuiButtonSort btnSortHunger;
 	private GuiButtonSort btnSortSaturation;
+	private @Nullable GuiButtonSort btnSortSoL;
 
 	private final String[] noIngredients;
 	private final String[] noSelection;
 
 	private Slot hoverSlot;
+
+	private boolean isSoLLoaded = false;
 
 	public GuiRecipeBook(ContainerRecipeBook container) {
 		super(container);
@@ -64,6 +70,10 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 
 		noIngredients = StatCollector.translateToLocal("cookingforblockheads:no_ingredients").split("\\\\n");
 		noSelection = StatCollector.translateToLocal("cookingforblockheads:no_selection").split("\\\\n");
+
+		if (Loader.isModLoaded("SpiceOfLife")) {
+			isSoLLoaded = true;
+		}
 	}
 
 	@Override
@@ -88,7 +98,16 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 		btnSortSaturation = new GuiButtonSort(4, width / 2 + 87, height / 2 - 40, 236, "cookingforblockheads:sort_by_saturation.tooltip");
 		buttonList.add(btnSortSaturation);
 
-		sortButtons = new GuiButtonSort[] {btnSortName, btnSortHunger, btnSortSaturation};
+		if (isSoLLoaded) {
+			btnSortSoL = new GuiButtonSort(5, width / 2 + 87, height / 2 - 20, 176, 60, "cookingforblockheads:sort_by_sol.tooltip");
+			buttonList.add(btnSortSoL);
+		}
+
+		if (isSoLLoaded) {
+			sortButtons = new GuiButtonSort[] {btnSortName, btnSortHunger, btnSortSaturation, btnSortSoL};
+		} else {
+			sortButtons = new GuiButtonSort[] {btnSortName, btnSortHunger, btnSortSaturation};
+		}
 
 		searchBar = new GuiTextField(fontRendererObj, guiLeft + xSize - 85, guiTop - 10, 70, 10);
 		searchBar.setVisible(false);
@@ -129,6 +148,9 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 		} else if(button == btnSortSaturation) {
 			container.sortingChanged();
 			NetworkHandler.instance.sendToServer(new MessageSort(2));
+		} else if(button == btnSortSoL) {
+			container.sortingChanged();
+			NetworkHandler.instance.sendToServer(new MessageSort(3));
 		}
 	}
 
@@ -212,6 +234,9 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 		btnSortName.enabled = hasRecipes;
 		btnSortHunger.enabled = hasRecipes;
 		btnSortSaturation.enabled = hasRecipes;
+		if (btnSortSoL != null) {
+			btnSortSoL.enabled = hasRecipes;
+		}
 
 		if(!container.hasSelection()) {
 			int curY = guiTop + 79 / 2 - noSelection.length / 2 * fontRendererObj.FONT_HEIGHT;
@@ -280,6 +305,8 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 			func_146283_a(btnSortHunger.getTooltipLines(), mouseX, mouseY);// drawHoveringText
 		} else if(btnSortSaturation.func_146115_a() && btnSortSaturation.enabled) {// isMouseOver
 			func_146283_a(btnSortSaturation.getTooltipLines(), mouseX, mouseY);// drawHoveringText
+		} else if(btnSortSoL != null && btnSortSoL.func_146115_a() && btnSortSoL.enabled) {// isMouseOver
+			func_146283_a(btnSortSoL.getTooltipLines(), mouseX, mouseY);// drawHoveringText
 		}
 	}
 

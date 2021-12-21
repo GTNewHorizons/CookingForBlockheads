@@ -48,6 +48,7 @@ cookingforblockheads:toaster.tooltipDesc=Toasts Bread.
 cookingforblockheads:sort_by_name.tooltip=Sort by Name
 cookingforblockheads:sort_by_hunger.tooltip=Sort by Hunger Restored
 cookingforblockheads:sort_by_saturation.tooltip=Sort by Saturation
+cookingforblockheads:sort_by_sol.tooltip=Sort by Number of times eaten
 
 cookingforblockheads:no_ingredients=Not\nenough\ningredients
 cookingforblockheads:no_selection=Select an item\non the right to\nsee its recipe.

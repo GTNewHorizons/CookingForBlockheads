@@ -7,6 +7,7 @@ import net.blay09.mods.cookingforblockheads.container.comparator.ComparatorHunge
 import net.blay09.mods.cookingforblockheads.container.comparator.ComparatorName;
 import net.blay09.mods.cookingforblockheads.container.comparator.ComparatorSaturation;
 import net.blay09.mods.cookingforblockheads.container.ContainerRecipeBook;
+import net.blay09.mods.cookingforblockheads.container.comparator.ComparatorSoL;
 import net.minecraft.inventory.Container;
 
 public class HandlerSort implements IMessageHandler<MessageSort, IMessage> {
@@ -24,6 +25,9 @@ public class HandlerSort implements IMessageHandler<MessageSort, IMessage> {
                     break;
                 case 2:
                     ((ContainerRecipeBook) container).sortRecipes(new ComparatorSaturation(ctx.getServerHandler().playerEntity));
+                    break;
+                case 3:
+                    ((ContainerRecipeBook) container).sortRecipes(new ComparatorSoL(ctx.getServerHandler().playerEntity));
                     break;
             }
         }
