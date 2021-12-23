@@ -1,0 +1,18 @@
+repositories {
+    maven {
+        name = "ic2"
+        url = "https://maven.ic2.player.to/"
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+    maven {
+        name = "AppleCore"
+        url = "http://www.ryanliptak.com/maven/"
+    }
+    maven {
+        name = "jitpack.io"
+        url = "https://jitpack.io"
+    }
+}

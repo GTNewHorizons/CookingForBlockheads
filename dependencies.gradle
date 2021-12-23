@@ -1,0 +1,18 @@
+// Add your dependencies here
+
+dependencies {
+    compile("com.github.GTNewHorizons:AppleCore:master-SNAPSHOT:dev") {
+        transitive=false;
+    }
+    compile("com.github.GTNewHorizons:NotEnoughItems:master-SNAPSHOT:dev")
+    compileOnly("com.github.GTNewHorizons:SpiceOfLife:master-SNAPSHOT:dev")  {
+        transitive=false;
+    }
+    
+    compileOnly files("CraftTweaker2-1.7.10-3.2.0-GTNH-legacy-Dev.jar")
+    compileOnly files("InventoryTweaks-147-deobf.jar")
+    compileOnly files("MouseTweaks-2.4.4-mc1.7.10.jar")
+    
+    compile("com.github.GTNewHorizons:GT5-Unofficial:master-SNAPSHOT:dev")
+    
+}

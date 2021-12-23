@@ -25,10 +25,15 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-@Mod(modid = CookingForBlockheads.MOD_ID)
+@Mod(
+	modid = CookingForBlockheads.MOD_ID,
+	version = CookingForBlockheads.VERSION,
+	name = CookingForBlockheads.NAME
+)
 public class CookingForBlockheads {
-
-    public static final String MOD_ID = "cookingforblockheads";
+	public static final String VERSION = "GRADLETOKEN_VERSION";
+	public static final String NAME = "GRADLETOKEN_MODNAME";
+    public static final String MOD_ID = "GRADLETOKEN_MODID";
 
 	public static CreativeTabs creativeTab = new CreativeTabs(MOD_ID) {
 		@Override
