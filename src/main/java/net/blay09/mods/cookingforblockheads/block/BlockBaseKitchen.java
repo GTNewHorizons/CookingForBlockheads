@@ -35,19 +35,4 @@ public abstract class BlockBaseKitchen extends BlockContainer {
             world.setBlockMetadataWithNotify(x, y, z, side, 2);
         }
     }
-//
-//    @Override
-//    public boolean recolorBlock(World world, BlockPos pos, EnumFacing side, EnumDyeColor color) {
-//        TileEntity tileEntity = world.getTileEntity(pos);
-//        if (tileEntity instanceof IDyeableKitchen) {
-//            IDyeableKitchen dyeable = (IDyeableKitchen) tileEntity;
-//            if (dyeable.getDyedColor() == color) {
-//                return false;
-//            }
-//
-//            dyeable.setDyedColor(color);
-//        }
-//
-//        return true;
-//    }
 }
