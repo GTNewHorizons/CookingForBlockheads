@@ -1,9 +1,14 @@
 // Add your dependencies here
 
 dependencies {
-    compile("com.github.GTNewHorizons:AppleCore:master-SNAPSHOT:dev") 
     compile("com.github.GTNewHorizons:NotEnoughItems:master-SNAPSHOT:dev")
-    compileOnly("com.github.GTNewHorizons:SpiceOfLife:master-SNAPSHOT:dev")  {
+    
+    compileOnly("com.github.GTNewHorizons:AppleCore:master-SNAPSHOT:dev") {
+        // Compile only until it runs properly in dev
+        transitive=false;
+    } 
+    
+    compileOnly("com.github.GTNewHorizons:SpiceOfLife:master-SNAPSHOT:dev") {
         transitive=false;
     }
     compile("com.github.GTNewHorizons:inventory-tweaks:master-SNAPSHOT:dev")
