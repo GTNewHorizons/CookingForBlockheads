@@ -118,12 +118,14 @@ public class CookingForBlockheads {
 						mapping.remap(CookingForBlockheads.blockCounter);
 						break;
 					case "cookingbook:counter_corner":
+					case "cookingbook:countercorner":
 						mapping.remap(CookingForBlockheads.blockCounterCorner);
 						break;
 					case "cookingbook:cabinet":
 						mapping.remap(CookingForBlockheads.blockCabinet);
 						break;
 					case "cookingbook:cabinet_corner":
+					case "cookingbook:cabinetcorner":
 						mapping.remap(CookingForBlockheads.blockCabinetCorner);
 						break;
 					case "cookingbook:kitchen_floor":
@@ -164,12 +166,14 @@ public class CookingForBlockheads {
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockCounter));
 						break;
 					case "cookingbook:counter_corner":
+					case "cookingbook:countercorner":
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockCounterCorner));
 						break;
 					case "cookingbook:cabinet":
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockCabinet));
 						break;
 					case "cookingbook:cabinet_corner":
+					case "cookingbook:cabinetcorner":
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockCabinetCorner));
 						break;
 					case "cookingbook:kitchen_floor":
