@@ -8,8 +8,11 @@ repositories {
         }
     }
     maven {
-        name = "AppleCore"
-        url = "http://www.ryanliptak.com/maven/"
+        url "https://cursemaven.com"
+    }
+    maven {
+        name = "sponge"
+        url = "https://repo.spongepowered.org/repository/maven-public"
     }
     maven {
         name = "jitpack.io"
