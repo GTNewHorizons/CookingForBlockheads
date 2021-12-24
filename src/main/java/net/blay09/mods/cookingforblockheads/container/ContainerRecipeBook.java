@@ -117,15 +117,16 @@ public class ContainerRecipeBook extends Container {
 
 	public void setCraftMatrix(FoodRecipe recipe) {
 		if(recipe != null) {
+			for(SlotCraftMatrix previewSlot : craftMatrixSlots) {
+				previewSlot.setIngredient(null);
+				previewSlot.setEnabled(false);
+				if(!isClientSide) {
+					previewSlot.updateVisibleStacks();
+				}
+			}
+
 			isFurnaceRecipe = recipe.isSmeltingRecipe();
 			if(isFurnaceRecipe) {
-				for(SlotCraftMatrix previewSlot : craftMatrixSlots) {
-					previewSlot.setIngredient(null);
-					previewSlot.setEnabled(false);
-					if(!isClientSide) {
-						previewSlot.updateVisibleStacks();
-					}
-				}
 				craftMatrixSlots[4].setIngredient(recipe.getCraftMatrix().get(0));
 				craftMatrixSlots[4].setEnabled(true);
 				if(!isClientSide) {
@@ -133,18 +134,21 @@ public class ContainerRecipeBook extends Container {
 				}
 			} else {
 				int offset = 0;
-				if (recipe.getCraftMatrix().size() <= 3) {
+				if (recipe.getRecipeWidth() == 1) {
+					// center column
+					offset += 1;
+				}
+				if (recipe.getRecipeHeight() == 1) {
+					// center row
 					offset += 3;
 				}
-				if(recipe.getCraftMatrix().size() == 1) {
-					offset++;
-				}
 				for (int i = 0; i < craftMatrix.getSizeInventory(); i++) {
-					int recipeIdx = i - offset;
-					if (recipeIdx >= 0 && recipeIdx < recipe.getCraftMatrix().size()) {
-						craftMatrixSlots[i].setIngredient(recipe.getCraftMatrix().get(recipeIdx));
-					} else {
-						craftMatrixSlots[i].setIngredient(null);
+					int origX = i % recipe.getRecipeWidth();
+					int origY = i / recipe.getRecipeWidth();
+					int targetIdx = origY * 3 + origX;
+					targetIdx += offset;
+					if (i < recipe.getCraftMatrix().size()) {
+						craftMatrixSlots[targetIdx].setIngredient(recipe.getCraftMatrix().get(i));
 					}
 					craftMatrixSlots[i].setEnabled(true);
 					if(!isClientSide) {

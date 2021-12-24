@@ -46,6 +46,10 @@ public class InventoryCraftBook extends InventoryCrafting {
             sourceInventorySlots[i] = -1;
         }
         ingredientLoop:for(int i = 0; i < ingredients.size(); i++) {
+            int origX = i % recipe.getRecipeWidth();
+            int origY = i / recipe.getRecipeWidth();
+            int targetIdx = origY * 3 + origX;
+
             if(ingredients.get(i) != null) {
                 sourceProviders.clear();
                 for(IKitchenItemProvider itemProvider : itemProviders) {
@@ -55,7 +59,7 @@ public class InventoryCraftBook extends InventoryCrafting {
                             ItemStack itemStack = providedStack.copy();
                             if(itemProvider.addToCraftingBuffer(itemStack)) {
                                 sourceProviders.add(itemProvider);
-                                setInventorySlotContents(i, itemStack);
+                                setInventorySlotContents(targetIdx, itemStack);
                                 continue ingredientLoop;
                             }
                         }
@@ -66,9 +70,9 @@ public class InventoryCraftBook extends InventoryCrafting {
                         ItemStack itemStack = inventories.get(j).getStackInSlot(k);
                         if (itemStack != null && ingredients.get(i).isValidItem(itemStack) && itemStack.stackSize - usedStackSize[j][k] > 0) {
                             usedStackSize[j][k]++;
-                            setInventorySlotContents(i, itemStack);
-                            sourceInventories[i] = j;
-                            sourceInventorySlots[i] = k;
+                            setInventorySlotContents(targetIdx, itemStack);
+                            sourceInventories[targetIdx] = j;
+                            sourceInventorySlots[targetIdx] = k;
                             continue ingredientLoop;
                         }
                     }

@@ -13,8 +13,10 @@ public class RemoteCraftingFood extends FoodRecipe {
 
     private final boolean isSmeltingRecipe;
 
-    public RemoteCraftingFood(ItemStack outputItem, List<FoodIngredient> craftMatrix, boolean isSmeltingRecipe) {
+    public RemoteCraftingFood(ItemStack outputItem, int recipeWidth, int recipeHeight, List<FoodIngredient> craftMatrix, boolean isSmeltingRecipe) {
         this.outputItem = outputItem;
+        this.recipeWidth = recipeWidth;
+        this.recipeHeight = recipeHeight;
         this.craftMatrix = craftMatrix;
         this.isSmeltingRecipe = isSmeltingRecipe;
     }
@@ -26,31 +28,42 @@ public class RemoteCraftingFood extends FoodRecipe {
 
     public static RemoteCraftingFood read(ByteBuf buf) {
         ItemStack outputItem = ByteBufUtils.readItemStack(buf);
-
+        int recipeWidth = buf.readByte();
+        int recipeHeight = buf.readByte();
         int ingredientCount = buf.readShort();
         List<FoodIngredient> craftMatrix = new ArrayList<>(ingredientCount);
         for(int k = 0; k < ingredientCount; k++) {
             int stackCount = buf.readShort();
-            ItemStack[] itemStacks = new ItemStack[stackCount];
-            for(int l = 0; l < stackCount; l++) {
-                itemStacks[l] = ByteBufUtils.readItemStack(buf);
+            if (stackCount > 0) {
+                ItemStack[] itemStacks = new ItemStack[stackCount];
+                for (int l = 0; l < stackCount; l++) {
+                    itemStacks[l] = ByteBufUtils.readItemStack(buf);
+                }
+                boolean isOptional = buf.readBoolean();
+                craftMatrix.add(new FoodIngredient(itemStacks, isOptional));
+            } else {
+                craftMatrix.add(null);
             }
-            boolean isOptional = buf.readBoolean();
-            craftMatrix.add(new FoodIngredient(itemStacks, isOptional));
         }
         boolean isSmeltingRecipe = buf.readBoolean();
-        return new RemoteCraftingFood(outputItem, craftMatrix, isSmeltingRecipe);
+        return new RemoteCraftingFood(outputItem, recipeWidth, recipeHeight, craftMatrix, isSmeltingRecipe);
     }
 
     public static void write(ByteBuf buf, FoodRecipe recipe) {
         ByteBufUtils.writeItemStack(buf, recipe.getOutputItem());
+        buf.writeByte(recipe.getRecipeWidth());
+        buf.writeByte(recipe.getRecipeHeight());
         buf.writeShort(recipe.getCraftMatrix().size());
         for(FoodIngredient ingredient : recipe.getCraftMatrix()) {
-            buf.writeShort(ingredient.getItemStacks().length);
-            for(ItemStack ingredientStack : ingredient.getItemStacks()) {
-                ByteBufUtils.writeItemStack(buf, ingredientStack);
+            if (ingredient != null) {
+                buf.writeShort(ingredient.getItemStacks().length);
+                for (ItemStack ingredientStack : ingredient.getItemStacks()) {
+                    ByteBufUtils.writeItemStack(buf, ingredientStack);
+                }
+                buf.writeBoolean(ingredient.isToolItem());
+            } else {
+                buf.writeShort(0);
             }
-            buf.writeBoolean(ingredient.isToolItem());
         }
         buf.writeBoolean(recipe.isSmeltingRecipe());
     }

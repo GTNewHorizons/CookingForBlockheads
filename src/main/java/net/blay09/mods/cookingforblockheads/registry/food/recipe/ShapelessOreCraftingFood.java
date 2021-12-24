@@ -14,6 +14,8 @@ public class ShapelessOreCraftingFood extends FoodRecipe {
 
     public ShapelessOreCraftingFood(ShapelessOreRecipe recipe) {
         this.outputItem = recipe.getRecipeOutput();
+        this.recipeWidth = Math.min(3, recipe.getRecipeSize());
+        this.recipeHeight = (int) Math.ceil((double) recipe.getRecipeSize() / 3);
         this.craftMatrix = new ArrayList<>();
         for(int i = 0; i < recipe.getInput().size(); i++) {
             Object input = recipe.getInput().get(i);
