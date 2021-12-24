@@ -1,7 +1,6 @@
 package net.blay09.mods.cookingforblockheads.registry.food.recipe;
 
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
-import net.blay09.mods.cookingforblockheads.registry.food.*;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
 import net.minecraft.item.ItemStack;
@@ -17,21 +16,22 @@ public class ShapelessOreCraftingFood extends FoodRecipe {
         this.recipeWidth = Math.min(3, recipe.getRecipeSize());
         this.recipeHeight = (int) Math.ceil((double) recipe.getRecipeSize() / 3);
         this.craftMatrix = new ArrayList<>();
-        for(int i = 0; i < recipe.getInput().size(); i++) {
-            Object input = recipe.getInput().get(i);
 
-            if (input == null) {
+        for (Object obj : recipe.getInput()) {
+            if (obj == null) {
                 continue;
             }
 
-            if(input instanceof ItemStack) {
-                boolean isToolItem = CookingRegistry.isToolItem((ItemStack) input);
-                craftMatrix.add(new FoodIngredient(((ItemStack) input), isToolItem));
-            } else if(input instanceof ArrayList) {
-                List<ItemStack> list = (List<ItemStack>) input;
+            if (obj instanceof ItemStack) {
+                ItemStack itemStack = (ItemStack) obj;
+                boolean isToolItem = CookingRegistry.isToolItem(itemStack);
+                craftMatrix.add(new FoodIngredient(itemStack, isToolItem));
+            } else if (obj instanceof ArrayList) {
+                // TODO: cast warning
+                List<ItemStack> list = (List<ItemStack>) obj;
                 boolean toolFound = false;
-                for(int j = 0; j < list.size(); j++) {
-                    if(CookingRegistry.isToolItem(list.get(j))) {
+                for (ItemStack itemStack : list) {
+                    if (CookingRegistry.isToolItem(itemStack)) {
                         toolFound = true;
                     }
                 }

@@ -15,10 +15,12 @@ public class ShapelessCraftingFood extends FoodRecipe {
         this.recipeWidth = Math.min(3, recipe.getRecipeSize());
         this.recipeHeight = (int) Math.ceil((double) recipe.getRecipeSize() / 3);
         this.craftMatrix = new ArrayList<>();
-        for(int i = 0; i < recipe.recipeItems.size(); i++) {
-            if (recipe.recipeItems.get(i) != null) {
-                boolean isToolItem = CookingRegistry.isToolItem((ItemStack) recipe.recipeItems.get(i));
-                craftMatrix.add(new FoodIngredient(((ItemStack) recipe.recipeItems.get(i)).copy(), isToolItem));
+
+        for (Object obj : recipe.recipeItems) {
+            if (obj != null) {
+                ItemStack itemStack = (ItemStack) obj;
+                boolean isToolItem = CookingRegistry.isToolItem(itemStack);
+                craftMatrix.add(new FoodIngredient(itemStack.copy(), isToolItem));
             }
         }
     }

@@ -116,15 +116,15 @@ public class ContainerRecipeBook extends Container {
 	}
 
 	public void setCraftMatrix(FoodRecipe recipe) {
-		if(recipe != null) {
-			for(SlotCraftMatrix previewSlot : craftMatrixSlots) {
-				previewSlot.setIngredient(null);
-				previewSlot.setEnabled(false);
-				if(!isClientSide) {
-					previewSlot.updateVisibleStacks();
-				}
+		for (SlotCraftMatrix previewSlot : craftMatrixSlots) {
+			previewSlot.setIngredient(null);
+			previewSlot.setEnabled(false);
+			if (!isClientSide) {
+				previewSlot.updateVisibleStacks();
 			}
+		}
 
+		if(recipe != null) {
 			isFurnaceRecipe = recipe.isSmeltingRecipe();
 			if(isFurnaceRecipe) {
 				craftMatrixSlots[4].setIngredient(recipe.getCraftMatrix().get(0));
@@ -155,11 +155,6 @@ public class ContainerRecipeBook extends Container {
 						craftMatrixSlots[i].updateVisibleStacks();
 					}
 				}
-			}
-		} else {
-			for(SlotCraftMatrix previewSlot : craftMatrixSlots) {
-				previewSlot.setIngredient(null);
-				previewSlot.setEnabled(false);
 			}
 		}
 	}
