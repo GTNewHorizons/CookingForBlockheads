@@ -165,14 +165,14 @@ public class ContainerRecipeBook extends Container {
 
 	public void setScrollOffset(int scrollOffset) {
 		this.scrollOffset = scrollOffset;
-		updateRecipeList();
+		updateRecipeList(false);
 	}
 
 	public void search(String term) {
 		this.searchTerm = term;
 	}
 
-	public void updateRecipeList() {
+	public void updateRecipeList(boolean reloadCraftMatrix) {
 		boolean noRecipes = getAvailableRecipeCount() == 0;
 		for(int i = 0; i < recipeBook.getSizeInventory(); i++) {
 			ItemStack lastItemStack = recipeBook.getStackInSlot(i);
@@ -183,7 +183,11 @@ public class ContainerRecipeBook extends Container {
 				recipeBook.setFoodItem(i, null);
 			}
 			ItemStack itemStack = recipeBook.getStackInSlot(i);
-			if(recipeIdx == currentSlotIndex && !ItemStack.areItemStacksEqual(lastItemStack, itemStack)) {
+			if (
+				recipeIdx == currentSlotIndex
+				&& !ItemStack.areItemStacksEqual(lastItemStack, itemStack)
+				&& reloadCraftMatrix
+			) {
 				currentSlotIndex = -1;
 				currentRecipe = null;
 				currentRecipeList = null;
@@ -201,6 +205,10 @@ public class ContainerRecipeBook extends Container {
 		} else if(!isClientSide) {
 			currentRecipeList = availableRecipes.get(currentRecipeKey);
 		}
+	}
+
+	public void updateRecipeList() {
+		this.updateRecipeList(true);
 	}
 
 	@Override
