@@ -55,7 +55,7 @@ public class RemoteCraftingFood extends FoodRecipe {
         buf.writeByte(recipe.getRecipeHeight());
         buf.writeShort(recipe.getCraftMatrix().size());
         for(FoodIngredient ingredient : recipe.getCraftMatrix()) {
-            if (ingredient != null) {
+            if (ingredient != null && ingredient.getItemStacks().length > 0) {
                 buf.writeShort(ingredient.getItemStacks().length);
                 for (ItemStack ingredientStack : ingredient.getItemStacks()) {
                     ByteBufUtils.writeItemStack(buf, ingredientStack);
