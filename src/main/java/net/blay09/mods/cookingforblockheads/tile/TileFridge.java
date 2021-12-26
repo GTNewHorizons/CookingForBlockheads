@@ -45,9 +45,11 @@ public class TileFridge extends BaseKitchenTileWithInventory {
         if (worldObj.getBlock(xCoord, yCoord + 1, zCoord) == CookingForBlockheads.blockFridge) {
             bottomFridge = this;
             upperFridge = (TileFridge) worldObj.getTileEntity(xCoord, yCoord + 1, zCoord);
+            this.setColor(upperFridge.getColor());
         } else if (worldObj.getBlock(xCoord, yCoord - 1, zCoord) == CookingForBlockheads.blockFridge) {
             bottomFridge = (TileFridge) worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
             upperFridge = this;
+            this.setColor(bottomFridge.getColor());
         } else {
             sharedInventory = internalInventory;
             return;
