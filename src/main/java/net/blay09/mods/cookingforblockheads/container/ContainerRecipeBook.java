@@ -172,7 +172,7 @@ public class ContainerRecipeBook extends Container {
 		this.searchTerm = term;
 	}
 
-	public void updateRecipeList(boolean reloadCraftMatrix) {
+	public void updateRecipeList(boolean resetCraftMatrix) {
 		boolean noRecipes = getAvailableRecipeCount() == 0;
 		for(int i = 0; i < recipeBook.getSizeInventory(); i++) {
 			ItemStack lastItemStack = recipeBook.getStackInSlot(i);
@@ -186,7 +186,7 @@ public class ContainerRecipeBook extends Container {
 			if (
 				recipeIdx == currentSlotIndex
 				&& !ItemStack.areItemStacksEqual(lastItemStack, itemStack)
-				&& reloadCraftMatrix
+				&& resetCraftMatrix
 			) {
 				currentSlotIndex = -1;
 				currentRecipe = null;
