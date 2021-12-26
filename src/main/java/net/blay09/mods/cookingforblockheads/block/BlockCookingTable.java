@@ -90,28 +90,32 @@ public class BlockCookingTable extends BlockBaseKitchen {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
         ItemStack heldItem = player.getHeldItem();
+        TileCookingTable table = (TileCookingTable) world.getTileEntity(x, y, z);
+
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
-            if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
-                player.getHeldItem().stackSize--;
+            if (dyeColor.isPresent()) {
+                int color = dyeColor.get();
+                if (table.getColor() != color) {
+                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
+                    player.getHeldItem().stackSize--;
+                    return true;
+                }
             }
-            return true;
         }
         
         if(heldItem != null) {
-            TileCookingTable tileEntity = (TileCookingTable) world.getTileEntity(x, y, z);
-            if(!tileEntity.hasNoFilterBook() && heldItem.getItem() == CookingForBlockheads.itemRecipeBook && heldItem.getItemDamage() == 3) {
-                tileEntity.setNoFilterBook(heldItem.splitStack(1));
+            if(!table.hasNoFilterBook() && heldItem.getItem() == CookingForBlockheads.itemRecipeBook && heldItem.getItemDamage() == 3) {
+                table.setNoFilterBook(heldItem.splitStack(1));
                 return true;
             }
         } else if(player.isSneaking()) {
-            TileCookingTable tileEntity = (TileCookingTable) world.getTileEntity(x, y, z);
-            ItemStack noFilterBook = tileEntity.getNoFilterBook();
+            ItemStack noFilterBook = table.getNoFilterBook();
             if(noFilterBook != null) {
                 if(!player.inventory.addItemStackToInventory(noFilterBook)) {
                     player.dropPlayerItemWithRandomChoice(noFilterBook, false);
                 }
-                tileEntity.setNoFilterBook(null);
+                table.setNoFilterBook(null);
                 return true;
             }
         }

@@ -77,18 +77,23 @@ public class BlockSink extends BlockBaseKitchen {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
+        TileSink sink = (TileSink) world.getTileEntity(x, y, z);
+
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
-            if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
-                player.getHeldItem().stackSize--;
+            if (dyeColor.isPresent()) {
+                int color = dyeColor.get();
+                if (sink.getColor() != color) {
+                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
+                    player.getHeldItem().stackSize--;
+                    return true;
+                }
             }
-            return true;
         }
         if (FluidContainerRegistry.isEmptyContainer(player.getHeldItem())) {
             FluidStack fluidStack = null;
             int amount = FluidContainerRegistry.getContainerCapacity(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), player.getHeldItem());
             if(CookingConfig.sinkRequiresWater) {
-                TileSink sink = (TileSink) world.getTileEntity(x, y, z);
                 if(sink.getWaterAmount() >= amount) {
                     fluidStack = sink.drain(ForgeDirection.UNKNOWN, amount, true);
                 }
@@ -112,7 +117,6 @@ public class BlockSink extends BlockBaseKitchen {
         } else if(FluidContainerRegistry.isFilledContainer(player.getHeldItem())) {
             FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(player.getHeldItem());
             if(CookingConfig.sinkRequiresWater) {
-                TileSink sink = (TileSink) world.getTileEntity(x, y, z);
                 sink.fill(ForgeDirection.UNKNOWN, fluidStack, true);
             }
             ItemStack emptyContainer = FluidContainerRegistry.drainFluidContainer(player.getHeldItem());
@@ -145,7 +149,6 @@ public class BlockSink extends BlockBaseKitchen {
                 return true;
             } else {
                 if(CookingConfig.sinkRequiresWater) {
-                    TileSink sink = (TileSink) world.getTileEntity(x, y, z);
                     if(sink.getWaterAmount() < FluidContainerRegistry.BUCKET_VOLUME) {
                         return false;
                     }

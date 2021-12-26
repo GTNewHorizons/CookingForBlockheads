@@ -100,18 +100,18 @@ public class BlockFridge extends BlockBaseKitchen {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
+        TileFridge fridge = (TileFridge) world.getTileEntity(x, y, z);
+
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
             if (dyeColor.isPresent()) {
-                TileFridge fridge = (TileFridge) world.getTileEntity(x, y, z);
-                fridge.setColor(dyeColor.get());
-                if(fridge.findNeighbourFridge() != null) {
-                    fridge.findNeighbourFridge().setColor(dyeColor.get());
+                int color = dyeColor.get();
+                if (fridge.getColor() != color) {
+                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
+                    player.getHeldItem().stackSize--;
+                    return true;
                 }
-                player.getHeldItem().stackSize--;
-
             }
-            return true;
         }
         if(!world.isRemote) {
             if(player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBlockFridge) {
