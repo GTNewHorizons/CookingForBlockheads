@@ -54,6 +54,9 @@ public class BlockCabinet extends BlockCounter {
     @Override
     public boolean recolourBlock(World world, int x, int y, int z, ForgeDirection side, int colour) {
         TileCabinet cabinet = (TileCabinet) world.getTileEntity(x, y, z);
+        if (cabinet.getColor() == colour) {
+            return false;
+        }
         cabinet.setColor(colour);
         return true;
     }

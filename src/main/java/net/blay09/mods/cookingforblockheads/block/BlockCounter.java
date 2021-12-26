@@ -66,6 +66,9 @@ public class BlockCounter extends BlockBaseKitchen {
     @Override
     public boolean recolourBlock(World world, int x, int y, int z, ForgeDirection side, int colour) {
         TileCounter counter = (TileCounter) world.getTileEntity(x, y, z);
+        if (counter.getColor() == colour) {
+            return false;
+        }
         counter.setColor(colour);
         return true;
     }
@@ -73,17 +76,12 @@ public class BlockCounter extends BlockBaseKitchen {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
-        TileCounter counter = (TileCounter) world.getTileEntity(x, y, z);
 
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
-            if (dyeColor.isPresent()) {
-                int color = dyeColor.get();
-                if (counter.getColor() != color) {
-                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
-                    player.getHeldItem().stackSize--;
-                    return true;
-                }
+            if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
+                player.getHeldItem().stackSize--;
+                return true;
             }
         }
         if(!world.isRemote) {

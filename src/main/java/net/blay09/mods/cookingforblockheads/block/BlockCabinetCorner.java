@@ -34,6 +34,9 @@ public class BlockCabinetCorner extends BlockCounterCorner {
     @Override
     public boolean recolourBlock(World world, int x, int y, int z, ForgeDirection side, int colour) {
         TileCabinetCorner corner = (TileCabinetCorner) world.getTileEntity(x, y, z);
+        if (corner.getColor() == colour) {
+            return false;
+        }
         corner.setColor(colour);
         return true;
     }
@@ -41,17 +44,12 @@ public class BlockCabinetCorner extends BlockCounterCorner {
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
-        TileCabinetCorner corner = (TileCabinetCorner) world.getTileEntity(x, y, z);
 
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
-            if (dyeColor.isPresent()) {
-                int color = dyeColor.get();
-                if (corner.getColor() != color) {
-                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
-                    player.getHeldItem().stackSize--;
-                    return true;
-                }
+            if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
+                player.getHeldItem().stackSize--;
+                return true;
             }
         }
         return true;

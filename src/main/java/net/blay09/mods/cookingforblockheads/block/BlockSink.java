@@ -69,6 +69,9 @@ public class BlockSink extends BlockBaseKitchen {
     @Override
     public boolean recolourBlock(World world, int x, int y, int z, ForgeDirection side, int colour) {
         TileSink sink = (TileSink) world.getTileEntity(x, y, z);
+        if (sink.getColor() == colour) {
+            return false;
+        }
         sink.setColor(colour);
         return true;
     }
@@ -81,13 +84,9 @@ public class BlockSink extends BlockBaseKitchen {
 
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
-            if (dyeColor.isPresent()) {
-                int color = dyeColor.get();
-                if (sink.getColor() != color) {
-                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
-                    player.getHeldItem().stackSize--;
-                    return true;
-                }
+            if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
+                player.getHeldItem().stackSize--;
+                return true;
             }
         }
         if (FluidContainerRegistry.isEmptyContainer(player.getHeldItem())) {

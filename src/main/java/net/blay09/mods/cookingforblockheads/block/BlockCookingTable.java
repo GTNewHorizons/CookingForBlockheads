@@ -83,6 +83,9 @@ public class BlockCookingTable extends BlockBaseKitchen {
     @Override
     public boolean recolourBlock(World world, int x, int y, int z, ForgeDirection side, int colour) {
         TileCookingTable table = (TileCookingTable) world.getTileEntity(x, y, z);
+        if (table.getColor() == colour) {
+            return false;
+        }
         table.setColor(colour);
         return true;
     }
@@ -94,13 +97,9 @@ public class BlockCookingTable extends BlockBaseKitchen {
 
         if(heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
-            if (dyeColor.isPresent()) {
-                int color = dyeColor.get();
-                if (table.getColor() != color) {
-                    recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, color);
-                    player.getHeldItem().stackSize--;
-                    return true;
-                }
+            if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
+                player.getHeldItem().stackSize--;
+                return true;
             }
         }
         
