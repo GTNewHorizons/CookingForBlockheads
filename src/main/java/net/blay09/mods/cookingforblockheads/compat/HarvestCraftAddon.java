@@ -118,7 +118,17 @@ public class HarvestCraftAddon {
             "groundnutmegItem",
             "saladdressingItem",
             "batterItem",
-            "oliveoilItem"
+            "oliveoilItem",
+            "carrotcakeItem",
+            "cheesecakeItem",
+            "cherrycheesecakeItem",
+            "pineappleupsidedowncakeItem",
+            "chocolatesprinklecakeItem",
+            "redvelvetcakeItem",
+            "lamingtonItem",
+            "pavlovaItem",
+            "holidaycakeItem",
+            "pumpkincheesecakeItem"
     };
 
     private static final String[] OVEN_RECIPES = new String[] {
