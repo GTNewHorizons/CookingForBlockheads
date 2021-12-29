@@ -77,11 +77,7 @@ public class CookingForBlockheads {
     @EventHandler
     public void init(FMLInitializationEvent event) {
 		for (int i = 0; i < DyeUtils.dyeCount; i++) {
-			if (i == 0) {
-				blockKitchenFloors[i] = new BlockKitchenFloor(null);
-			} else {
-				blockKitchenFloors[i] = new BlockKitchenFloor(DyeUtils.dyeNamesSnakeCase[i]);
-			}
+			blockKitchenFloors[i] = new BlockKitchenFloor(DyeUtils.dyeNamesSnakeCase[i]);
 			KitchenMultiBlock.registerConnectorBlock(blockKitchenFloors[i]);
 		}
 		proxy.init(event);
@@ -100,12 +96,12 @@ public class CookingForBlockheads {
 	@EventHandler
 	public void missingMapping(FMLMissingMappingsEvent event) throws Exception {
 		for (FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()) {
-			if(!mapping.name.startsWith("cookingbook:")) {
+			if(!mapping.name.startsWith("cookingbook:") && !mapping.name.startsWith("cookingforblockheads:")) {
 				System.out.println("SKIPPING " + mapping.type + " " + mapping.name + " ");
 				continue;
 			}
 			System.out.println(mapping.type + " " + mapping.name + " ");
-			if (mapping.type == GameRegistry.Type.BLOCK) {
+			if (mapping.name.startsWith("cookingbook:") && mapping.type == GameRegistry.Type.BLOCK) {
 				switch (mapping.name) {
 					case "cookingbook:sink":
 						mapping.remap(CookingForBlockheads.blockSink);
@@ -147,7 +143,7 @@ public class CookingForBlockheads {
 					default:
 						System.out.println("No block match for " + mapping.name);
 				} 
-			} else if (mapping.type == GameRegistry.Type.ITEM) {
+			} else if (mapping.name.startsWith("cookingbook:") && mapping.type == GameRegistry.Type.ITEM) {
 				switch (mapping.name) {
 					case "cookingbook:recipebook":
 						mapping.remap(CookingForBlockheads.itemRecipeBook);
@@ -161,7 +157,7 @@ public class CookingForBlockheads {
 					case "cookingbook:toolrack":
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockToolRack));
 						break;
- 					case "cookingbook:toaster":
+					case "cookingbook:toaster":
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockToaster));
 						break;
 					case "cookingbook:cookingtable":
@@ -195,6 +191,22 @@ public class CookingForBlockheads {
 
 					default:
 						System.out.println("No item match for " + mapping.name);
+				}
+			} else if (mapping.name.startsWith("cookingforblockheads:") && mapping.type == GameRegistry.Type.BLOCK) {
+				switch (mapping.name) {
+					case "cookingforblockheads:kitchen_floor":
+						mapping.remap(CookingForBlockheads.blockKitchenFloors[0]);
+						break;
+					default:
+						System.out.println("No block match for " + mapping.name);
+				}
+			} else if (mapping.name.startsWith("cookingforblockheads:") && mapping.type == GameRegistry.Type.ITEM) {
+				switch (mapping.name) {
+					case "cookingforblockheads:kitchen_floor":
+						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockKitchenFloors[0]));
+						break;
+					default:
+						System.out.println("No block match for " + mapping.name);
 				}
 			} else {
 				System.out.println("Hmmmm " + mapping.name);

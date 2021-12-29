@@ -47,11 +47,7 @@ public class CommonProxy {
 		GameRegistry.registerBlock(CookingForBlockheads.blockFridge, ItemBlockFridge.class, "fridge");
 		for (int i = 0; i < DyeUtils.dyeCount; i++) {
 			String dyeName = DyeUtils.dyeNamesSnakeCase[i];
-			if (dyeName.equals("white")) {
-				GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloors[i], ItemBlockGenericKitchen.class, "kitchen_floor", new Object[]{"kitchen_floor", false});
-			} else {
-				GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloors[i], ItemBlockGenericKitchen.class, dyeName + "_kitchen_floor", new Object[]{"kitchen_floor", false});
-			}
+			GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloors[i], ItemBlockGenericKitchen.class, dyeName + "_kitchen_floor", new Object[]{"kitchen_floor", false});
 		}
 		GameRegistry.registerBlock(CookingForBlockheads.blockSink, ItemBlockGenericKitchen.class, "sink", new Object[]{"sink", true});
 		GameRegistry.registerBlock(CookingForBlockheads.blockToolRack, ItemBlockGenericKitchen.class, "toolrack", new Object[]{"toolrack", false});
