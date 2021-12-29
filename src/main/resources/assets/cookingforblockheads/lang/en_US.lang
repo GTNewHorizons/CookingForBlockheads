@@ -53,10 +53,10 @@ cookingforblockheads:cookingoven.tooltipDesc=Enables smelting abilities.
 cookingforblockheads:sink.tooltipDesc=Provides water to recipes.
 cookingforblockheads:fridge.tooltipDesc=Provides contained ingredients to recipes.
 cookingforblockheads:counter.tooltipDesc=Stores ingredients for recipes.
-cookingforblockheads:countercorner.tooltipDesc=Keeping up appearances
+cookingforblockheads:countercorner.tooltipDesc=Keeping up appearances.
 cookingforblockheads:cabinet.tooltipDesc=Stores ingredients for recipes.
-cookingforblockheads:cabinetcorner.tooltipDesc=Keeping up appearances
-cookingforblockheads:kitchen_floor.tooltipDesc=No use in particular.
+cookingforblockheads:cabinetcorner.tooltipDesc=Keeping up appearances.
+cookingforblockheads:kitchen_floor.tooltipDesc=Connect kitchen blocks over distances.
 cookingforblockheads:toolrack.tooltipDesc=Provides contained tools to recipes.
 cookingforblockheads:toaster.tooltipDesc=Toasts Bread.
 

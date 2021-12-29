@@ -38,7 +38,7 @@ public class CommonProxy {
 		GameRegistry.registerItem(CookingForBlockheads.itemRecipeBook, "recipebook");
 		GameRegistry.registerItem(CookingForBlockheads.itemToast, "toast");
 		
-		GameRegistry.registerBlock(CookingForBlockheads.blockCookingTable, ItemBlockGenericKitchen.class, "cookingtable", new Object[]{"cookingtable", false});
+		GameRegistry.registerBlock(CookingForBlockheads.blockCookingTable, ItemBlockGenericKitchen.class, "cookingtable", new Object[]{"cookingtable", true});
 		GameRegistry.registerBlock(CookingForBlockheads.blockOven, ItemBlockGenericKitchen.class, "cookingoven", new Object[]{"cookingoven", false});
 		GameRegistry.registerBlock(CookingForBlockheads.blockCounter, ItemBlockGenericKitchen.class, "counter", new Object[]{"counter", true});
 		GameRegistry.registerBlock(CookingForBlockheads.blockCounterCorner, ItemBlockGenericKitchen.class, "countercorner", new Object[]{"countercorner", true});
@@ -53,7 +53,7 @@ public class CommonProxy {
 				GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloors[i], ItemBlockGenericKitchen.class, dyeName + "_kitchen_floor", new Object[]{"kitchen_floor", false});
 			}
 		}
-		GameRegistry.registerBlock(CookingForBlockheads.blockSink, ItemBlockGenericKitchen.class, "sink", new Object[]{"sink", false});
+		GameRegistry.registerBlock(CookingForBlockheads.blockSink, ItemBlockGenericKitchen.class, "sink", new Object[]{"sink", true});
 		GameRegistry.registerBlock(CookingForBlockheads.blockToolRack, ItemBlockGenericKitchen.class, "toolrack", new Object[]{"toolrack", false});
 		GameRegistry.registerBlock(CookingForBlockheads.blockToaster, ItemBlockGenericKitchen.class, "toaster", new Object[]{"toaster", false});
 
