@@ -23,6 +23,7 @@ import net.blay09.mods.cookingforblockheads.block.BlockToaster;
 import net.blay09.mods.cookingforblockheads.block.BlockToolRack;
 import net.blay09.mods.cookingforblockheads.item.ItemRecipeBook;
 import net.blay09.mods.cookingforblockheads.item.ItemToast;
+import net.blay09.mods.cookingforblockheads.utils.DyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -53,7 +54,7 @@ public class CookingForBlockheads {
 	public static Block blockCabinet = new BlockCabinet(); // xx
 	public static Block blockCabinetCorner = new BlockCabinetCorner(); // xx
 	public static Block blockFridge = new BlockFridge(); // x
-	public static Block blockKitchenFloor = new BlockKitchenFloor();
+	public static Block[] blockKitchenFloors = new Block[DyeUtils.dyeCount];
 	public static Block blockSink = new BlockSink(); // x
 	public static Block blockToolRack = new BlockToolRack(); // x 
 	public static Block blockToaster = new BlockToaster(); // x
@@ -75,7 +76,14 @@ public class CookingForBlockheads {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-		KitchenMultiBlock.registerConnectorBlock(CookingForBlockheads.blockKitchenFloor);
+		for (int i = 0; i < DyeUtils.dyeCount; i++) {
+			if (i == 0) {
+				blockKitchenFloors[i] = new BlockKitchenFloor(null);
+			} else {
+				blockKitchenFloors[i] = new BlockKitchenFloor(DyeUtils.dyeNamesSnakeCase[i]);
+			}
+			KitchenMultiBlock.registerConnectorBlock(blockKitchenFloors[i]);
+		}
 		proxy.init(event);
     }
 
@@ -134,7 +142,7 @@ public class CookingForBlockheads {
 						mapping.remap(CookingForBlockheads.blockCabinetCorner);
 						break;
 					case "cookingbook:kitchen_floor":
-						mapping.remap(CookingForBlockheads.blockKitchenFloor);
+						mapping.remap(CookingForBlockheads.blockKitchenFloors[0]);
 						break;
 					default:
 						System.out.println("No block match for " + mapping.name);
@@ -182,7 +190,7 @@ public class CookingForBlockheads {
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockCabinetCorner));
 						break;
 					case "cookingbook:kitchen_floor":
-						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockKitchenFloor));
+						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockKitchenFloors[0]));
 						break;
 
 					default:

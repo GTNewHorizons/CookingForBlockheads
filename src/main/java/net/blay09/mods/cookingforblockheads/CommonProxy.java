@@ -22,6 +22,7 @@ import net.blay09.mods.cookingforblockheads.tile.TileOven;
 import net.blay09.mods.cookingforblockheads.tile.TileSink;
 import net.blay09.mods.cookingforblockheads.tile.TileToaster;
 import net.blay09.mods.cookingforblockheads.tile.TileToolRack;
+import net.blay09.mods.cookingforblockheads.utils.DyeUtils;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -44,7 +45,14 @@ public class CommonProxy {
 		GameRegistry.registerBlock(CookingForBlockheads.blockCabinet, ItemBlockGenericKitchen.class, "cabinet", new Object[]{"cabinet", true});
 		GameRegistry.registerBlock(CookingForBlockheads.blockCabinetCorner, ItemBlockGenericKitchen.class, "cabinetcorner", new Object[]{"cabinetcorner", true});
 		GameRegistry.registerBlock(CookingForBlockheads.blockFridge, ItemBlockFridge.class, "fridge");
-		GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloor, ItemBlockGenericKitchen.class, "kitchen_floor", new Object[]{"kitchen_floor", false});
+		for (int i = 0; i < DyeUtils.dyeCount; i++) {
+			String dyeName = DyeUtils.dyeNamesSnakeCase[i];
+			if (dyeName.equals("white")) {
+				GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloors[i], ItemBlockGenericKitchen.class, "kitchen_floor", new Object[]{"kitchen_floor", false});
+			} else {
+				GameRegistry.registerBlock(CookingForBlockheads.blockKitchenFloors[i], ItemBlockGenericKitchen.class, dyeName + "_kitchen_floor", new Object[]{"kitchen_floor", false});
+			}
+		}
 		GameRegistry.registerBlock(CookingForBlockheads.blockSink, ItemBlockGenericKitchen.class, "sink", new Object[]{"sink", false});
 		GameRegistry.registerBlock(CookingForBlockheads.blockToolRack, ItemBlockGenericKitchen.class, "toolrack", new Object[]{"toolrack", false});
 		GameRegistry.registerBlock(CookingForBlockheads.blockToaster, ItemBlockGenericKitchen.class, "toaster", new Object[]{"toaster", false});
@@ -132,7 +140,13 @@ public class CommonProxy {
 		}
 
 		// Kitchen Floor
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CookingForBlockheads.blockKitchenFloor, 12), "QC", "CQ", 'Q', Blocks.quartz_block, 'C', Blocks.coal_block));
+		for (int i = 0; i < DyeUtils.dyeCount; i++) {
+			if (i == 0) {
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CookingForBlockheads.blockKitchenFloors[0], 12), "QC", "CQ", 'Q', Blocks.quartz_block, 'C', Blocks.coal_block));
+			} else {
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CookingForBlockheads.blockKitchenFloors[i], 8), "FFF", "FDF", "FFF", 'F', CookingForBlockheads.blockKitchenFloors[0], 'D', DyeUtils.dyeOredicts[i]));
+			}
+		}
 
 		// Counter
 		if (CookingConfig.gregtech5uLoaded) {

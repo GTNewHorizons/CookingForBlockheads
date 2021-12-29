@@ -33,7 +33,7 @@ import java.util.OptionalInt;
  */
 public class DyeUtils
 {
-    private static final String[] dyeOredicts = new String[]
+    public static final String[] dyeOredicts = new String[]
         {
             "dyeWhite",
             "dyeOrange",
@@ -51,6 +51,28 @@ public class DyeUtils
             "dyeGreen",
             "dyeRed",
             "dyeBlack"
+        };
+
+    public static final int dyeCount = dyeOredicts.length;
+
+    public static final String[] dyeNamesSnakeCase = new String[]
+        {
+            "white",
+            "orange",
+            "magenta",
+            "light_blue",
+            "yellow",
+            "lime",
+            "pink",
+            "gray",
+            "light_gray",
+            "cyan",
+            "purple",
+            "blue",
+            "brown",
+            "green",
+            "red",
+            "black"
         };
 
     /**
