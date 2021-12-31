@@ -27,6 +27,8 @@ import net.blay09.mods.cookingforblockheads.utils.DyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(
 	modid = CookingForBlockheads.MOD_ID,
@@ -65,6 +67,8 @@ public class CookingForBlockheads {
 	@SidedProxy(clientSide = "net.blay09.mods.cookingforblockheads.client.ClientProxy", serverSide = "net.blay09.mods.cookingforblockheads.CommonProxy")
     public static CommonProxy proxy;
 
+	public static Logger logger = LogManager.getLogger(MOD_ID);
+
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -97,10 +101,10 @@ public class CookingForBlockheads {
 	public void missingMapping(FMLMissingMappingsEvent event) throws Exception {
 		for (FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()) {
 			if(!mapping.name.startsWith("cookingbook:") && !mapping.name.startsWith("cookingforblockheads:")) {
-				System.out.println("SKIPPING " + mapping.type + " " + mapping.name + " ");
+				logger.debug("SKIPPING " + mapping.type + " " + mapping.name + " ");
 				continue;
 			}
-			System.out.println(mapping.type + " " + mapping.name + " ");
+			logger.info(mapping.type + " " + mapping.name + " ");
 			if (mapping.name.startsWith("cookingbook:") && mapping.type == GameRegistry.Type.BLOCK) {
 				switch (mapping.name) {
 					case "cookingbook:sink":
@@ -141,7 +145,7 @@ public class CookingForBlockheads {
 						mapping.remap(CookingForBlockheads.blockKitchenFloors[0]);
 						break;
 					default:
-						System.out.println("No block match for " + mapping.name);
+						logger.info("No block match for " + mapping.name);
 				} 
 			} else if (mapping.name.startsWith("cookingbook:") && mapping.type == GameRegistry.Type.ITEM) {
 				switch (mapping.name) {
@@ -190,7 +194,7 @@ public class CookingForBlockheads {
 						break;
 
 					default:
-						System.out.println("No item match for " + mapping.name);
+						logger.info("No item match for " + mapping.name);
 				}
 			} else if (mapping.name.startsWith("cookingforblockheads:") && mapping.type == GameRegistry.Type.BLOCK) {
 				switch (mapping.name) {
@@ -198,7 +202,7 @@ public class CookingForBlockheads {
 						mapping.remap(CookingForBlockheads.blockKitchenFloors[0]);
 						break;
 					default:
-						System.out.println("No block match for " + mapping.name);
+						logger.info("No block match for " + mapping.name);
 				}
 			} else if (mapping.name.startsWith("cookingforblockheads:") && mapping.type == GameRegistry.Type.ITEM) {
 				switch (mapping.name) {
@@ -206,10 +210,10 @@ public class CookingForBlockheads {
 						mapping.remap(Item.getItemFromBlock(CookingForBlockheads.blockKitchenFloors[0]));
 						break;
 					default:
-						System.out.println("No block match for " + mapping.name);
+						logger.info("No item match for " + mapping.name);
 				}
 			} else {
-				System.out.println("Hmmmm " + mapping.name);
+				logger.info("Hmmmm " + mapping.name);
 			}
 		}
 	}
