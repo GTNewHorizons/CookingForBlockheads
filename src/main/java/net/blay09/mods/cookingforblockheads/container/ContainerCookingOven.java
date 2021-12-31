@@ -17,8 +17,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import squeek.applecore.api.AppleCoreAPI;
 
 import java.util.List;
 import java.util.Map;
@@ -146,7 +146,7 @@ public class ContainerCookingOven extends Container {
                     if (!mergeItemStack(slotStack, 3, 4, false)) {
                         return null;
                     }
-                } else if (smeltingResult != null && smeltingResult.getItem() instanceof ItemFood) {
+                } else if (smeltingResult != null && AppleCoreAPI.accessor.isFood(smeltingResult)) {
                     if (!this.mergeItemStack(slotStack, 0, 3, false)) {
                         return null;
                     }

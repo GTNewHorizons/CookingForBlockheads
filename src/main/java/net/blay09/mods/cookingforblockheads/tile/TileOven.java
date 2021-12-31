@@ -9,7 +9,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,6 +22,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.apache.commons.lang3.ArrayUtils;
+import squeek.applecore.api.AppleCoreAPI;
 
 import java.util.List;
 
@@ -255,7 +255,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
             case 0:
             case 1:
             case 2:
-                return itemStack.getItem() instanceof ItemFood;
+                return AppleCoreAPI.accessor.isFood(itemStack);
             case 3:
             case 4:
             case 5:

@@ -2,8 +2,8 @@ package net.blay09.mods.cookingforblockheads.container.comparator;
 
 import net.blay09.mods.cookingforblockheads.api.CookingForBlockheadsAPI;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import squeek.applecore.api.AppleCoreAPI;
 
 import java.util.Comparator;
 
@@ -18,8 +18,8 @@ public class ComparatorHunger implements Comparator<ItemStack> {
 
     @Override
     public int compare(ItemStack o1, ItemStack o2) {
-        boolean isFirstFood = o1.getItem() instanceof ItemFood;
-        boolean isSecondFood = o2.getItem() instanceof ItemFood;
+        boolean isFirstFood = AppleCoreAPI.accessor.isFood(o1);
+        boolean isSecondFood = AppleCoreAPI.accessor.isFood(o2);
         if(!isFirstFood && !isSecondFood) {
             return 0;
         } else if(!isFirstFood) {

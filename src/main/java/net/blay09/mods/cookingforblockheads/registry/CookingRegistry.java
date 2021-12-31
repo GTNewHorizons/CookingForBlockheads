@@ -19,7 +19,6 @@ import net.blay09.mods.cookingforblockheads.registry.food.recipe.SmeltingFood;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -61,7 +60,7 @@ public class CookingRegistry {
             IRecipe recipe = (IRecipe) obj;
             ItemStack output = recipe.getRecipeOutput();
             if(output != null) {
-                if (output.getItem()  instanceof ItemFood || AppleCoreAPI.accessor.isFood(output)) {
+                if (AppleCoreAPI.accessor.isFood(output)) {
                     if (HarvestCraftAddon.isWeirdBrokenRecipe(recipe)) {
                         continue;
                     }
@@ -89,7 +88,7 @@ public class CookingRegistry {
                 sourceStack = (ItemStack) entry.getKey();
             }
             ItemStack resultStack = (ItemStack) entry.getValue();
-            if(resultStack.getItem() instanceof ItemFood) {
+            if(AppleCoreAPI.accessor.isFood(resultStack)) {
                 foodItems.put(resultStack.getItem(), new SmeltingFood(resultStack, sourceStack));
             } else {
                 for(ItemStack itemStack : nonFoodRecipes) {
