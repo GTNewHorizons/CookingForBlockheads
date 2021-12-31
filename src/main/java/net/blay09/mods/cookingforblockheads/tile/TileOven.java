@@ -366,7 +366,11 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
                     int resultSpaceLeft = 0;
                     for (int j : slotsBottom) {
                         ItemStack slotStack = getStackInSlot(j);
-                        if (slotStack != null && slotStack.getItem() == transferStack.getItem()) {
+                        if (
+                            slotStack != null
+                            && slotStack.getItem() == transferStack.getItem()
+                            && slotStack.getItem().getDamage(slotStack) == transferStack.getItem().getDamage(transferStack)
+                        ) {
                             resultSpaceLeft = slotStack.getMaxStackSize() - slotStack.stackSize;
 
                             if (resultSpaceLeft > 0) {
