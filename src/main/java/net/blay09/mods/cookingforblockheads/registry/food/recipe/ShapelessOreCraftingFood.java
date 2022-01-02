@@ -3,6 +3,7 @@ package net.blay09.mods.cookingforblockheads.registry.food.recipe;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
+import net.blay09.mods.cookingforblockheads.utils.MiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -27,15 +28,14 @@ public class ShapelessOreCraftingFood extends FoodRecipe {
                 boolean isToolItem = CookingRegistry.isToolItem(itemStack);
                 craftMatrix.add(new FoodIngredient(itemStack, isToolItem));
             } else if (obj instanceof ArrayList) {
-                // TODO: cast warning
-                List<ItemStack> list = (List<ItemStack>) obj;
+                List<ItemStack> inputList = MiscUtils.castList((List<?>) obj, ItemStack.class);
                 boolean toolFound = false;
-                for (ItemStack itemStack : list) {
+                for (ItemStack itemStack : inputList) {
                     if (CookingRegistry.isToolItem(itemStack)) {
                         toolFound = true;
                     }
                 }
-                craftMatrix.add(new FoodIngredient(list.toArray(new ItemStack[list.size()]), toolFound));
+                craftMatrix.add(new FoodIngredient(inputList.toArray(new ItemStack[0]), toolFound));
             }
         }
     }

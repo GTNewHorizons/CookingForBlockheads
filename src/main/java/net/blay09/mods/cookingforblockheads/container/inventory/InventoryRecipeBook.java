@@ -1,6 +1,7 @@
 package net.blay09.mods.cookingforblockheads.container.inventory;
 
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
+import net.blay09.mods.cookingforblockheads.utils.MiscUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -83,6 +84,6 @@ public class InventoryRecipeBook implements IInventory {
     }
 
     public List<FoodRecipe> getFoodList(int slotIndex) {
-        return (List<FoodRecipe>) recipes[slotIndex];
+        return MiscUtils.castList(recipes[slotIndex], FoodRecipe.class);
     }
 }

@@ -4,6 +4,7 @@ import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenStorageProvider;
 import net.blay09.mods.cookingforblockheads.container.ContainerWithInventory;
 import net.blay09.mods.cookingforblockheads.container.inventory.InventoryLarge;
 import net.blay09.mods.cookingforblockheads.container.inventory.InventoryNormal;
+import net.blay09.mods.cookingforblockheads.utils.MiscUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -98,7 +99,8 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
         if (!worldObj.isRemote && numPlayersUsing != 0 && (tickCounter + xCoord + yCoord + zCoord) % 200 == 0) {
             numPlayersUsing = 0;
             float range = 5.0F;
-            for (EntityPlayer entityPlayer : (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float) xCoord - range, (float) yCoord - range, (float) zCoord - range, (float) xCoord + 1 + range, (float) yCoord + 1 + range, (float) zCoord + 1 + range))) {
+            List<?> list = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float) xCoord - range, (float) yCoord - range, (float) zCoord - range, (float) xCoord + 1 + range, (float) yCoord + 1 + range, (float) zCoord + 1 + range));
+            for (EntityPlayer entityPlayer : MiscUtils.castList(list, EntityPlayer.class)) {
                 if (entityPlayer.openContainer instanceof ContainerWithInventory) {
                     IInventory inventory = ((ContainerWithInventory) entityPlayer.openContainer).getContainerInventory();
                     if (inventory == this || (inventory instanceof InventoryLarge && ((InventoryLarge) inventory).containsInventory(this))) {

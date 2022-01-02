@@ -95,7 +95,7 @@ public class SlotCraftMatrix extends Slot {
                         }
                     }
                 }
-                visibleStacks = visibleStackList.toArray(new ItemStack[visibleStackList.size()]);
+                visibleStacks = visibleStackList.toArray(new ItemStack[0]);
             } else {
                 for(int i = 0; i < visibleStacks.length; i++) {
                     ItemStack displayStack = visibleStacks[i].copy();
