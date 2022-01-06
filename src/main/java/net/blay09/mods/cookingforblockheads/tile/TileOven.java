@@ -5,7 +5,6 @@ import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenSmeltingProvider
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenStorageProvider;
 import net.blay09.mods.cookingforblockheads.container.ContainerCookingOven;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
-import net.blay09.mods.cookingforblockheads.utils.MiscUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -433,8 +432,8 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
         if (!worldObj.isRemote && numPlayersUsing != 0 && (tickCounter + xCoord + yCoord + zCoord) % 200 == 0) {
             numPlayersUsing = 0;
             float range = 5.0f;
-            List<?> list = worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float) xCoord - range, (float) yCoord - range, (float) zCoord - range, (float) xCoord + 1 + range, (float) yCoord + 1 + range, (float) zCoord + 1 + range));
-            for(EntityPlayer entityPlayer : MiscUtils.castList(list, EntityPlayer.class)) {
+            List<EntityPlayer> players = (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float) xCoord - range, (float) yCoord - range, (float) zCoord - range, (float) xCoord + 1 + range, (float) yCoord + 1 + range, (float) zCoord + 1 + range));
+            for(EntityPlayer entityPlayer : players) {
                 if (entityPlayer.openContainer instanceof ContainerCookingOven) {
                     if(((ContainerCookingOven) entityPlayer.openContainer).getTileEntity() == this) {
                         numPlayersUsing++;

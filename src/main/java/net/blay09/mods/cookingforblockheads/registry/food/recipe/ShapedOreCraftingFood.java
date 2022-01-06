@@ -3,7 +3,6 @@ package net.blay09.mods.cookingforblockheads.registry.food.recipe;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
-import net.blay09.mods.cookingforblockheads.utils.MiscUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
@@ -38,7 +37,7 @@ public class ShapedOreCraftingFood extends FoodRecipe {
                 boolean isToolItem = CookingRegistry.isToolItem(itemStack);
                 craftMatrix.add(new FoodIngredient((ItemStack) obj, isToolItem));
             } else if (obj instanceof List) {
-                List<ItemStack> inputList = MiscUtils.castList((List<?>) obj, ItemStack.class);
+                List<ItemStack> inputList = (List<ItemStack>) obj;
                 boolean toolFound = false;
                 for (ItemStack itemStack : inputList) {
                     if (CookingRegistry.isToolItem(itemStack)) {
