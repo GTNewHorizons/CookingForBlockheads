@@ -2,6 +2,9 @@ package net.blay09.mods.cookingforblockheads.compat;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.common.items.GT_MetaGenerated_Tool_01;
 import net.blay09.mods.cookingforblockheads.api.CookingForBlockheadsAPI;
 import net.blay09.mods.cookingforblockheads.api.event.FoodRegistryInitEvent;
@@ -38,6 +41,11 @@ public class GregTech5UAddon {
         public void craftingComplete() {}
     }
 
+    private static final ItemStack[] ADDITIONAL_RECIPES = new ItemStack[] {
+        GT_OreDictUnificator.get(OrePrefixes.dust, Materials.MeatRaw, 1L),
+        GT_OreDictUnificator.get(OrePrefixes.dust, Materials.MeatCooked, 1L),
+    };
+
     private static final short[] META_TOOLS = new short[] {
         GT_MetaGenerated_Tool_01.HARDHAMMER,
         GT_MetaGenerated_Tool_01.SOFTMALLET,
@@ -60,7 +68,11 @@ public class GregTech5UAddon {
 
     @SubscribeEvent
     public void onFoodRegistryInit(FoodRegistryInitEvent event) {
-        // Nothing currently
+        for (ItemStack stack : ADDITIONAL_RECIPES) {
+            if (stack != null) {
+                event.registerNonFoodRecipe(stack);
+            }
+        }
     }
 
 
