@@ -2,11 +2,10 @@
 
 dependencies {
     compile("com.github.GTNewHorizons:NotEnoughItems:2.2.3-GTNH:dev")
-    
-    compileOnly("com.github.GTNewHorizons:AppleCore:3.1.7:dev") {
-        // Compile only until it runs properly in dev
+
+    compile("com.github.GTNewHorizons:AppleCore:3.1.8:dev") {
         transitive=false;
-    } 
+    }
     
     compileOnly("com.github.GTNewHorizons:SpiceOfLife:master-SNAPSHOT:dev") {
         transitive=false;
@@ -14,8 +13,8 @@ dependencies {
     compile("com.github.GTNewHorizons:inventory-tweaks:1.5.13:dev")
     compile("com.github.GTNewHorizons:CraftTweaker:3.2.6:dev")
     
-    compileOnly files("MouseTweaks-2.4.4-mc1.7.10.jar")
+    compileOnly files("dependencies/MouseTweaks-2.4.4-mc1.7.10.jar")
     
-    compile("com.github.GTNewHorizons:GT5-Unofficial:5.09.40.19:dev")
-    runtime("com.github.GTNewHorizons:StructureLib:1.0.15:dev")
+    compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.09.40.19:dev")
+    runtime("com.github.GTNewHorizons:SpongeMixins:1.5.0") //needed for Applecore to not freak the F out
 }
