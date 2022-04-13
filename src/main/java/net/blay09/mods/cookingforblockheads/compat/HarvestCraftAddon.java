@@ -128,7 +128,12 @@ public class HarvestCraftAddon {
             "lamingtonItem",
             "pavlovaItem",
             "holidaycakeItem",
-            "pumpkincheesecakeItem"
+            "pumpkincheesecakeItem",
+//            "toastedsesameseedsItem", // no usage
+            "bubblywaterItem",
+            "currypowderItem",
+            "soysauceItem",
+            "garammasalaItem",
     };
 
     private static final String[] OVEN_RECIPES = new String[] {
