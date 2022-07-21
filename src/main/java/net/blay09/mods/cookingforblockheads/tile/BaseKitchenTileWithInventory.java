@@ -1,5 +1,7 @@
 package net.blay09.mods.cookingforblockheads.tile;
 
+import java.util.List;
+import java.util.Random;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenStorageProvider;
 import net.blay09.mods.cookingforblockheads.container.ContainerWithInventory;
 import net.blay09.mods.cookingforblockheads.container.inventory.InventoryLarge;
@@ -17,9 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-
-import java.util.List;
-import java.util.Random;
 
 public class BaseKitchenTileWithInventory extends TileEntity implements IInventory, IKitchenStorageProvider {
     protected static final Random random = new Random();
@@ -68,7 +67,8 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
         NBTTagList tagList = tagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound itemCompound = tagList.getCompoundTagAt(i);
-            internalInventory.setInventorySlotContents(itemCompound.getByte("Slot"), ItemStack.loadItemStackFromNBT(itemCompound));
+            internalInventory.setInventorySlotContents(
+                    itemCompound.getByte("Slot"), ItemStack.loadItemStackFromNBT(itemCompound));
         }
         color = tagCompound.getByte("Color");
         isFlipped = tagCompound.getBoolean("IsFlipped");
@@ -94,22 +94,33 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
     }
 
     protected void fixBrokenContainerClosedCall() {
-        // Because Mojang people thought it would be more sane to check chest watchers every few ticks instead of fixing the actual issue.
+        // Because Mojang people thought it would be more sane to check chest watchers every few ticks instead of fixing
+        // the actual issue.
         if (!worldObj.isRemote && numPlayersUsing != 0 && (tickCounter + xCoord + yCoord + zCoord) % 200 == 0) {
             numPlayersUsing = 0;
             float range = 5.0F;
-            List<EntityPlayer> players = (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float) xCoord - range, (float) yCoord - range, (float) zCoord - range, (float) xCoord + 1 + range, (float) yCoord + 1 + range, (float) zCoord + 1 + range));
+            List<EntityPlayer> players = (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(
+                    EntityPlayer.class,
+                    AxisAlignedBB.getBoundingBox(
+                            (float) xCoord - range,
+                            (float) yCoord - range,
+                            (float) zCoord - range,
+                            (float) xCoord + 1 + range,
+                            (float) yCoord + 1 + range,
+                            (float) zCoord + 1 + range));
             for (EntityPlayer entityPlayer : players) {
                 if (entityPlayer.openContainer instanceof ContainerWithInventory) {
-                    IInventory inventory = ((ContainerWithInventory) entityPlayer.openContainer).getContainerInventory();
-                    if (inventory == this || (inventory instanceof InventoryLarge && ((InventoryLarge) inventory).containsInventory(this))) {
+                    IInventory inventory =
+                            ((ContainerWithInventory) entityPlayer.openContainer).getContainerInventory();
+                    if (inventory == this
+                            || (inventory instanceof InventoryLarge
+                                    && ((InventoryLarge) inventory).containsInventory(this))) {
                         numPlayersUsing++;
                     }
                 }
             }
         }
     }
-
 
     @Override
     public void updateEntity() {
@@ -199,7 +210,6 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
         return renderItem;
     }
 
-
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
         super.onDataPacket(net, pkt);
@@ -214,7 +224,6 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tagCompound);
     }
 
-    
     public void breakBlock() {
         for (int i = 0; i < internalInventory.getSizeInventory(); i++) {
             ItemStack itemStack = internalInventory.getStackInSlot(i);
@@ -222,7 +231,9 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
                 float offsetX = random.nextFloat() * 0.8f + 0.1f;
                 float offsetY = random.nextFloat() * 0.8f + 0.1f;
                 EntityItem entityItem;
-                for (float offsetZ = random.nextFloat() * 0.8f + 0.1f; itemStack.stackSize > 0; worldObj.spawnEntityInWorld(entityItem)) {
+                for (float offsetZ = random.nextFloat() * 0.8f + 0.1f;
+                        itemStack.stackSize > 0;
+                        worldObj.spawnEntityInWorld(entityItem)) {
                     int stackSize = random.nextInt(21) + 10;
 
                     if (stackSize > itemStack.stackSize) {
@@ -230,20 +241,25 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
                     }
 
                     itemStack.stackSize -= stackSize;
-                    entityItem = new EntityItem(worldObj, (double) ((float) xCoord + offsetX), (double) ((float) yCoord + offsetY), (double) ((float) zCoord + offsetZ), new ItemStack(itemStack.getItem(), stackSize, itemStack.getItemDamage()));
+                    entityItem = new EntityItem(
+                            worldObj,
+                            (double) ((float) xCoord + offsetX),
+                            (double) ((float) yCoord + offsetY),
+                            (double) ((float) zCoord + offsetZ),
+                            new ItemStack(itemStack.getItem(), stackSize, itemStack.getItemDamage()));
                     float f3 = 0.05F;
                     entityItem.motionX = (double) ((float) random.nextGaussian() * f3);
                     entityItem.motionY = (double) ((float) random.nextGaussian() * f3 + 0.2F);
                     entityItem.motionZ = (double) ((float) random.nextGaussian() * f3);
 
                     if (itemStack.hasTagCompound()) {
-                        entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
+                        entityItem.getEntityItem().setTagCompound((NBTTagCompound)
+                                itemStack.getTagCompound().copy());
                     }
                 }
             }
         }
     }
-
 
     public void setColor(int color) {
         this.color = color;

@@ -11,11 +11,10 @@ public class HandlerClickRecipe implements IMessageHandler<MessageClickRecipe, I
     @Override
     public IMessage onMessage(MessageClickRecipe message, MessageContext ctx) {
         Container container = ctx.getServerHandler().playerEntity.openContainer;
-        if(container instanceof ContainerRecipeBook) {
+        if (container instanceof ContainerRecipeBook) {
             ((ContainerRecipeBook) container).setScrollOffset(message.getScrollOffset());
             ((ContainerRecipeBook) container).clickRecipe(message.getSlotIndex(), message.isShiftClick());
         }
         return null;
     }
-
 }

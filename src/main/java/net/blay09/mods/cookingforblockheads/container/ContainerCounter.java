@@ -18,5 +18,4 @@ public class ContainerCounter extends ContainerWithInventory {
         super.onContainerClosed(player);
         inventory.closeInventory();
     }
-
 }

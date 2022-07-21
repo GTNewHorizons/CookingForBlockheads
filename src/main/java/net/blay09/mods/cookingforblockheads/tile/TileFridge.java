@@ -9,7 +9,7 @@ public class TileFridge extends BaseKitchenTileWithInventory {
     public TileFridge() {
         super("fridge");
     }
-    
+
     @Override
     public void updateEntity() {
         super.updateEntity();
@@ -18,7 +18,6 @@ public class TileFridge extends BaseKitchenTileWithInventory {
             updateMultiblock();
         }
     }
-
 
     @Override
     public boolean receiveClientEvent(int id, int value) {
@@ -56,5 +55,4 @@ public class TileFridge extends BaseKitchenTileWithInventory {
         }
         sharedInventory = new InventoryLarge(bottomFridge.getInternalInventory(), upperFridge.getInternalInventory());
     }
-
 }

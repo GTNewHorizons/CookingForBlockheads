@@ -6,7 +6,7 @@ public class RenderUtils {
 
     public static float getAngle(int metadata) {
 
-        switch(ForgeDirection.getOrientation(metadata)) {
+        switch (ForgeDirection.getOrientation(metadata)) {
             case NORTH:
                 return 0;
             case EAST:
@@ -19,5 +19,4 @@ public class RenderUtils {
                 return -90;
         }
     }
-
 }

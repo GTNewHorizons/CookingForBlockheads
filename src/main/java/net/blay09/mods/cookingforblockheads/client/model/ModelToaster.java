@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
  * Created using Tabula 4.1.1
  */
 public class ModelToaster extends ModelBase {
-    public double[] modelScale = new double[] { 2D, 2D, 2D };
+    public double[] modelScale = new double[] {2D, 2D, 2D};
     public ModelRenderer Buttery;
     public ModelRenderer Why;
     public ModelRenderer Biscuit;
@@ -147,7 +147,7 @@ public class ModelToaster extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         GL11.glPushMatrix();
         GL11.glScaled(1D / modelScale[0], 1D / modelScale[1], 1D / modelScale[2]);
         this.Buttery.render(f5);
@@ -172,5 +172,4 @@ public class ModelToaster extends ModelBase {
         this.Why.render(f5);
         GL11.glPopMatrix();
     }
-
 }

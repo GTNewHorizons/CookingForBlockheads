@@ -32,5 +32,4 @@ public class InternalMethods implements IInternalMethods {
     public void addToolItem(ItemStack toolItem) {
         CookingRegistry.addToolItem(toolItem);
     }
-
 }

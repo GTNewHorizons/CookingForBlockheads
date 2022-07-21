@@ -1,5 +1,7 @@
 package net.blay09.mods.cookingforblockheads.container.slot;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenItemProvider;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
@@ -10,9 +12,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 import net.minecraftforge.oredict.OreDictionary;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SlotCraftMatrix extends Slot {
 
@@ -46,9 +45,9 @@ public class SlotCraftMatrix extends Slot {
 
     public void setIngredient(FoodIngredient ingredient) {
         this.ingredient = ingredient;
-//        if(ingredient == null) {
-//            putStack(null);
-//        }
+        //        if(ingredient == null) {
+        //            putStack(null);
+        //        }
     }
 
     public void setEnabled(boolean enabled) {
@@ -64,11 +63,12 @@ public class SlotCraftMatrix extends Slot {
      * SERVER ONLY
      */
     public void updateVisibleStacks() {
-        if(ingredient != null) {
+        if (ingredient != null) {
             visibleStacks = ingredient.getItemStacks();
             if (!isNoFilter && ingredient.getItemStacks().length > 1 && !ingredient.isToolItem()) {
                 List<ItemStack> visibleStackList = new ArrayList<>();
-                stackLoop:for (ItemStack visibleStack : visibleStacks) {
+                stackLoop:
+                for (ItemStack visibleStack : visibleStacks) {
                     for (int i = 0; i < sourceInventories.size(); i++) {
                         for (int j = 0; j < sourceInventories.get(i).getSizeInventory(); j++) {
                             ItemStack itemStack = sourceInventories.get(i).getStackInSlot(j);
@@ -82,9 +82,9 @@ public class SlotCraftMatrix extends Slot {
                             }
                         }
                     }
-                    for(IKitchenItemProvider provider : itemProviders) {
-                        for(ItemStack itemStack : provider.getProvidedItemStacks()) {
-                            if(CookingRegistry.areItemStacksEqualWithWildcard(itemStack, visibleStack)) {
+                    for (IKitchenItemProvider provider : itemProviders) {
+                        for (ItemStack itemStack : provider.getProvidedItemStacks()) {
+                            if (CookingRegistry.areItemStacksEqualWithWildcard(itemStack, visibleStack)) {
                                 ItemStack displayStack = visibleStack.copy();
                                 if (displayStack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
                                     displayStack.setItemDamage(0);
@@ -97,23 +97,27 @@ public class SlotCraftMatrix extends Slot {
                 }
                 visibleStacks = visibleStackList.toArray(new ItemStack[0]);
             } else {
-                for(int i = 0; i < visibleStacks.length; i++) {
+                for (int i = 0; i < visibleStacks.length; i++) {
                     ItemStack displayStack = visibleStacks[i].copy();
-                    if(displayStack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+                    if (displayStack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
                         displayStack.setItemDamage(0);
                     }
                     visibleStacks[i] = displayStack;
                 }
             }
-            if(visibleStacks.length == 1) {
+            if (visibleStacks.length == 1) {
                 putStack(visibleStacks[0]);
-                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slotNumber, visibleStacks[0]));
+                ((EntityPlayerMP) player)
+                        .playerNetServerHandler.sendPacket(
+                                new S2FPacketSetSlot(player.openContainer.windowId, slotNumber, visibleStacks[0]));
             }
             visibleItemTime = ITEM_SWITCH_TIME;
             visibleItemIndex = 0;
         } else {
             putStack(null);
-            ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slotNumber, null));
+            ((EntityPlayerMP) player)
+                    .playerNetServerHandler.sendPacket(
+                            new S2FPacketSetSlot(player.openContainer.windowId, slotNumber, null));
             visibleStacks = null;
         }
         update();
@@ -123,15 +127,17 @@ public class SlotCraftMatrix extends Slot {
      * SERVER ONLY
      */
     public void update() {
-        if(visibleStacks != null && visibleStacks.length > 1) {
+        if (visibleStacks != null && visibleStacks.length > 1) {
             visibleItemTime++;
-            if(visibleItemTime >= ITEM_SWITCH_TIME) {
+            if (visibleItemTime >= ITEM_SWITCH_TIME) {
                 visibleItemIndex++;
-                if(visibleItemIndex >= visibleStacks.length) {
+                if (visibleItemIndex >= visibleStacks.length) {
                     visibleItemIndex = 0;
                 }
                 putStack(visibleStacks[visibleItemIndex]);
-                ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(player.openContainer.windowId, slotNumber, visibleStacks[visibleItemIndex]));
+                ((EntityPlayerMP) player)
+                        .playerNetServerHandler.sendPacket(new S2FPacketSetSlot(
+                                player.openContainer.windowId, slotNumber, visibleStacks[visibleItemIndex]));
                 visibleItemTime = 0;
             }
         }

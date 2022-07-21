@@ -14,13 +14,13 @@ public class NEIRecipeBookGuiHandler extends INEIGuiAdapter {
 
     @Override
     public boolean hideItemPanelSlot(GuiContainer gui, int x, int y, int w, int h) {
-        if(gui instanceof GuiRecipeBook) {
+        if (gui instanceof GuiRecipeBook) {
             GuiButtonSort[] sortButtons = ((GuiRecipeBook) gui).getSortButtons();
-            if(sortButtons != null) {
+            if (sortButtons != null) {
                 tmpPanelRect.setBounds(x, y, w, h);
-                for(GuiButtonSort button : sortButtons) {
+                for (GuiButtonSort button : sortButtons) {
                     tmpButtonRect.setBounds(button.xPosition, button.yPosition, button.width, button.height);
-                    if(tmpPanelRect.intersects(tmpButtonRect)) {
+                    if (tmpPanelRect.intersects(tmpButtonRect)) {
                         return true;
                     }
                 }

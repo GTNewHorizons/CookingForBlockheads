@@ -1,7 +1,13 @@
 package net.blay09.mods.cookingforblockheads.block;
 
+import static net.minecraftforge.common.util.ForgeDirection.EAST;
+import static net.minecraftforge.common.util.ForgeDirection.NORTH;
+import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
+import static net.minecraftforge.common.util.ForgeDirection.WEST;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.client.render.block.ToolRackBlockRenderer;
 import net.blay09.mods.cookingforblockheads.tile.TileToolRack;
@@ -19,13 +25,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import java.util.Random;
-
-import static net.minecraftforge.common.util.ForgeDirection.EAST;
-import static net.minecraftforge.common.util.ForgeDirection.NORTH;
-import static net.minecraftforge.common.util.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.util.ForgeDirection.WEST;
 
 public class BlockToolRack extends BlockBaseKitchen {
 
@@ -46,8 +45,7 @@ public class BlockToolRack extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
     public TileEntity createNewTileEntity(World world, int metadata) {
@@ -103,14 +101,15 @@ public class BlockToolRack extends BlockBaseKitchen {
 
     @Override
     public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-        return world.isSideSolid(x - 1, y, z, EAST) ||
-                world.isSideSolid(x + 1, y, z, WEST) ||
-                world.isSideSolid(x, y, z - 1, SOUTH) ||
-                world.isSideSolid(x, y, z + 1, NORTH);
+        return world.isSideSolid(x - 1, y, z, EAST)
+                || world.isSideSolid(x + 1, y, z, WEST)
+                || world.isSideSolid(x, y, z - 1, SOUTH)
+                || world.isSideSolid(x, y, z + 1, NORTH);
     }
 
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+    public int onBlockPlaced(
+            World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
         int newMetadata = metadata;
         if ((metadata == 0 || side == 2) && world.isSideSolid(x, y, z + 1, NORTH)) {
             newMetadata = 2;
@@ -128,18 +127,27 @@ public class BlockToolRack extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        if(player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBlock) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBlock) {
             return true;
         }
-        if(hitY > 0.25f) {
+        if (hitY > 0.25f) {
             int metadata = world.getBlockMetadata(x, y, z);
             float hit = hitX;
-            switch(metadata) {
-                case 2: hit = hitX; break;
-                case 3: hit = 1f - hitX; break;
-                case 4: hit = 1f - hitZ; break;
-                case 5: hit = hitZ; break;
+            switch (metadata) {
+                case 2:
+                    hit = hitX;
+                    break;
+                case 3:
+                    hit = 1f - hitX;
+                    break;
+                case 4:
+                    hit = 1f - hitZ;
+                    break;
+                case 5:
+                    hit = hitZ;
+                    break;
             }
             int hitSlot = hit > 0.5f ? 0 : 1;
             TileToolRack tileToolRack = (TileToolRack) world.getTileEntity(x, y, z);
@@ -180,7 +188,9 @@ public class BlockToolRack extends BlockBaseKitchen {
                     float offsetY = random.nextFloat() * 0.8F + 0.1F;
                     EntityItem entityItem;
 
-                    for (float offsetZ = random.nextFloat() * 0.8F + 0.1F; itemStack.stackSize > 0; world.spawnEntityInWorld(entityItem)) {
+                    for (float offsetZ = random.nextFloat() * 0.8F + 0.1F;
+                            itemStack.stackSize > 0;
+                            world.spawnEntityInWorld(entityItem)) {
                         int stackSize = random.nextInt(21) + 10;
 
                         if (stackSize > itemStack.stackSize) {
@@ -188,14 +198,20 @@ public class BlockToolRack extends BlockBaseKitchen {
                         }
 
                         itemStack.stackSize -= stackSize;
-                        entityItem = new EntityItem(world, (double) ((float) x + offsetX), (double) ((float) y + offsetY), (double) ((float) z + offsetZ), new ItemStack(itemStack.getItem(), stackSize, itemStack.getItemDamage()));
+                        entityItem = new EntityItem(
+                                world,
+                                (double) ((float) x + offsetX),
+                                (double) ((float) y + offsetY),
+                                (double) ((float) z + offsetZ),
+                                new ItemStack(itemStack.getItem(), stackSize, itemStack.getItemDamage()));
                         float f3 = 0.05F;
                         entityItem.motionX = (double) ((float) random.nextGaussian() * f3);
                         entityItem.motionY = (double) ((float) random.nextGaussian() * f3 + 0.2F);
                         entityItem.motionZ = (double) ((float) random.nextGaussian() * f3);
 
                         if (itemStack.hasTagCompound()) {
-                            entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
+                            entityItem.getEntityItem().setTagCompound((NBTTagCompound)
+                                    itemStack.getTagCompound().copy());
                         }
                     }
                 }
@@ -204,5 +220,4 @@ public class BlockToolRack extends BlockBaseKitchen {
             super.breakBlock(world, x, y, z, block, metadata);
         }
     }
-
 }

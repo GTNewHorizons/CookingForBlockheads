@@ -11,8 +11,10 @@ public class TileCounter extends BaseKitchenTileWithInventory implements IInvent
     public TileCounter() {
         super(getName());
     }
-    
-    public TileCounter(String name) { super(name); }
+
+    public TileCounter(String name) {
+        super(name);
+    }
 
     @Override
     public void updateEntity() {
@@ -27,5 +29,4 @@ public class TileCounter extends BaseKitchenTileWithInventory implements IInvent
     public boolean receiveClientEvent(int id, int value) {
         return super.receiveClientEvent(id, value);
     }
-
 }

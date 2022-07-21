@@ -27,7 +27,7 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        if(id == ITEM_RECIPE_BOOK) {
+        if (id == ITEM_RECIPE_BOOK) {
             ItemStack heldItem = player.getHeldItem();
             if (heldItem != null) {
                 switch (heldItem.getItemDamage()) {
@@ -43,28 +43,36 @@ public class GuiHandler implements IGuiHandler {
             TileEntity tileEntity = world.getTileEntity(x, y, z);
             switch (id) {
                 case COOKING_TABLE:
-                    if (world.getBlock(x, y, z) == CookingForBlockheads.blockCookingTable && tileEntity instanceof TileCookingTable) {
+                    if (world.getBlock(x, y, z) == CookingForBlockheads.blockCookingTable
+                            && tileEntity instanceof TileCookingTable) {
                         if (((TileCookingTable) tileEntity).hasNoFilterBook()) {
-                            return new ContainerRecipeBook(player, false).allowCrafting().allowSmelting().setNoFilter().setKitchenMultiBlock(new KitchenMultiBlock(world, x, y, z));
+                            return new ContainerRecipeBook(player, false)
+                                    .allowCrafting()
+                                    .allowSmelting()
+                                    .setNoFilter()
+                                    .setKitchenMultiBlock(new KitchenMultiBlock(world, x, y, z));
                         } else {
-                            return new ContainerRecipeBook(player, false).allowCrafting().allowSmelting().setKitchenMultiBlock(new KitchenMultiBlock(world, x, y, z));
+                            return new ContainerRecipeBook(player, false)
+                                    .allowCrafting()
+                                    .allowSmelting()
+                                    .setKitchenMultiBlock(new KitchenMultiBlock(world, x, y, z));
                         }
                     }
                     break;
                 case COOKING_OVEN:
                     if (tileEntity instanceof TileOven) {
-                        return new ContainerCookingOven(player.inventory, (TileOven)tileEntity);
+                        return new ContainerCookingOven(player.inventory, (TileOven) tileEntity);
                     }
                     break;
                 case FRIDGE:
                     if (tileEntity instanceof TileFridge) {
                         ((TileFridge) tileEntity).updateMultiblock();
-                        return new ContainerFridge(player.inventory, ((TileFridge)tileEntity).getInventory());
+                        return new ContainerFridge(player.inventory, ((TileFridge) tileEntity).getInventory());
                     }
                     break;
                 case COUNTER:
                     if (tileEntity instanceof TileCounter) {
-                        return new ContainerCounter(player.inventory, ((TileCounter)tileEntity).getInventory());
+                        return new ContainerCounter(player.inventory, ((TileCounter) tileEntity).getInventory());
                     }
             }
         }
@@ -73,7 +81,7 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        if(ID == ITEM_RECIPE_BOOK) {
+        if (ID == ITEM_RECIPE_BOOK) {
             ItemStack heldItem = player.getHeldItem();
             if (heldItem != null) {
                 switch (heldItem.getItemDamage()) {
@@ -84,28 +92,30 @@ public class GuiHandler implements IGuiHandler {
                         return new GuiRecipeBook(new ContainerRecipeBook(player, true).allowCrafting());
                 }
             }
-        }
-        else {
+        } else {
             TileEntity tileEntity = world.getTileEntity(x, y, z);
             switch (ID) {
                 case COOKING_TABLE:
-                    return new GuiRecipeBook(new ContainerRecipeBook(player, true).allowCrafting().allowSmelting());
+                    return new GuiRecipeBook(new ContainerRecipeBook(player, true)
+                            .allowCrafting()
+                            .allowSmelting());
                 case COOKING_OVEN:
-                    if (tileEntity instanceof  TileOven) {
+                    if (tileEntity instanceof TileOven) {
                         return new GuiCookingOven(player.inventory, (TileOven) tileEntity);
                     }
                 case FRIDGE:
                     if (tileEntity instanceof TileFridge) {
                         ((TileFridge) tileEntity).updateMultiblock();
-                        return new GuiInventory(new ContainerFridge(player.inventory, ((TileFridge)tileEntity).getInventory()));
+                        return new GuiInventory(
+                                new ContainerFridge(player.inventory, ((TileFridge) tileEntity).getInventory()));
                     }
                 case COUNTER:
                     if (tileEntity instanceof TileCounter) {
-                        return new GuiInventory(new ContainerCounter(player.inventory, ((TileCounter)tileEntity).getInventory()));
+                        return new GuiInventory(
+                                new ContainerCounter(player.inventory, ((TileCounter) tileEntity).getInventory()));
                     }
             }
         }
         return null;
     }
-
 }

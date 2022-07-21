@@ -9,10 +9,8 @@ import net.minecraftforge.common.MinecraftForge;
 public class DreamcraftAddon {
 
     private static final String[] DREAMCRAFT_ITEMS = new String[] {
-            "item.EdibleSalt",
-            "item.WetTofu",
+        "item.EdibleSalt", "item.WetTofu",
     };
-
 
     public DreamcraftAddon() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -20,13 +18,11 @@ public class DreamcraftAddon {
 
     @SubscribeEvent
     public void onFoodRegistryInit(FoodRegistryInitEvent event) {
-        for(String s : DREAMCRAFT_ITEMS) {
+        for (String s : DREAMCRAFT_ITEMS) {
             ItemStack itemStack = GameRegistry.findItemStack("dreamcraft", s, 1);
-            if(itemStack != null) {
+            if (itemStack != null) {
                 event.registerNonFoodRecipe(itemStack);
             }
         }
     }
-    
-
 }

@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class ModelCabinet extends ModelBase {
     protected boolean isFlipped;
-    
+
     public ModelRenderer BottomWall;
     public ModelRenderer RightWall;
     public ModelRenderer LeftWall;
@@ -21,8 +21,7 @@ public class ModelCabinet extends ModelBase {
     public ModelRenderer DoorHandle;
     public ModelRenderer DoorHandleFlipped;
 
-    public ModelCabinet()
-    {
+    public ModelCabinet() {
         this.textureWidth = 128;
         this.textureHeight = 128;
         this.Door = new ModelRenderer(this, 0, 47);
@@ -68,15 +67,16 @@ public class ModelCabinet extends ModelBase {
 
     public void renderUncolored() {
         float f5 = 0.0625f;
-        if(isFlipped) {
+        if (isFlipped) {
             this.DoorHandleFlipped.render(f5);
         } else {
             this.DoorHandle.render(f5);
         }
     }
+
     public void renderColored() {
         float f5 = 0.0625f;
-        if(isFlipped) {
+        if (isFlipped) {
             this.DoorFlipped.render(f5);
         } else {
             this.Door.render(f5);
@@ -97,10 +97,7 @@ public class ModelCabinet extends ModelBase {
         this.InnerBoard.render(f5);
     }
 
-
     public void setFlipped(boolean doorFlipped) {
         this.isFlipped = doorFlipped;
     }
-
-
 }

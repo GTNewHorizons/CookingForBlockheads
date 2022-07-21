@@ -80,7 +80,7 @@ public class ModelOven extends ModelBase {
         this.OvenGrid.render(f5);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        if(isBurning) {
+        if (isBurning) {
             this.OvenDoorBurning.render(f5);
         } else {
             this.OvenDoor.render(f5);

@@ -2,6 +2,12 @@ package net.blay09.mods.cookingforblockheads;
 
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.registry.GameRegistry;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenItemProvider;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenSmeltingProvider;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenStorageProvider;
@@ -15,19 +21,11 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 public class KitchenMultiBlock {
 
-    private final static List<Block> blockConnectors = new ArrayList<>();
+    private static final List<Block> blockConnectors = new ArrayList<>();
     public static final Map<String, Class<? extends IMultiblockKitchen>> tileEntityWrappers = new HashMap<>();
     public static final Map<String, Class<? extends IMultiblockKitchen>> blockWrappers = new HashMap<>();
-
 
     private final Set<ChunkPosition> checkedPos = Sets.newHashSet();
     private final List<IKitchenStorageProvider> storageProviderList = new ArrayList<>();
@@ -40,17 +38,17 @@ public class KitchenMultiBlock {
 
     private void findNeighbourKitchenBlocks(World world, int x, int y, int z, boolean extendedUpSearch) {
         List<ChunkPosition> dirToCheck = new ArrayList<>();
-        
+
         for (int i = 0; i <= 5; i++) {
             ForgeDirection dir = ForgeDirection.getOrientation(i);
             final int upSearch = (extendedUpSearch && dir == ForgeDirection.UP) ? 2 : 1;
-            for (int j = 0; j < upSearch ; j++) {
+            for (int j = 0; j < upSearch; j++) {
                 ChunkPosition pos = new ChunkPosition(x + dir.offsetX, y + dir.offsetY + j, z + dir.offsetZ);
                 dirToCheck.add(pos);
             }
         }
-        
-        for(ChunkPosition pos : dirToCheck) {
+
+        for (ChunkPosition pos : dirToCheck) {
             // TODO: Add extended up search for cabinets
             if (checkedPos.add(pos)) {
                 final TileEntity tileEntity = world.getTileEntity(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
@@ -79,7 +77,6 @@ public class KitchenMultiBlock {
                         findNeighbourKitchenBlocks(world, pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ, false);
                     }
                 }
-                
             }
         }
     }
@@ -109,11 +106,10 @@ public class KitchenMultiBlock {
         }
         return itemStack;
     }
-    
+
     public static void registerConnectorBlock(final Block block) {
         blockConnectors.add(block);
     }
-
 
     public boolean hasSmeltingProvider() {
         return smeltingProviderList.size() > 0;
@@ -130,7 +126,10 @@ public class KitchenMultiBlock {
             if (clazz != null) {
                 try {
                     return clazz.getConstructor(Block.class).newInstance(block);
-                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                } catch (InstantiationException
+                        | IllegalAccessException
+                        | NoSuchMethodException
+                        | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
@@ -139,11 +138,15 @@ public class KitchenMultiBlock {
     }
 
     public static IMultiblockKitchen getWrapper(TileEntity tileEntity) {
-        Class<? extends IMultiblockKitchen> clazz = tileEntityWrappers.get(tileEntity.getClass().getName());
+        Class<? extends IMultiblockKitchen> clazz =
+                tileEntityWrappers.get(tileEntity.getClass().getName());
         if (clazz != null) {
             try {
                 return clazz.getConstructor(TileEntity.class).newInstance(tileEntity);
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            } catch (InstantiationException
+                    | IllegalAccessException
+                    | NoSuchMethodException
+                    | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

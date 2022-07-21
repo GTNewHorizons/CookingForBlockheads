@@ -1,8 +1,10 @@
 package net.blay09.mods.cookingforblockheads.tile;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
+import java.util.ArrayList;
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.CookingConfig;
+import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenItemProvider;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -14,9 +16,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TileSink extends TileEntity implements IKitchenItemProvider, IFluidHandler {
     protected int color;
     private final List<ItemStack> itemStacks = new ArrayList<>();
@@ -24,29 +23,27 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
     private final FluidTank waterTank = new WaterTank(16000);
     private int craftingBuffer;
 
-
     public TileSink() {
         itemStacks.add(new ItemStack(Items.water_bucket));
         ItemStack pamsWater = GameRegistry.findItemStack("harvestcraft", "freshwaterItem", 1);
-        if(pamsWater != null) {
+        if (pamsWater != null) {
             itemStacks.add(pamsWater);
         }
     }
-
 
     private static class WaterTank extends FluidTank {
 
         public WaterTank(int capacity) {
             super(capacity);
         }
+
         @Override
         public int fill(FluidStack resource, boolean doFill) {
-            if(resource.getFluid() != FluidRegistry.WATER) {
+            if (resource.getFluid() != FluidRegistry.WATER) {
                 return 0;
             }
             return super.fill(resource, doFill);
         }
-
     }
 
     @Override
@@ -56,10 +53,10 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
 
     @Override
     public boolean addToCraftingBuffer(ItemStack itemStack) {
-        if(!CookingConfig.sinkRequiresWater) {
+        if (!CookingConfig.sinkRequiresWater) {
             return true;
         }
-        if(waterTank.getFluidAmount() < FluidContainerRegistry.BUCKET_VOLUME) {
+        if (waterTank.getFluidAmount() < FluidContainerRegistry.BUCKET_VOLUME) {
             return false;
         }
         craftingBuffer += FluidContainerRegistry.BUCKET_VOLUME;
@@ -68,7 +65,7 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
 
     @Override
     public boolean receiveClientEvent(int id, int value) {
-        if(id == 1) {
+        if (id == 1) {
             waterTank.setFluid(new FluidStack(FluidRegistry.WATER, value));
             return true;
         }
@@ -148,7 +145,7 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        return new FluidTankInfo[] { waterTank.getInfo() };
+        return new FluidTankInfo[] {waterTank.getInfo()};
     }
 
     public void setColor(int color) {

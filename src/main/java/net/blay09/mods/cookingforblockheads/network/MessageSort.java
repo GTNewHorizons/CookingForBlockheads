@@ -23,7 +23,6 @@ public class MessageSort implements IMessage {
         buf.writeByte(sortingId);
     }
 
-
     public int getSortingId() {
         return sortingId;
     }

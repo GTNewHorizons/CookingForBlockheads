@@ -9,19 +9,22 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class StorageDrawersAddon {
     public StorageDrawersAddon() {
-        KitchenMultiBlock.tileEntityWrappers.put("com.jaquadro.minecraft.storagedrawers.block.tile.TileEntityDrawersStandard", DrawerWrapper.class);
+        KitchenMultiBlock.tileEntityWrappers.put(
+                "com.jaquadro.minecraft.storagedrawers.block.tile.TileEntityDrawersStandard", DrawerWrapper.class);
         KitchenMultiBlock.registerConnectorBlock(GameRegistry.findBlock("StorageDrawers", "trim"));
         MinecraftForge.EVENT_BUS.register(this);
     }
+
     public static class DrawerWrapper implements IKitchenStorageProvider {
         TileEntity tile;
+
         public DrawerWrapper(TileEntity tile) {
             this.tile = tile;
         }
+
         @Override
         public IInventory getInventory() {
-            return (IInventory)tile;
+            return (IInventory) tile;
         }
     }
-
 }

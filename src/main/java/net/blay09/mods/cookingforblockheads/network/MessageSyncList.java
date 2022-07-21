@@ -4,12 +4,11 @@ import com.google.common.collect.ArrayListMultimap;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
+import java.util.ArrayList;
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
 import net.blay09.mods.cookingforblockheads.registry.food.recipe.RemoteCraftingFood;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MessageSyncList implements IMessage {
 
@@ -26,11 +25,11 @@ public class MessageSyncList implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         int itemCount = buf.readInt();
-        for(int i = 0; i < itemCount; i++) {
+        for (int i = 0; i < itemCount; i++) {
             ItemStack itemStack = ByteBufUtils.readItemStack(buf);
             List<FoodRecipe> recipeList = availableRecipes.get(itemStack.toString());
             int recipeCount = buf.readInt();
-            for(int j = 0; j < recipeCount; j++) {
+            for (int j = 0; j < recipeCount; j++) {
                 recipeList.add(RemoteCraftingFood.read(buf));
             }
             sortedRecipes.add(itemStack);
@@ -40,14 +39,13 @@ public class MessageSyncList implements IMessage {
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(sortedRecipes.size());
-        for(ItemStack itemStack : sortedRecipes) {
+        for (ItemStack itemStack : sortedRecipes) {
             ByteBufUtils.writeItemStack(buf, itemStack);
             List<FoodRecipe> recipeList = availableRecipes.get(itemStack.toString());
             buf.writeInt(recipeList.size());
-            for(FoodRecipe recipe : recipeList) {
+            for (FoodRecipe recipe : recipeList) {
                 RemoteCraftingFood.write(buf, recipe);
             }
         }
     }
-
 }

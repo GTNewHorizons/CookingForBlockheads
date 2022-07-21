@@ -12,10 +12,15 @@ public class HandlerRecipeInfo implements IMessageHandler<MessageRecipeInfo, IMe
     @Override
     public IMessage onMessage(MessageRecipeInfo message, MessageContext ctx) {
         Container container = FMLClientHandler.instance().getClientPlayerEntity().openContainer;
-        if(container instanceof ContainerRecipeBook) {
-            ((ContainerRecipeBook) container).setSelectedRecipe(message.slotIndex, message.recipe, message.hasVariants, message.isMissingTools, message.canSmelt);
+        if (container instanceof ContainerRecipeBook) {
+            ((ContainerRecipeBook) container)
+                    .setSelectedRecipe(
+                            message.slotIndex,
+                            message.recipe,
+                            message.hasVariants,
+                            message.isMissingTools,
+                            message.canSmelt);
         }
         return null;
     }
-
 }

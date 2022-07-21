@@ -21,7 +21,7 @@ public class InventoryLarge implements IInventory {
 
     @Override
     public ItemStack getStackInSlot(int i) {
-        if(i < lowerInventory.getSizeInventory()) {
+        if (i < lowerInventory.getSizeInventory()) {
             return lowerInventory.getStackInSlot(i);
         } else {
             return upperInventory.getStackInSlot(i - lowerInventory.getSizeInventory());
@@ -30,7 +30,7 @@ public class InventoryLarge implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int i, int amount) {
-        if(i < lowerInventory.getSizeInventory()) {
+        if (i < lowerInventory.getSizeInventory()) {
             return lowerInventory.decrStackSize(i, amount);
         } else {
             return upperInventory.decrStackSize(i - lowerInventory.getSizeInventory(), amount);
@@ -39,7 +39,7 @@ public class InventoryLarge implements IInventory {
 
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
-        if(i < lowerInventory.getSizeInventory()) {
+        if (i < lowerInventory.getSizeInventory()) {
             return lowerInventory.getStackInSlotOnClosing(i);
         } else {
             return upperInventory.getStackInSlotOnClosing(i - lowerInventory.getSizeInventory());
@@ -48,7 +48,7 @@ public class InventoryLarge implements IInventory {
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
-        if(i < lowerInventory.getSizeInventory()) {
+        if (i < lowerInventory.getSizeInventory()) {
             lowerInventory.setInventorySlotContents(i, itemStack);
         } else {
             upperInventory.setInventorySlotContents(i - lowerInventory.getSizeInventory(), itemStack);

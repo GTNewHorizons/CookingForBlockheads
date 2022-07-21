@@ -5,5 +5,4 @@ import net.minecraft.inventory.IInventory;
 public interface IKitchenStorageProvider extends IMultiblockKitchen {
 
     IInventory getInventory();
-
 }

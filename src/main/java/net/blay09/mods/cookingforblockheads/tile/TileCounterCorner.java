@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileCounterCorner extends BaseKitchenTileWithInventory implements IInventory, IKitchenStorageProvider {
     protected static final String name = "countercorner";
+
     public TileCounterCorner() {
         super(name);
     }
@@ -28,5 +29,4 @@ public class TileCounterCorner extends BaseKitchenTileWithInventory implements I
     public boolean receiveClientEvent(int id, int value) {
         return super.receiveClientEvent(id, value);
     }
-
 }

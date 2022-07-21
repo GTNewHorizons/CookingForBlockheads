@@ -2,18 +2,22 @@ package net.blay09.mods.cookingforblockheads.registry.food.recipe;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
-import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
-import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
-import net.minecraft.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
+import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
+import net.minecraft.item.ItemStack;
 
 public class RemoteCraftingFood extends FoodRecipe {
 
     private final boolean isSmeltingRecipe;
 
-    public RemoteCraftingFood(ItemStack outputItem, int recipeWidth, int recipeHeight, List<FoodIngredient> craftMatrix, boolean isSmeltingRecipe) {
+    public RemoteCraftingFood(
+            ItemStack outputItem,
+            int recipeWidth,
+            int recipeHeight,
+            List<FoodIngredient> craftMatrix,
+            boolean isSmeltingRecipe) {
         this.outputItem = outputItem;
         this.recipeWidth = recipeWidth;
         this.recipeHeight = recipeHeight;
@@ -32,7 +36,7 @@ public class RemoteCraftingFood extends FoodRecipe {
         int recipeHeight = buf.readByte();
         int ingredientCount = buf.readShort();
         List<FoodIngredient> craftMatrix = new ArrayList<>(ingredientCount);
-        for(int k = 0; k < ingredientCount; k++) {
+        for (int k = 0; k < ingredientCount; k++) {
             int stackCount = buf.readShort();
             if (stackCount > 0) {
                 ItemStack[] itemStacks = new ItemStack[stackCount];
@@ -54,7 +58,7 @@ public class RemoteCraftingFood extends FoodRecipe {
         buf.writeByte(recipe.getRecipeWidth());
         buf.writeByte(recipe.getRecipeHeight());
         buf.writeShort(recipe.getCraftMatrix().size());
-        for(FoodIngredient ingredient : recipe.getCraftMatrix()) {
+        for (FoodIngredient ingredient : recipe.getCraftMatrix()) {
             if (ingredient != null && ingredient.getItemStacks().length > 0) {
                 buf.writeShort(ingredient.getItemStacks().length);
                 for (ItemStack ingredientStack : ingredient.getItemStacks()) {

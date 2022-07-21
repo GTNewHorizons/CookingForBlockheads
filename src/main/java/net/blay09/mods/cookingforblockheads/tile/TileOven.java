@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.tile;
 
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.CookingConfig;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenSmeltingProvider;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenStorageProvider;
@@ -24,8 +25,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.apache.commons.lang3.ArrayUtils;
 import squeek.applecore.api.AppleCoreAPI;
 
-import java.util.List;
-
 public class TileOven extends TileEntity implements ISidedInventory, IKitchenSmeltingProvider, IKitchenStorageProvider {
 
     public static class OvenInventory implements IInventory {
@@ -42,7 +41,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
         @Override
         public ItemStack getStackInSlot(int i) {
-            if(i >= 3) {
+            if (i >= 3) {
                 return inventory.getStackInSlot(16 + i - 3);
             }
             return inventory.getStackInSlot(i + 4);
@@ -50,7 +49,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
         @Override
         public ItemStack decrStackSize(int i, int amount) {
-            if(i >= 3) {
+            if (i >= 3) {
                 return inventory.decrStackSize(16 + i - 3, amount);
             }
             return inventory.decrStackSize(i + 4, amount);
@@ -58,7 +57,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
         @Override
         public ItemStack getStackInSlotOnClosing(int i) {
-            if(i >= 3) {
+            if (i >= 3) {
                 return inventory.getStackInSlotOnClosing(16 + i - 3);
             }
             return inventory.getStackInSlotOnClosing(i + 4);
@@ -66,7 +65,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
         @Override
         public void setInventorySlotContents(int i, ItemStack itemStack) {
-            if(i >= 3) {
+            if (i >= 3) {
                 inventory.setInventorySlotContents(16 + i - 3, itemStack);
             } else {
                 inventory.setInventorySlotContents(i + 4, itemStack);
@@ -110,7 +109,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
         @Override
         public boolean isItemValidForSlot(int i, ItemStack itemStack) {
-            if(i >= 3) {
+            if (i >= 3) {
                 return inventory.isItemValidForSlot(16 + i - 3, itemStack);
             } else {
                 return inventory.isItemValidForSlot(i + 4, itemStack);
@@ -118,10 +117,10 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
         }
     }
 
-    private static final int[] slotsTop = new int[]{0, 1, 2};
-    private static final int[] slotsSide = new int[]{3};
-    private static final int[] slotsBottom = new int[]{4, 5, 6};
-    private static final int[] slotsCenter = new int[]{7, 8, 9, 10, 11, 12, 13, 14, 15};
+    private static final int[] slotsTop = new int[] {0, 1, 2};
+    private static final int[] slotsSide = new int[] {3};
+    private static final int[] slotsBottom = new int[] {4, 5, 6};
+    private static final int[] slotsCenter = new int[] {7, 8, 9, 10, 11, 12, 13, 14, 15};
     private static final int SLOT_CENTER_OFFSET = 7;
     private static final int COOK_TIME = 200;
 
@@ -143,7 +142,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
         interiorRenderItem = new EntityItem(world, 0, 0, 0);
         interiorRenderItem.hoverStart = 0f;
-        for(int i = 0; i < renderItem.length; i++) {
+        for (int i = 0; i < renderItem.length; i++) {
             renderItem[i] = new EntityItem(world, 0, 0, 0);
             renderItem[i].hoverStart = 0f;
             renderItem[i].setEntityItemStack(inventory[16 + i]);
@@ -220,10 +219,10 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
         inventory[i] = itemStack;
-        if(i >= 16 && i < 20) {
+        if (i >= 16 && i < 20) {
             renderItem[i - 16].setEntityItemStack(itemStack);
         }
-        if(itemStack == null && i >= SLOT_CENTER_OFFSET && i < SLOT_CENTER_OFFSET + 9) {
+        if (itemStack == null && i >= SLOT_CENTER_OFFSET && i < SLOT_CENTER_OFFSET + 9) {
             slotCookTime[i - SLOT_CENTER_OFFSET] = 0;
         }
         markDirty();
@@ -266,7 +265,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
     @Override
     public boolean receiveClientEvent(int id, int value) {
-        if(id == 1) {
+        if (id == 1) {
             numPlayersUsing = value;
             return true;
         }
@@ -298,7 +297,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
         }
 
         prevDoorAngle = doorAngle;
-        if(numPlayersUsing > 0) {
+        if (numPlayersUsing > 0) {
             final float doorSpeed = 0.2f;
             doorAngle = Math.min(1f, doorAngle + doorSpeed);
         } else {
@@ -312,7 +311,8 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
                 for (int j : slotsSide) {
                     if (getStackInSlot(j) != null) {
                         ItemStack fuelItem = getStackInSlot(j);
-                        currentItemBurnTime = furnaceBurnTime = (int) Math.max(1, (float) getItemBurnTime(fuelItem) * CookingConfig.ovenFuelTimeMultiplier);
+                        currentItemBurnTime = furnaceBurnTime = (int)
+                                Math.max(1, (float) getItemBurnTime(fuelItem) * CookingConfig.ovenFuelTimeMultiplier);
                         if (furnaceBurnTime != 0) {
                             fuelItem.stackSize--;
                             if (fuelItem.stackSize == 0) {
@@ -400,7 +400,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
                         break;
                     }
                 }
-                if(getStackInSlot(firstTransferSlot) == null) {
+                if (getStackInSlot(firstTransferSlot) == null) {
                     slotCookTime[firstTransferSlot - SLOT_CENTER_OFFSET] = 0;
                 }
                 hasChanged = true;
@@ -427,15 +427,24 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
     }
 
     private void fixBrokenContainerClosedCall() {
-        // Because Mojang people thought it would be more sane to check chest watchers every few ticks instead of fixing the actual issue.
+        // Because Mojang people thought it would be more sane to check chest watchers every few ticks instead of fixing
+        // the actual issue.
         tickCounter++;
         if (!worldObj.isRemote && numPlayersUsing != 0 && (tickCounter + xCoord + yCoord + zCoord) % 200 == 0) {
             numPlayersUsing = 0;
             float range = 5.0f;
-            List<EntityPlayer> players = (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getBoundingBox((float) xCoord - range, (float) yCoord - range, (float) zCoord - range, (float) xCoord + 1 + range, (float) yCoord + 1 + range, (float) zCoord + 1 + range));
-            for(EntityPlayer entityPlayer : players) {
+            List<EntityPlayer> players = (List<EntityPlayer>) worldObj.getEntitiesWithinAABB(
+                    EntityPlayer.class,
+                    AxisAlignedBB.getBoundingBox(
+                            (float) xCoord - range,
+                            (float) yCoord - range,
+                            (float) zCoord - range,
+                            (float) xCoord + 1 + range,
+                            (float) yCoord + 1 + range,
+                            (float) zCoord + 1 + range));
+            for (EntityPlayer entityPlayer : players) {
                 if (entityPlayer.openContainer instanceof ContainerCookingOven) {
-                    if(((ContainerCookingOven) entityPlayer.openContainer).getTileEntity() == this) {
+                    if (((ContainerCookingOven) entityPlayer.openContainer).getTileEntity() == this) {
                         numPlayersUsing++;
                     }
                 }
@@ -445,7 +454,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
     public static ItemStack getSmeltingResult(ItemStack itemStack) {
         ItemStack result = CookingRegistry.getSmeltingResult(itemStack);
-        if(result != null) {
+        if (result != null) {
             return result;
         }
         return FurnaceRecipes.smelting().getSmeltingResult(itemStack);
@@ -457,7 +466,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
 
     public static int getItemBurnTime(ItemStack fuelItem) {
         int fuelTime = CookingRegistry.getOvenFuelTime(fuelItem);
-        if(fuelTime != 0 || CookingConfig.ovenRequiresCookingOil) {
+        if (fuelTime != 0 || CookingConfig.ovenRequiresCookingOil) {
             return fuelTime;
         }
         return TileEntityFurnace.getItemBurnTime(fuelItem);
@@ -486,7 +495,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
     public void markDirty() {
         super.markDirty();
 
-        if(hasWorldObj()) {
+        if (hasWorldObj()) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
@@ -501,7 +510,7 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
             byte slotId = itemCompound.getByte("Slot");
             if (slotId >= 0 && slotId < inventory.length) {
                 inventory[slotId] = ItemStack.loadItemStackFromNBT(itemCompound);
-                if(slotId >= 16 && slotId < 20 && renderItem[slotId - 16] != null) {
+                if (slotId >= 16 && slotId < 20 && renderItem[slotId - 16] != null) {
                     renderItem[slotId - 16].setEntityItemStack(inventory[slotId]);
                 }
             }
@@ -568,24 +577,24 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
     public ItemStack smeltItem(ItemStack itemStack) {
         int[] inputSlots = getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal());
         int firstEmptySlot = -1;
-        for(int slot : inputSlots) {
+        for (int slot : inputSlots) {
             ItemStack slotStack = getStackInSlot(slot);
-            if(slotStack != null) {
-                if(slotStack.isItemEqual(slotStack)) {
+            if (slotStack != null) {
+                if (slotStack.isItemEqual(slotStack)) {
                     int spaceLeft = Math.min(itemStack.stackSize, slotStack.getMaxStackSize() - slotStack.stackSize);
-                    if(spaceLeft > 0) {
+                    if (spaceLeft > 0) {
                         slotStack.stackSize += spaceLeft;
                         itemStack.stackSize -= spaceLeft;
                     }
                 }
-                if(itemStack.stackSize <= 0) {
+                if (itemStack.stackSize <= 0) {
                     return null;
                 }
-            } else if(firstEmptySlot == -1) {
+            } else if (firstEmptySlot == -1) {
                 firstEmptySlot = slot;
             }
         }
-        if(firstEmptySlot != -1) {
+        if (firstEmptySlot != -1) {
             setInventorySlotContents(firstEmptySlot, itemStack);
             return null;
         }

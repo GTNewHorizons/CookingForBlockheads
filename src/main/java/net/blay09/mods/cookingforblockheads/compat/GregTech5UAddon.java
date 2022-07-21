@@ -6,6 +6,8 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.common.items.GT_MetaGenerated_Tool_01;
+import java.util.ArrayList;
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.api.CookingForBlockheadsAPI;
 import net.blay09.mods.cookingforblockheads.api.event.FoodRegistryInitEvent;
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenItemProvider;
@@ -13,12 +15,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GregTech5UAddon {
 
-    public static abstract class ToolWrapper implements IKitchenItemProvider {
+    public abstract static class ToolWrapper implements IKitchenItemProvider {
 
         protected final List<ItemStack> itemStacks = new ArrayList<>();
 
@@ -57,9 +56,9 @@ public class GregTech5UAddon {
 
     public GregTech5UAddon() {
 
-        for(short meta : META_TOOLS) {
+        for (short meta : META_TOOLS) {
             ItemStack toolItem = GameRegistry.makeItemStack("gregtech:gt.metatool.01", meta, 1, null);
-            if(toolItem != null) {
+            if (toolItem != null) {
                 CookingForBlockheadsAPI.addToolItem(toolItem);
             }
         }
@@ -75,6 +74,4 @@ public class GregTech5UAddon {
             }
         }
     }
-
-
 }

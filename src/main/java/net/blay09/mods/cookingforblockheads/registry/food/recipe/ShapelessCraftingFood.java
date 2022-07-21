@@ -1,12 +1,11 @@
 package net.blay09.mods.cookingforblockheads.registry.food.recipe;
 
+import java.util.ArrayList;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;
-
-import java.util.ArrayList;
 
 public class ShapelessCraftingFood extends FoodRecipe {
 
@@ -24,5 +23,4 @@ public class ShapelessCraftingFood extends FoodRecipe {
             }
         }
     }
-
 }

@@ -3,6 +3,9 @@ package net.blay09.mods.cookingforblockheads.registry;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import net.blay09.mods.cookingforblockheads.api.SinkHandler;
 import net.blay09.mods.cookingforblockheads.api.ToastHandler;
 import net.blay09.mods.cookingforblockheads.api.event.FoodRegistryInitEvent;
@@ -32,10 +35,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import squeek.applecore.api.AppleCoreAPI;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 public class CookingRegistry {
 
     private static final List<IRecipe> recipeList = Lists.newArrayList();
@@ -56,10 +55,10 @@ public class CookingRegistry {
         Collection<ItemStack> nonFoodRecipes = init.getNonFoodRecipes();
 
         // Crafting Recipes of Food Items
-        for(Object obj : CraftingManager.getInstance().getRecipeList()) {
+        for (Object obj : CraftingManager.getInstance().getRecipeList()) {
             IRecipe recipe = (IRecipe) obj;
             ItemStack output = recipe.getRecipeOutput();
-            if(output != null) {
+            if (output != null) {
                 if (AppleCoreAPI.accessor.isFood(output)) {
                     if (HarvestCraftAddon.isWeirdBrokenRecipe(recipe)) {
                         continue;
@@ -77,21 +76,21 @@ public class CookingRegistry {
         }
 
         // Smelting Recipes of Food Items
-        for(Object obj : FurnaceRecipes.smelting().getSmeltingList().entrySet()) {
+        for (Object obj : FurnaceRecipes.smelting().getSmeltingList().entrySet()) {
             Map.Entry entry = (Map.Entry) obj;
             ItemStack sourceStack = null;
-            if(entry.getKey() instanceof Item) {
+            if (entry.getKey() instanceof Item) {
                 sourceStack = new ItemStack((Item) entry.getKey());
-            } else if(entry.getKey() instanceof Block) {
+            } else if (entry.getKey() instanceof Block) {
                 sourceStack = new ItemStack((Block) entry.getKey());
-            } else if(entry.getKey() instanceof ItemStack) {
+            } else if (entry.getKey() instanceof ItemStack) {
                 sourceStack = (ItemStack) entry.getKey();
             }
             ItemStack resultStack = (ItemStack) entry.getValue();
-            if(AppleCoreAPI.accessor.isFood(resultStack)) {
+            if (AppleCoreAPI.accessor.isFood(resultStack)) {
                 foodItems.put(resultStack.getItem(), new SmeltingFood(resultStack, sourceStack));
             } else {
-                for(ItemStack itemStack : nonFoodRecipes) {
+                for (ItemStack itemStack : nonFoodRecipes) {
                     if (areItemStacksEqualWithWildcard(resultStack, itemStack)) {
                         foodItems.put(resultStack.getItem(), new SmeltingFood(resultStack, sourceStack));
                         break;
@@ -103,7 +102,7 @@ public class CookingRegistry {
 
     public static void addFoodRecipe(IRecipe recipe) {
         ItemStack output = recipe.getRecipeOutput();
-        if(output != null) {
+        if (output != null) {
             recipeList.add(recipe);
             if (recipe instanceof ShapedRecipes) {
                 foodItems.put(output.getItem(), new ShapedCraftingFood((ShapedRecipes) recipe));
@@ -117,32 +116,36 @@ public class CookingRegistry {
         }
     }
 
-    public static boolean areIngredientsAvailableFor(List<FoodIngredient> craftMatrix, List<IInventory> inventories, List<IKitchenItemProvider> itemProviders) {
+    public static boolean areIngredientsAvailableFor(
+            List<FoodIngredient> craftMatrix, List<IInventory> inventories, List<IKitchenItemProvider> itemProviders) {
         int[][] usedStackSize = new int[inventories.size()][];
-        for(int i = 0; i < usedStackSize.length; i++) {
+        for (int i = 0; i < usedStackSize.length; i++) {
             usedStackSize[i] = new int[inventories.get(i).getSizeInventory()];
         }
         boolean[] itemFound = new boolean[craftMatrix.size()];
-        matrixLoop:for(int i = 0; i < craftMatrix.size(); i++) {
-            if(craftMatrix.get(i) == null || craftMatrix.get(i).isToolItem()) {
+        matrixLoop:
+        for (int i = 0; i < craftMatrix.size(); i++) {
+            if (craftMatrix.get(i) == null || craftMatrix.get(i).isToolItem()) {
                 itemFound[i] = true;
                 continue;
             }
-            for(IKitchenItemProvider itemProvider : itemProviders) {
+            for (IKitchenItemProvider itemProvider : itemProviders) {
                 itemProvider.clearCraftingBuffer();
-                for(ItemStack providedStack : itemProvider.getProvidedItemStacks()) {
-                    if(craftMatrix.get(i).isValidItem(providedStack)) {
-                        if(itemProvider.addToCraftingBuffer(providedStack)) {
+                for (ItemStack providedStack : itemProvider.getProvidedItemStacks()) {
+                    if (craftMatrix.get(i).isValidItem(providedStack)) {
+                        if (itemProvider.addToCraftingBuffer(providedStack)) {
                             itemFound[i] = true;
                             continue matrixLoop;
                         }
                     }
                 }
             }
-            for(int j = 0; j < inventories.size(); j++) {
+            for (int j = 0; j < inventories.size(); j++) {
                 for (int k = 0; k < inventories.get(j).getSizeInventory(); k++) {
                     ItemStack itemStack = inventories.get(j).getStackInSlot(k);
-                    if (itemStack != null && craftMatrix.get(i).isValidItem(itemStack) && itemStack.stackSize - usedStackSize[j][k] > 0) {
+                    if (itemStack != null
+                            && craftMatrix.get(i).isValidItem(itemStack)
+                            && itemStack.stackSize - usedStackSize[j][k] > 0) {
                         usedStackSize[j][k]++;
                         itemFound[i] = true;
                         continue matrixLoop;
@@ -150,8 +153,8 @@ public class CookingRegistry {
                 }
             }
         }
-        for(int i = 0; i < itemFound.length; i++) {
-            if(!itemFound[i]) {
+        for (int i = 0; i < itemFound.length; i++) {
+            if (!itemFound[i]) {
                 return false;
             }
         }
@@ -159,8 +162,8 @@ public class CookingRegistry {
     }
 
     public static IRecipe findMatchingFoodRecipe(InventoryCraftBook craftBook, World worldObj) {
-        for(IRecipe recipe : recipeList) {
-            if(recipe.matches(craftBook, worldObj)) {
+        for (IRecipe recipe : recipeList) {
+            if (recipe.matches(craftBook, worldObj)) {
                 return recipe;
             }
         }
@@ -176,11 +179,11 @@ public class CookingRegistry {
     }
 
     public static boolean isToolItem(ItemStack itemStack) {
-        if(itemStack == null) {
+        if (itemStack == null) {
             return false;
         }
-        for(ItemStack toolItem : tools) {
-            if(areItemStacksEqualWithWildcard(toolItem, itemStack)) {
+        for (ItemStack toolItem : tools) {
+            if (areItemStacksEqualWithWildcard(toolItem, itemStack)) {
                 return true;
             }
         }
@@ -192,8 +195,8 @@ public class CookingRegistry {
     }
 
     public static int getOvenFuelTime(ItemStack itemStack) {
-        for(Map.Entry<ItemStack, Integer> entry : ovenFuelItems.entrySet()) {
-            if(areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
+        for (Map.Entry<ItemStack, Integer> entry : ovenFuelItems.entrySet()) {
+            if (areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
                 return entry.getValue();
             }
         }
@@ -205,8 +208,8 @@ public class CookingRegistry {
     }
 
     public static ItemStack getSmeltingResult(ItemStack itemStack) {
-        for(Map.Entry<ItemStack, ItemStack> entry : ovenRecipes.entrySet()) {
-            if(areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
+        for (Map.Entry<ItemStack, ItemStack> entry : ovenRecipes.entrySet()) {
+            if (areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
                 return entry.getValue();
             }
         }
@@ -222,8 +225,8 @@ public class CookingRegistry {
     }
 
     public static ItemStack getSinkOutput(ItemStack itemStack) {
-        for(Map.Entry<ItemStack, SinkHandler> entry : sinkHandlers.entrySet()) {
-            if(areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
+        for (Map.Entry<ItemStack, SinkHandler> entry : sinkHandlers.entrySet()) {
+            if (areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
                 return entry.getValue().getSinkOutput(itemStack);
             }
         }
@@ -231,8 +234,8 @@ public class CookingRegistry {
     }
 
     public static ItemStack getToastOutput(ItemStack itemStack) {
-        for(Map.Entry<ItemStack, ToastHandler> entry : toastHandlers.entrySet()) {
-            if(areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
+        for (Map.Entry<ItemStack, ToastHandler> entry : toastHandlers.entrySet()) {
+            if (areItemStacksEqualWithWildcard(entry.getKey(), itemStack)) {
                 return entry.getValue().getToasterOutput(itemStack);
             }
         }
@@ -240,10 +243,12 @@ public class CookingRegistry {
     }
 
     public static boolean areItemStacksEqualWithWildcard(ItemStack first, ItemStack second) {
-        if(first == null || second == null) {
+        if (first == null || second == null) {
             return false;
         }
-        return first.getItem() == second.getItem() && (first.getItemDamage() == second.getItemDamage() || first.getItemDamage() == OreDictionary.WILDCARD_VALUE || second.getItemDamage() == OreDictionary.WILDCARD_VALUE);
+        return first.getItem() == second.getItem()
+                && (first.getItemDamage() == second.getItemDamage()
+                        || first.getItemDamage() == OreDictionary.WILDCARD_VALUE
+                        || second.getItemDamage() == OreDictionary.WILDCARD_VALUE);
     }
-
 }

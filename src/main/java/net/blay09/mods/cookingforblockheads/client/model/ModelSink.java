@@ -22,8 +22,7 @@ public class ModelSink extends ModelBase {
     public ModelRenderer FaucetBase;
     public ModelRenderer FaucetEnd;
 
-    public ModelSink()
-    {
+    public ModelSink() {
         this.textureWidth = 128;
         this.textureHeight = 64;
         this.MetalMiddle = new ModelRenderer(this, 34, 4);
@@ -86,8 +85,8 @@ public class ModelSink extends ModelBase {
         TopLeft.render(f5);
         TopBack.render(f5);
         TopRight.render(f5);
-
     }
+
     public void renderColored() {
         float f5 = 0.0625f;
         Backsplash.render(f5);
@@ -100,5 +99,4 @@ public class ModelSink extends ModelBase {
         WallBack.render(f5);
         WallFront.render(f5);
     }
- 
 }

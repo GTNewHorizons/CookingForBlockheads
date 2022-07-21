@@ -1,7 +1,7 @@
 package net.blay09.mods.cookingforblockheads.client;
 
-import net.blay09.mods.cookingforblockheads.tile.TileOven;
 import net.blay09.mods.cookingforblockheads.container.ContainerCookingOven;
+import net.blay09.mods.cookingforblockheads.tile.TileOven;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -10,7 +10,8 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiCookingOven extends GuiContainer {
 
-    private static final ResourceLocation texture = new ResourceLocation("cookingforblockheads", "textures/gui/oven.png");
+    private static final ResourceLocation texture =
+            new ResourceLocation("cookingforblockheads", "textures/gui/oven.png");
     private TileOven tileEntity;
 
     public GuiCookingOven(InventoryPlayer playerInventory, TileOven tileEntity) {
@@ -23,7 +24,8 @@ public class GuiCookingOven extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String s = I18n.format(tileEntity.getInventoryName());
-        this.fontRendererObj.drawString(s, (this.xSize + 22) / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+        this.fontRendererObj.drawString(
+                s, (this.xSize + 22) / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
         this.fontRendererObj.drawString(I18n.format("container.inventory"), 8 + 22, this.ySize - 96 + 2, 4210752);
     }
 
@@ -35,7 +37,7 @@ public class GuiCookingOven extends GuiContainer {
         drawTexturedModalRect(guiLeft + 22, guiTop, 0, 0, xSize - 22, ySize);
         drawTexturedModalRect(guiLeft, guiTop + 10, 176, 30, 25, 87);
 
-        if(tileEntity.isBurning()) {
+        if (tileEntity.isBurning()) {
             int burnTime = (int) (12 * tileEntity.getBurnTimeProgress());
             drawTexturedModalRect(guiLeft + 22 + 40, guiTop + 43 + 12 - burnTime, 176, 12 - burnTime, 14, burnTime + 1);
         }

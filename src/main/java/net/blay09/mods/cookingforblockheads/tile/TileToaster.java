@@ -18,7 +18,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class TileToaster extends TileEntity implements IInventory, IKitchenStorageProvider {
 
-//    private static final int TOAST_TICKS = 60 * 20;
+    //    private static final int TOAST_TICKS = 60 * 20;
     private static final int TOAST_TICKS = 60;
     private ItemStack[] inventory = new ItemStack[2];
     private EntityItem[] renderItems = new EntityItem[2];
@@ -29,7 +29,7 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
     public void setWorldObj(World world) {
         super.setWorldObj(world);
 
-        for(int i = 0; i < renderItems.length; i++) {
+        for (int i = 0; i < renderItems.length; i++) {
             renderItems[i] = new EntityItem(worldObj, 0, 0, 0);
             renderItems[i].hoverStart = 0f;
             renderItems[i].setEntityItemStack(inventory[i]);
@@ -48,7 +48,7 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
 
     @Override
     public ItemStack decrStackSize(int i, int count) {
-        if(inventory[i] != null) {
+        if (inventory[i] != null) {
             ItemStack itemStack;
             if (inventory[i].stackSize <= count) {
                 itemStack = inventory[i];
@@ -82,7 +82,7 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
         inventory[i] = itemStack;
-        if(renderItems[i] != null) {
+        if (renderItems[i] != null) {
             renderItems[i].setEntityItemStack(itemStack);
         }
         markDirty();
@@ -109,12 +109,10 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
     }
 
     @Override
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
@@ -125,7 +123,7 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
     public void markDirty() {
         super.markDirty();
 
-        if(hasWorldObj()) {
+        if (hasWorldObj()) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
@@ -136,7 +134,7 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
 
         inventory = new ItemStack[getSizeInventory()];
         NBTTagList tagList = tagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
-        for(int i = 0; i < tagList.tagCount(); i++) {
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound itemCompound = tagList.getCompoundTagAt(i);
             setInventorySlotContents(itemCompound.getByte("Slot"), ItemStack.loadItemStackFromNBT(itemCompound));
         }
@@ -147,8 +145,8 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
         super.writeToNBT(tagCompound);
 
         NBTTagList tagList = new NBTTagList();
-        for(int i = 0; i < inventory.length; i++) {
-            if(inventory[i] != null) {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
                 NBTTagCompound itemCompound = new NBTTagCompound();
                 itemCompound.setByte("Slot", (byte) i);
                 inventory[i].writeToNBT(itemCompound);
@@ -173,18 +171,19 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
 
     @Override
     public void updateEntity() {
-        if(active) {
+        if (active) {
             toastTicks--;
-            if(toastTicks <= 0) {
-                for(int i = 0; i < getSizeInventory(); i++) {
+            if (toastTicks <= 0) {
+                for (int i = 0; i < getSizeInventory(); i++) {
                     ItemStack inputStack = getStackInSlot(i);
-                    if(inputStack != null) {
+                    if (inputStack != null) {
                         ItemStack outputStack = CookingRegistry.getToastOutput(inputStack);
                         if (outputStack == null) {
                             outputStack = inputStack;
                         }
                         if (!worldObj.isRemote) {
-                            EntityItem entityItem = new EntityItem(worldObj, xCoord + 0.5f, yCoord + 0.75f, zCoord + 0.5f, outputStack);
+                            EntityItem entityItem =
+                                    new EntityItem(worldObj, xCoord + 0.5f, yCoord + 0.75f, zCoord + 0.5f, outputStack);
                             entityItem.motionX = 0f;
                             entityItem.motionY = 0.1f;
                             entityItem.motionZ = 0f;
@@ -214,7 +213,7 @@ public class TileToaster extends TileEntity implements IInventory, IKitchenStora
 
     public void setActive(boolean active) {
         this.active = active;
-        if(active) {
+        if (active) {
             toastTicks = TOAST_TICKS;
         } else {
             toastTicks = 0;

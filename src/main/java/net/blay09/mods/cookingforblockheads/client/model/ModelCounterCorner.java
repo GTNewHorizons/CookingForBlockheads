@@ -1,4 +1,4 @@
-package net.blay09.mods.cookingforblockheads.client.model;// Cubik Studio 2.9.482 Beta JAVA exporter
+package net.blay09.mods.cookingforblockheads.client.model; // Cubik Studio 2.9.482 Beta JAVA exporter
 // Designed by Blay09 with Cubik Studio - https://cubik.studio
 
 import net.minecraft.client.model.ModelBase;
@@ -7,15 +7,14 @@ import org.lwjgl.opengl.GL11;
 
 public class ModelCounterCorner extends ModelBase {
 
-    //fields
+    // fields
     public ModelRenderer BackSplash;
     public ModelRenderer Top;
     public ModelRenderer Base;
     public ModelRenderer BackSplashTwo;
     public ModelRenderer WallFront;
 
-    public ModelCounterCorner()
-    {
+    public ModelCounterCorner() {
         textureWidth = 64;
         textureHeight = 128;
 
@@ -34,10 +33,8 @@ public class ModelCounterCorner extends ModelBase {
         this.Top = new ModelRenderer(this, 0, 82);
         this.Top.setRotationPoint(-7.5F, 9.0F, -8.0F);
         this.Top.addBox(0.0F, 0.0F, 0.0F, 16, 1, 16, 0.0F);
-
     }
 
-   
     public void renderUncolored() {
         float f5 = 0.0625f;
 
@@ -54,23 +51,34 @@ public class ModelCounterCorner extends ModelBase {
         // Backsplash
         GL11.glPushMatrix();
         GL11.glTranslatef(this.BackSplash.offsetX, this.BackSplash.offsetY, this.BackSplash.offsetZ);
-        GL11.glTranslatef(this.BackSplash.rotationPointX * f5, this.BackSplash.rotationPointY * f5, this.BackSplash.rotationPointZ * f5);
+        GL11.glTranslatef(
+                this.BackSplash.rotationPointX * f5,
+                this.BackSplash.rotationPointY * f5,
+                this.BackSplash.rotationPointZ * f5);
         GL11.glScaled(0.96875D, 1.0D, 1.0D);
         GL11.glTranslatef(-this.BackSplash.offsetX, -this.BackSplash.offsetY, -this.BackSplash.offsetZ);
-        GL11.glTranslatef(-this.BackSplash.rotationPointX * f5, -this.BackSplash.rotationPointY * f5, -this.BackSplash.rotationPointZ * f5);
+        GL11.glTranslatef(
+                -this.BackSplash.rotationPointX * f5,
+                -this.BackSplash.rotationPointY * f5,
+                -this.BackSplash.rotationPointZ * f5);
         this.BackSplash.render(f5);
         GL11.glPopMatrix();
 
         // Backsplash2
         GL11.glPushMatrix();
         GL11.glTranslatef(this.BackSplashTwo.offsetX, this.BackSplashTwo.offsetY, this.BackSplashTwo.offsetZ);
-        GL11.glTranslatef(this.BackSplashTwo.rotationPointX * f5, this.BackSplashTwo.rotationPointY * f5, this.BackSplashTwo.rotationPointZ * f5);
+        GL11.glTranslatef(
+                this.BackSplashTwo.rotationPointX * f5,
+                this.BackSplashTwo.rotationPointY * f5,
+                this.BackSplashTwo.rotationPointZ * f5);
         GL11.glScaled(1.0D, 1.0D, 0.96875D);
         GL11.glTranslatef(-this.BackSplashTwo.offsetX, -this.BackSplashTwo.offsetY, -this.BackSplashTwo.offsetZ);
-        GL11.glTranslatef(-this.BackSplashTwo.rotationPointX * f5, -this.BackSplashTwo.rotationPointY * f5, -this.BackSplashTwo.rotationPointZ * f5);
+        GL11.glTranslatef(
+                -this.BackSplashTwo.rotationPointX * f5,
+                -this.BackSplashTwo.rotationPointY * f5,
+                -this.BackSplashTwo.rotationPointZ * f5);
         this.BackSplashTwo.render(f5);
         GL11.glPopMatrix();
-        
     }
 
     public void renderColored() {
@@ -82,21 +90,25 @@ public class ModelCounterCorner extends ModelBase {
         GL11.glTranslatef(this.Base.rotationPointX * f5, this.Base.rotationPointY * f5, this.Base.rotationPointZ * f5);
         GL11.glScaled(0.96875D, 1.0D, 0.96875D);
         GL11.glTranslatef(-this.Base.offsetX, -this.Base.offsetY, -this.Base.offsetZ);
-        GL11.glTranslatef(-this.Base.rotationPointX * f5, -this.Base.rotationPointY * f5, -this.Base.rotationPointZ * f5);
+        GL11.glTranslatef(
+                -this.Base.rotationPointX * f5, -this.Base.rotationPointY * f5, -this.Base.rotationPointZ * f5);
         this.Base.render(f5);
         GL11.glPopMatrix();
 
         // WallFront
         GL11.glPushMatrix();
         GL11.glTranslatef(this.WallFront.offsetX, this.WallFront.offsetY, this.WallFront.offsetZ);
-        GL11.glTranslatef(this.WallFront.rotationPointX * f5, this.WallFront.rotationPointY * f5, this.WallFront.rotationPointZ * f5);
+        GL11.glTranslatef(
+                this.WallFront.rotationPointX * f5,
+                this.WallFront.rotationPointY * f5,
+                this.WallFront.rotationPointZ * f5);
         GL11.glScaled(0.96875D, 1.0D, 1.0D);
         GL11.glTranslatef(-this.WallFront.offsetX, -this.WallFront.offsetY, -this.WallFront.offsetZ);
-        GL11.glTranslatef(-this.WallFront.rotationPointX * f5, -this.WallFront.rotationPointY * f5, -this.WallFront.rotationPointZ * f5);
+        GL11.glTranslatef(
+                -this.WallFront.rotationPointX * f5,
+                -this.WallFront.rotationPointY * f5,
+                -this.WallFront.rotationPointZ * f5);
         this.WallFront.render(f5);
         GL11.glPopMatrix();
-
-
-
     }
 }

@@ -7,7 +7,8 @@ import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 
 public class NetworkHandler {
 
-    public static final SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(CookingForBlockheads.MOD_ID);
+    public static final SimpleNetworkWrapper instance =
+            NetworkRegistry.INSTANCE.newSimpleChannel(CookingForBlockheads.MOD_ID);
 
     public static void init() {
         instance.registerMessage(HandlerSort.class, MessageSort.class, 0, Side.SERVER);
@@ -18,5 +19,4 @@ public class NetworkHandler {
         instance.registerMessage(HandlerSearch.class, MessageSearch.class, 5, Side.SERVER);
         instance.registerMessage(HandlerTileEntity.class, MessageTileEntity.class, 6, Side.CLIENT);
     }
-
 }

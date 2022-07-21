@@ -17,5 +17,4 @@ public class SlotOvenInput extends Slot {
         ItemStack smeltingResult = TileOven.getSmeltingResult(stack);
         return smeltingResult != null && AppleCoreAPI.accessor.isFood(smeltingResult);
     }
-
 }

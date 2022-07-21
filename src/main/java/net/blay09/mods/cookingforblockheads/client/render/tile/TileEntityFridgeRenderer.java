@@ -2,9 +2,9 @@ package net.blay09.mods.cookingforblockheads.client.render.tile;
 
 import net.blay09.mods.cookingforblockheads.CookingConfig;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
+import net.blay09.mods.cookingforblockheads.client.model.ModelBaseFridge;
 import net.blay09.mods.cookingforblockheads.client.model.ModelFridge;
 import net.blay09.mods.cookingforblockheads.client.model.ModelSmallFridge;
-import net.blay09.mods.cookingforblockheads.client.model.ModelBaseFridge;
 import net.blay09.mods.cookingforblockheads.client.render.RenderUtils;
 import net.blay09.mods.cookingforblockheads.tile.TileFridge;
 import net.minecraft.block.Block;
@@ -19,12 +19,13 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntityFridgeRenderer extends TileEntityRendererBase {
 
-    private static final ResourceLocation textureSmall = new ResourceLocation("cookingforblockheads", "textures/entity/ModelSmallFridge.png");
-    private static final ResourceLocation textureBig = new ResourceLocation("cookingforblockheads", "textures/entity/ModelFridge.png");
+    private static final ResourceLocation textureSmall =
+            new ResourceLocation("cookingforblockheads", "textures/entity/ModelSmallFridge.png");
+    private static final ResourceLocation textureBig =
+            new ResourceLocation("cookingforblockheads", "textures/entity/ModelFridge.png");
 
     private ModelFridge modelBig = new ModelFridge();
     private ModelSmallFridge modelSmall = new ModelSmallFridge();
-
 
     @Override
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float delta) {
@@ -33,21 +34,23 @@ public class TileEntityFridgeRenderer extends TileEntityRendererBase {
         TileFridge tileFridge = (TileFridge) tileEntity;
         final boolean isDoorFlipped = tileFridge.isFlipped();
         final int dye = tileFridge.getColor();
-        if(tileEntity.hasWorldObj()) {
+        if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
-            final Block above = tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord + 1, tileEntity.zCoord);
-            if(above == CookingForBlockheads.blockFridge) {
+            final Block above =
+                    tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord + 1, tileEntity.zCoord);
+            if (above == CookingForBlockheads.blockFridge) {
                 isLargeFridge = true;
             }
-            final Block below = tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord - 1, tileEntity.zCoord);
-            if(below == CookingForBlockheads.blockFridge) {
+            final Block below =
+                    tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord - 1, tileEntity.zCoord);
+            if (below == CookingForBlockheads.blockFridge) {
                 return;
             }
         }
 
         GL11.glPushMatrix();
         boolean oldRescaleNormal = GL11.glIsEnabled(GL12.GL_RESCALE_NORMAL);
-        if(oldRescaleNormal) {
+        if (oldRescaleNormal) {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glTranslatef((float) x, (float) y + 1f, (float) z);
@@ -56,16 +59,18 @@ public class TileEntityFridgeRenderer extends TileEntityRendererBase {
         GL11.glColor4f(1f, 1f, 1f, 1f);
         GL11.glRotatef(angle, 0f, 1f, 0f);
         GL11.glRotatef(180f, 0f, 0f, 1f);
-        float doorAngle = tileFridge.getPrevDoorAngle() + (tileFridge.getDoorAngle() - tileFridge.getPrevDoorAngle()) * delta;
+        float doorAngle =
+                tileFridge.getPrevDoorAngle() + (tileFridge.getDoorAngle() - tileFridge.getPrevDoorAngle()) * delta;
         doorAngle = 1.0f - doorAngle;
         doorAngle = 1.0f - doorAngle * doorAngle * doorAngle;
-        
+
         ModelBaseFridge model;
         if (isLargeFridge) {
             model = modelBig;
             TileFridge upperFridge = tileFridge.findNeighbourFridge();
             if (upperFridge != null) {
-                float neighbourDoorAngle = upperFridge.getPrevDoorAngle() + (upperFridge.getDoorAngle() - upperFridge.getPrevDoorAngle()) * delta;
+                float neighbourDoorAngle = upperFridge.getPrevDoorAngle()
+                        + (upperFridge.getDoorAngle() - upperFridge.getPrevDoorAngle()) * delta;
                 if (neighbourDoorAngle > doorAngle) {
                     doorAngle = neighbourDoorAngle;
                 }
@@ -75,28 +80,27 @@ public class TileEntityFridgeRenderer extends TileEntityRendererBase {
         } else {
             model = modelSmall;
             bindTexture(textureSmall);
-
         }
 
         model.setFlipped(isDoorFlipped);
-        if(isDoorFlipped) {
+        if (isDoorFlipped) {
             model.DoorFlipped.rotateAngleY = -(float) ((Math.PI / 2f) * doorAngle);
             model.DoorHandleFlipped.rotateAngleY = -(float) ((Math.PI / 2f) * doorAngle);
         } else {
             model.Door.rotateAngleY = (float) ((Math.PI / 2f) * doorAngle);
             model.DoorHandle.rotateAngleY = (float) ((Math.PI / 2f) * doorAngle);
         }
-        
+
         model.renderUncolored();
         GL11.glColor4f(colorTable[dye][0], colorTable[dye][1], colorTable[dye][2], 1f);
         model.renderColored();
-        
-        if(doorAngle > 0f) {
+
+        if (doorAngle > 0f) {
             GL11.glColor4f(1f, 1f, 1f, 1f);
             model.renderInterior();
             GL11.glRotatef(180f, 0f, 0f, -1f);
             GL11.glScalef(0.5f, 0.5f, 0.5f);
-            if(!CookingConfig.disableItemRender && Minecraft.getMinecraft().gameSettings.fancyGraphics) {
+            if (!CookingConfig.disableItemRender && Minecraft.getMinecraft().gameSettings.fancyGraphics) {
                 RenderItem.renderInFrame = true;
                 for (int i = 0; i < tileFridge.getSizeInventory(); i++) {
                     final ItemStack itemStack = tileFridge.getStackInSlot(i);
@@ -121,29 +125,31 @@ public class TileEntityFridgeRenderer extends TileEntityRendererBase {
                             if (i > tileFridge.getSizeInventory() / 2) {
                                 relSlot -= tileFridge.getSizeInventory() / 2;
                             }
-                            itemX = (relSlot > 8) ? Math.min(4f / 5f, (relSlot - 9) / 5f) : Math.min(8f / 9f, (float) relSlot / 9f);
+                            itemX = (relSlot > 8)
+                                    ? Math.min(4f / 5f, (relSlot - 9) / 5f)
+                                    : Math.min(8f / 9f, (float) relSlot / 9f);
                             itemY = -2f + ((i > tileFridge.getSizeInventory() / 2) ? -0.7f : 0.01f);
                             itemZ = (relSlot > 8) ? -0.8f : -0.1f;
                             partialTickTime = 0f;
                         }
-                         
+
                         if (relSlot % 2 == 0) {
                             itemZ -= 0.1f;
                         }
 
                         tileFridge.getRenderItem().setEntityItemStack(itemStack);
-                        RenderManager.instance.renderEntityWithPosYaw(tileFridge.getRenderItem(), 0.45f - itemX, itemY, 0.5f + itemZ, 0f, partialTickTime);
+                        RenderManager.instance.renderEntityWithPosYaw(
+                                tileFridge.getRenderItem(), 0.45f - itemX, itemY, 0.5f + itemZ, 0f, partialTickTime);
                     }
                 }
                 RenderItem.renderInFrame = false;
             }
         }
 
-        if(!oldRescaleNormal) {
+        if (!oldRescaleNormal) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glPopMatrix();
         GL11.glColor4f(1f, 1f, 1f, 1f);
     }
-
 }

@@ -20,14 +20,14 @@ public class InventoryRecipeBookMatrix implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int i, int stackSize) {
-        if(inventory[i] != null) {
-            if(inventory[i].stackSize <= stackSize) {
+        if (inventory[i] != null) {
+            if (inventory[i].stackSize <= stackSize) {
                 ItemStack itemStack = inventory[i];
                 inventory[i] = null;
                 return itemStack;
             } else {
                 ItemStack itemStack = inventory[i].splitStack(stackSize);
-                if(inventory[i].stackSize == 0) {
+                if (inventory[i].stackSize == 0) {
                     inventory[i] = null;
                 }
                 return itemStack;
@@ -70,18 +70,13 @@ public class InventoryRecipeBookMatrix implements IInventory {
     }
 
     @Override
-    public void openInventory() {
-
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
         return false;
     }
-
 }

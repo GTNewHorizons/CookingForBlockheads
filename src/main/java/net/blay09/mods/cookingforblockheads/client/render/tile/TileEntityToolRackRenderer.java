@@ -13,7 +13,8 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntityToolRackRenderer extends TileEntitySpecialRenderer {
 
-    private static final ResourceLocation texture = new ResourceLocation("cookingforblockheads", "textures/entity/ModelToolRack-texture.png");
+    private static final ResourceLocation texture =
+            new ResourceLocation("cookingforblockheads", "textures/entity/ModelToolRack-texture.png");
 
     private ModelToolRack model = new ModelToolRack();
 
@@ -21,12 +22,12 @@ public class TileEntityToolRackRenderer extends TileEntitySpecialRenderer {
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float delta) {
         TileToolRack tileToolRack = (TileToolRack) tileEntity;
         int metadata = 0;
-        if(tileEntity.hasWorldObj()) {
+        if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
         }
         GL11.glPushMatrix();
         boolean oldRescaleNormal = GL11.glIsEnabled(GL12.GL_RESCALE_NORMAL);
-        if(oldRescaleNormal) {
+        if (oldRescaleNormal) {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glColor4f(1f, 1f, 1f, 1f);
@@ -36,21 +37,20 @@ public class TileEntityToolRackRenderer extends TileEntitySpecialRenderer {
         GL11.glRotatef(angle, 0f, 1f, 0f);
         bindTexture(texture);
         model.renderAll();
-        if(tileToolRack.getStackInSlot(0) != null) {
+        if (tileToolRack.getStackInSlot(0) != null) {
             RenderItem.renderInFrame = true;
             RenderManager.instance.renderEntityWithPosYaw(tileToolRack.getRenderItem(0), 0.25d, 0.3d, 0.4d, 0f, 0f);
             RenderItem.renderInFrame = false;
         }
-        if(tileToolRack.getStackInSlot(1) != null) {
+        if (tileToolRack.getStackInSlot(1) != null) {
             RenderItem.renderInFrame = true;
             RenderManager.instance.renderEntityWithPosYaw(tileToolRack.getRenderItem(1), -0.25d, 0.3d, 0.4d, 0f, 0f);
             RenderItem.renderInFrame = false;
         }
-        if(!oldRescaleNormal) {
+        if (!oldRescaleNormal) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glPopMatrix();
         GL11.glColor4f(1f, 1f, 1f, 1f);
     }
-
 }

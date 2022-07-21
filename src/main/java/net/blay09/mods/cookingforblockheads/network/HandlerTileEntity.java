@@ -10,9 +10,9 @@ public class HandlerTileEntity implements IMessageHandler<MessageTileEntity, IMe
 
     @Override
     public IMessage onMessage(MessageTileEntity message, MessageContext ctx) {
-        TileEntity tileEntity = Minecraft.getMinecraft().theWorld.getTileEntity(message.getX(), message.getY(), message.getZ());
+        TileEntity tileEntity =
+                Minecraft.getMinecraft().theWorld.getTileEntity(message.getX(), message.getY(), message.getZ());
         tileEntity.readFromNBT(message.getTagCompound());
         return null;
     }
-
 }

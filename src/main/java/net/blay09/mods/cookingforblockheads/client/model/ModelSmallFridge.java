@@ -24,7 +24,6 @@ public class ModelSmallFridge extends ModelBaseFridge {
     public ModelRenderer FrontLeftFoot;
     public ModelRenderer FrontRightFoot;
 
-
     public ModelSmallFridge() {
         this.textureWidth = 126;
         this.textureHeight = 43;
@@ -100,7 +99,7 @@ public class ModelSmallFridge extends ModelBaseFridge {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         this.RightWall.render(f5);
         this.Shelf.render(f5);
         this.LeftSeal.render(f5);
@@ -138,7 +137,7 @@ public class ModelSmallFridge extends ModelBaseFridge {
         this.RightSeal.render(f5);
         this.BottomSeal.render(f5);
         this.TopSeal.render(f5);
-        if(isFlipped) {
+        if (isFlipped) {
             this.BottomHingeFlipped.render(f5);
             this.TopHingeFlipped.render(f5);
             this.DoorHandleFlipped.render(f5);
@@ -152,6 +151,4 @@ public class ModelSmallFridge extends ModelBaseFridge {
         this.BackLeftFoot.render(f5);
         this.FrontLeftFoot.render(f5);
     }
-
-    
 }

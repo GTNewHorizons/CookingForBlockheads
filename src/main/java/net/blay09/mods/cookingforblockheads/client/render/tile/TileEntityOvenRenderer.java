@@ -16,7 +16,8 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntityOvenRenderer extends TileEntitySpecialRenderer {
 
-    private static final ResourceLocation texture = new ResourceLocation("cookingforblockheads", "textures/entity/ModelOven.png");
+    private static final ResourceLocation texture =
+            new ResourceLocation("cookingforblockheads", "textures/entity/ModelOven.png");
 
     private ModelOven model = new ModelOven();
 
@@ -24,12 +25,12 @@ public class TileEntityOvenRenderer extends TileEntitySpecialRenderer {
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float delta) {
         TileOven tileEntityOven = (TileOven) tileEntity;
         int metadata = 0;
-        if(tileEntity.hasWorldObj()) {
+        if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
         }
         GL11.glPushMatrix();
         boolean oldRescaleNormal = GL11.glIsEnabled(GL12.GL_RESCALE_NORMAL);
-        if(oldRescaleNormal) {
+        if (oldRescaleNormal) {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glColor4f(1f, 1f, 1f, 1f);
@@ -40,15 +41,16 @@ public class TileEntityOvenRenderer extends TileEntitySpecialRenderer {
         GL11.glRotatef(angle, 0f, 1f, 0f);
         GL11.glRotatef(180f, 0f, 0f, 1f);
         bindTexture(texture);
-        float doorAngle = tileEntityOven.getPrevDoorAngle() + (tileEntityOven.getDoorAngle() - tileEntityOven.getPrevDoorAngle()) * delta;
+        float doorAngle = tileEntityOven.getPrevDoorAngle()
+                + (tileEntityOven.getDoorAngle() - tileEntityOven.getPrevDoorAngle()) * delta;
         doorAngle = 1.0f - doorAngle;
         doorAngle = 1.0f - doorAngle * doorAngle * doorAngle;
         model.OvenDoor.rotateAngleX = (float) ((Math.PI / 2.5f) * doorAngle);
         model.OvenDoorBurning.rotateAngleX = (float) ((Math.PI / 2.5f) * doorAngle);
         model.renderAll(doorAngle <= 0.25f && tileEntityOven.isBurning());
         GL11.glRotatef(180f, 0f, 0f, -1f);
-        if(doorAngle > 0f) {
-            if(!CookingConfig.disableItemRender && Minecraft.getMinecraft().gameSettings.fancyGraphics) {
+        if (doorAngle > 0f) {
+            if (!CookingConfig.disableItemRender && Minecraft.getMinecraft().gameSettings.fancyGraphics) {
                 RenderItem.renderInFrame = true;
                 for (int i = 0; i < 9; i++) {
                     ItemStack itemStack = tileEntityOven.getStackInSlot(i + 7);
@@ -61,7 +63,8 @@ public class TileEntityOvenRenderer extends TileEntitySpecialRenderer {
                         GL11.glTranslatef(itemX - 0.5f, -2.25f, 0.05f + itemZ);
                         GL11.glRotatef(90f, 1f, 0f, 0f);
                         tileEntityOven.getInteriorRenderItem().setEntityItemStack(itemStack);
-                        RenderManager.instance.renderEntityWithPosYaw(tileEntityOven.getInteriorRenderItem(), 0, 0, 0, 0f, 0f);
+                        RenderManager.instance.renderEntityWithPosYaw(
+                                tileEntityOven.getInteriorRenderItem(), 0, 0, 0, 0f, 0f);
                         GL11.glPopMatrix();
                     }
                 }
@@ -109,11 +112,10 @@ public class TileEntityOvenRenderer extends TileEntitySpecialRenderer {
             GL11.glPopMatrix();
             RenderItem.renderInFrame = false;
         }
-        if(!oldRescaleNormal) {
+        if (!oldRescaleNormal) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glPopMatrix();
         GL11.glColor4f(1f, 1f, 1f, 1f);
     }
-
 }

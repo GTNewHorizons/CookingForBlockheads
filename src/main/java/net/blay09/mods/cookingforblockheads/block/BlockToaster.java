@@ -34,8 +34,7 @@ public class BlockToaster extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
@@ -50,8 +49,7 @@ public class BlockToaster extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
     public IIcon getIcon(int side, int metadata) {
@@ -59,18 +57,19 @@ public class BlockToaster extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         TileToaster tileEntity = (TileToaster) world.getTileEntity(x, y, z);
         ItemStack heldItem = player.getHeldItem();
-        if(heldItem == null) {
-//            if(!tileEntity.isActive()) {
-                tileEntity.setActive(!tileEntity.isActive());
-//            }
+        if (heldItem == null) {
+            //            if(!tileEntity.isActive()) {
+            tileEntity.setActive(!tileEntity.isActive());
+            //            }
         } else {
             ItemStack output = CookingRegistry.getToastOutput(heldItem);
-            if(output != null) {
-                for(int i = 0; i < tileEntity.getSizeInventory(); i++) {
-                    if(tileEntity.getStackInSlot(i) == null) {
+            if (output != null) {
+                for (int i = 0; i < tileEntity.getSizeInventory(); i++) {
+                    if (tileEntity.getStackInSlot(i) == null) {
                         tileEntity.setInventorySlotContents(i, heldItem.splitStack(1));
                         return false;
                     }
@@ -102,5 +101,4 @@ public class BlockToaster extends BlockBaseKitchen {
     public TileEntity createNewTileEntity(World world, int metadata) {
         return new TileToaster();
     }
-
 }

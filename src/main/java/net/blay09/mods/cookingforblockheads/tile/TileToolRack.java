@@ -23,7 +23,7 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
     public void setWorldObj(World world) {
         super.setWorldObj(world);
 
-        for(int i = 0; i < renderItems.length; i++) {
+        for (int i = 0; i < renderItems.length; i++) {
             renderItems[i] = new EntityItem(worldObj, 0, 0, 0);
             renderItems[i].hoverStart = 0f;
             renderItems[i].setEntityItemStack(inventory[i]);
@@ -42,7 +42,7 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
 
     @Override
     public ItemStack decrStackSize(int i, int count) {
-        if(inventory[i] != null) {
+        if (inventory[i] != null) {
             ItemStack itemStack;
             if (inventory[i].stackSize <= count) {
                 itemStack = inventory[i];
@@ -76,7 +76,7 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
         inventory[i] = itemStack;
-        if(renderItems[i] != null) {
+        if (renderItems[i] != null) {
             renderItems[i].setEntityItemStack(itemStack);
         }
         markDirty();
@@ -103,12 +103,10 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
     }
 
     @Override
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
@@ -119,7 +117,7 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
     public void markDirty() {
         super.markDirty();
 
-        if(hasWorldObj()) {
+        if (hasWorldObj()) {
             worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         }
     }
@@ -130,7 +128,7 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
 
         inventory = new ItemStack[getSizeInventory()];
         NBTTagList tagList = tagCompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
-        for(int i = 0; i < tagList.tagCount(); i++) {
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound itemCompound = tagList.getCompoundTagAt(i);
             setInventorySlotContents(itemCompound.getByte("Slot"), ItemStack.loadItemStackFromNBT(itemCompound));
         }
@@ -141,8 +139,8 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
         super.writeToNBT(tagCompound);
 
         NBTTagList tagList = new NBTTagList();
-        for(int i = 0; i < inventory.length; i++) {
-            if(inventory[i] != null) {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
                 NBTTagCompound itemCompound = new NBTTagCompound();
                 itemCompound.setByte("Slot", (byte) i);
                 inventory[i].writeToNBT(itemCompound);
@@ -173,5 +171,4 @@ public class TileToolRack extends TileEntity implements IInventory, IKitchenStor
     public IInventory getInventory() {
         return (IInventory) worldObj.getTileEntity(xCoord, yCoord, zCoord);
     }
-
 }

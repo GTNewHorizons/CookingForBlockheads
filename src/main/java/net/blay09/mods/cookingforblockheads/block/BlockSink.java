@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.block;
 
+import java.util.Optional;
 import net.blay09.mods.cookingforblockheads.CookingConfig;
 import net.blay09.mods.cookingforblockheads.client.render.block.SinkBlockRenderer;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
@@ -21,8 +22,6 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.Optional;
-
 public class BlockSink extends BlockBaseKitchen {
 
     public BlockSink() {
@@ -42,8 +41,7 @@ public class BlockSink extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
@@ -58,8 +56,7 @@ public class BlockSink extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
     public IIcon getIcon(int side, int metadata) {
@@ -76,13 +73,13 @@ public class BlockSink extends BlockBaseKitchen {
         return true;
     }
 
-    
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
         TileSink sink = (TileSink) world.getTileEntity(x, y, z);
 
-        if(heldItem != null && DyeUtils.isDye(heldItem)) {
+        if (heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
             if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
                 player.getHeldItem().stackSize--;
@@ -91,15 +88,16 @@ public class BlockSink extends BlockBaseKitchen {
         }
         if (FluidContainerRegistry.isEmptyContainer(player.getHeldItem())) {
             FluidStack fluidStack = null;
-            int amount = FluidContainerRegistry.getContainerCapacity(new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), player.getHeldItem());
-            if(CookingConfig.sinkRequiresWater) {
-                if(sink.getWaterAmount() >= amount) {
+            int amount = FluidContainerRegistry.getContainerCapacity(
+                    new FluidStack(FluidRegistry.WATER, FluidContainerRegistry.BUCKET_VOLUME), player.getHeldItem());
+            if (CookingConfig.sinkRequiresWater) {
+                if (sink.getWaterAmount() >= amount) {
                     fluidStack = sink.drain(ForgeDirection.UNKNOWN, amount, true);
                 }
             } else {
                 fluidStack = new FluidStack(FluidRegistry.WATER, amount);
             }
-            if(fluidStack != null && fluidStack.amount >= amount) {
+            if (fluidStack != null && fluidStack.amount >= amount) {
                 ItemStack filledContainer = FluidContainerRegistry.fillFluidContainer(fluidStack, player.getHeldItem());
                 if (filledContainer != null) {
                     if (player.getHeldItem().stackSize <= 1) {
@@ -113,17 +111,17 @@ public class BlockSink extends BlockBaseKitchen {
                 spawnParticles(world, x, y, z);
             }
             return true;
-        } else if(FluidContainerRegistry.isFilledContainer(player.getHeldItem())) {
+        } else if (FluidContainerRegistry.isFilledContainer(player.getHeldItem())) {
             FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(player.getHeldItem());
-            if(CookingConfig.sinkRequiresWater) {
+            if (CookingConfig.sinkRequiresWater) {
                 sink.fill(ForgeDirection.UNKNOWN, fluidStack, true);
             }
             ItemStack emptyContainer = FluidContainerRegistry.drainFluidContainer(player.getHeldItem());
-            if(emptyContainer != null) {
-                if(player.getHeldItem().stackSize <= 1) {
+            if (emptyContainer != null) {
+                if (player.getHeldItem().stackSize <= 1) {
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, emptyContainer);
                 } else {
-                    if(player.inventory.addItemStackToInventory(emptyContainer)) {
+                    if (player.inventory.addItemStackToInventory(emptyContainer)) {
                         player.getHeldItem().stackSize--;
                     }
                 }
@@ -132,23 +130,23 @@ public class BlockSink extends BlockBaseKitchen {
             return true;
         } else {
             ItemStack resultStack = CookingRegistry.getSinkOutput(player.getHeldItem());
-            if(resultStack != null) {
+            if (resultStack != null) {
                 ItemStack oldItem = player.getHeldItem();
                 NBTTagCompound tagCompound = oldItem.getTagCompound();
                 ItemStack newItem = resultStack.copy();
                 newItem.setTagCompound(tagCompound);
-                if(oldItem.stackSize <= 1) {
+                if (oldItem.stackSize <= 1) {
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, newItem);
                 } else {
-                    if(player.inventory.addItemStackToInventory(newItem)) {
+                    if (player.inventory.addItemStackToInventory(newItem)) {
                         oldItem.stackSize--;
                     }
                 }
                 spawnParticles(world, x, y, z);
                 return true;
             } else {
-                if(CookingConfig.sinkRequiresWater) {
-                    if(sink.getWaterAmount() < FluidContainerRegistry.BUCKET_VOLUME) {
+                if (CookingConfig.sinkRequiresWater) {
+                    if (sink.getWaterAmount() < FluidContainerRegistry.BUCKET_VOLUME) {
                         return false;
                     }
                 }
@@ -162,18 +160,42 @@ public class BlockSink extends BlockBaseKitchen {
         int metadata = world.getBlockMetadata(x, y, z);
         float dripWaterX = 0f;
         float dripWaterZ = 0f;
-        switch(metadata) {
-            case 2: dripWaterZ = 0.25f; dripWaterX = -0.05f; break;
-            case 3: dripWaterX = 0.25f; break;
-            case 4: dripWaterX = 0.25f; dripWaterZ = 0.25f; break;
-            case 5: dripWaterZ = -0.05f; break;
+        switch (metadata) {
+            case 2:
+                dripWaterZ = 0.25f;
+                dripWaterX = -0.05f;
+                break;
+            case 3:
+                dripWaterX = 0.25f;
+                break;
+            case 4:
+                dripWaterX = 0.25f;
+                dripWaterZ = 0.25f;
+                break;
+            case 5:
+                dripWaterZ = -0.05f;
+                break;
         }
         float particleX = (float) x + 0.5f;
         float particleY = (float) y + 1.25f;
         float particleZ = (float) z + 0.5f;
-        world.spawnParticle("dripWater", (double) particleX + dripWaterX, (double) particleY - 0.45f, (double) particleZ + dripWaterZ, 0, 0, 0);
-        for(int i = 0; i < 5; i++) {
-            world.spawnParticle("splash", (double) particleX + Math.random() - 0.5f, (double) particleY + Math.random() - 0.5f, (double) particleZ + Math.random() - 0.5f, 0, 0, 0);
+        world.spawnParticle(
+                "dripWater",
+                (double) particleX + dripWaterX,
+                (double) particleY - 0.45f,
+                (double) particleZ + dripWaterZ,
+                0,
+                0,
+                0);
+        for (int i = 0; i < 5; i++) {
+            world.spawnParticle(
+                    "splash",
+                    (double) particleX + Math.random() - 0.5f,
+                    (double) particleY + Math.random() - 0.5f,
+                    (double) particleZ + Math.random() - 0.5f,
+                    0,
+                    0,
+                    0);
         }
     }
 
@@ -198,5 +220,4 @@ public class BlockSink extends BlockBaseKitchen {
     public TileEntity createNewTileEntity(World world, int metadata) {
         return new TileSink();
     }
-
 }

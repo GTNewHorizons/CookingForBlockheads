@@ -25,18 +25,15 @@ public class BlockCabinet extends BlockCounter {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return true;
     }
 
@@ -59,5 +56,4 @@ public class BlockCabinet extends BlockCounter {
         cabinet.setColor(colour);
         return true;
     }
-
 }

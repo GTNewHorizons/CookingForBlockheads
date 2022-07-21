@@ -15,5 +15,4 @@ public class BlockKitchenFloor extends Block {
         setHardness(5f);
         setResistance(10f);
     }
-
 }

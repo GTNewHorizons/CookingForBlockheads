@@ -23,7 +23,6 @@ public class MessageSwitchRecipe implements IMessage {
         buf.writeByte(direction);
     }
 
-
     public int getDirection() {
         return direction;
     }

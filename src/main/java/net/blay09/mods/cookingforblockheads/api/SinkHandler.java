@@ -5,5 +5,4 @@ import net.minecraft.item.ItemStack;
 public interface SinkHandler {
 
     ItemStack getSinkOutput(ItemStack itemStack);
-
 }

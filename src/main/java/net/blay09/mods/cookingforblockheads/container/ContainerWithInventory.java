@@ -26,14 +26,14 @@ public abstract class ContainerWithInventory extends Container implements IConta
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 31 + i * 18 + playerInventoryStart));
+                addSlotToContainer(
+                        new Slot(inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 31 + i * 18 + playerInventoryStart));
             }
         }
 
         for (int i = 0; i < 9; i++) {
             addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 89 + playerInventoryStart));
         }
-
     }
 
     public IInventory getContainerInventory() {
@@ -63,7 +63,6 @@ public abstract class ContainerWithInventory extends Container implements IConta
         return itemStack;
     }
 
-
     @Override
     public boolean canInteractWith(EntityPlayer player) {
         return true;
@@ -73,5 +72,4 @@ public abstract class ContainerWithInventory extends Container implements IConta
     public boolean isLargeContainer() {
         return numRows > 3;
     }
-
 }

@@ -1,14 +1,13 @@
 package net.blay09.mods.cookingforblockheads.registry.food.recipe;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShapedOreCraftingFood extends FoodRecipe {
 
@@ -26,7 +25,7 @@ public class ShapedOreCraftingFood extends FoodRecipe {
         }
         this.craftMatrix = new ArrayList<>();
 
-        for(Object obj : recipe.getInput()) {
+        for (Object obj : recipe.getInput()) {
             if (obj == null) {
                 craftMatrix.add(null);
                 continue;
@@ -48,5 +47,4 @@ public class ShapedOreCraftingFood extends FoodRecipe {
             }
         }
     }
-
 }

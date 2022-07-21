@@ -31,5 +31,4 @@ public class SlotRecipe extends Slot {
     public boolean func_111238_b() { // canBeHovered
         return enabled;
     }
-
 }

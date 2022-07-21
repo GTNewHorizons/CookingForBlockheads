@@ -1,11 +1,10 @@
 package net.blay09.mods.cookingforblockheads.container.inventory;
 
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-
-import java.util.List;
 
 public class InventoryRecipeBook implements IInventory {
 
@@ -59,14 +58,10 @@ public class InventoryRecipeBook implements IInventory {
     }
 
     @Override
-    public void openInventory() {
-
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
@@ -75,7 +70,7 @@ public class InventoryRecipeBook implements IInventory {
 
     public void setFoodItem(int i, List<FoodRecipe> recipes) {
         this.recipes[i] = recipes;
-        if(recipes != null) {
+        if (recipes != null) {
             outputItem[i] = recipes.get(0).getOutputItem();
         } else {
             outputItem[i] = null;

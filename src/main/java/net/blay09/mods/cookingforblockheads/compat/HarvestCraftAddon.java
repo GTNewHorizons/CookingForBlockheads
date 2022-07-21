@@ -2,6 +2,8 @@ package net.blay09.mods.cookingforblockheads.compat;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.ArrayList;
+import java.util.List;
 import net.blay09.mods.cookingforblockheads.KitchenMultiBlock;
 import net.blay09.mods.cookingforblockheads.api.CookingForBlockheadsAPI;
 import net.blay09.mods.cookingforblockheads.api.ToastHandler;
@@ -18,9 +20,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class HarvestCraftAddon {
 
     public static class OvenWrapper implements IKitchenSmeltingProvider {
@@ -35,24 +34,25 @@ public class HarvestCraftAddon {
         public ItemStack smeltItem(ItemStack itemStack) {
             int[] inputSlots = inventory.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal());
             int firstEmptySlot = -1;
-            for(int slot : inputSlots) {
+            for (int slot : inputSlots) {
                 ItemStack slotStack = inventory.getStackInSlot(slot);
-                if(slotStack != null) {
-                    if(slotStack.isItemEqual(slotStack)) {
-                        int spaceLeft = Math.min(itemStack.stackSize, slotStack.getMaxStackSize() - slotStack.stackSize);
-                        if(spaceLeft > 0) {
+                if (slotStack != null) {
+                    if (slotStack.isItemEqual(slotStack)) {
+                        int spaceLeft =
+                                Math.min(itemStack.stackSize, slotStack.getMaxStackSize() - slotStack.stackSize);
+                        if (spaceLeft > 0) {
                             slotStack.stackSize += spaceLeft;
                             itemStack.stackSize -= spaceLeft;
                         }
                     }
-                    if(itemStack.stackSize <= 0) {
+                    if (itemStack.stackSize <= 0) {
                         return null;
                     }
-                } else if(firstEmptySlot == -1) {
+                } else if (firstEmptySlot == -1) {
                     firstEmptySlot = slot;
                 }
             }
-            if(firstEmptySlot != -1) {
+            if (firstEmptySlot != -1) {
                 inventory.setInventorySlotContents(firstEmptySlot, itemStack);
                 return null;
             }
@@ -60,7 +60,7 @@ public class HarvestCraftAddon {
         }
     }
 
-    public static abstract class ToolWrapper implements IKitchenItemProvider {
+    public abstract static class ToolWrapper implements IKitchenItemProvider {
 
         protected final List<ItemStack> itemStacks = new ArrayList<>();
 
@@ -98,59 +98,59 @@ public class HarvestCraftAddon {
     }
 
     private static final String[] ADDITIONAL_RECIPES = new String[] {
-            "flourItem",
-            "doughItem",
-            "cornmealItem",
-            "freshwaterItem",
-            "pastaItem",
-            "vanillaItem",
-            "butterItem",
-            "heavycreamItem",
-            "saltItem",
-            "freshmilkItem",
-            "mayoItem",
-            "cocoapowderItem",
-            "ketchupItem",
-            "vinegarItem",
-            "mustardItem",
-            "blackpepperItem",
-            "groundcinnamonItem",
-            "groundnutmegItem",
-            "saladdressingItem",
-            "batterItem",
-            "oliveoilItem",
-            "carrotcakeItem",
-            "cheesecakeItem",
-            "cherrycheesecakeItem",
-            "pineappleupsidedowncakeItem",
-            "chocolatesprinklecakeItem",
-            "redvelvetcakeItem",
-            "lamingtonItem",
-            "pavlovaItem",
-            "holidaycakeItem",
-            "pumpkincheesecakeItem",
-//            "toastedsesameseedsItem", // no usage
-            "bubblywaterItem",
-            "currypowderItem",
-            "soysauceItem",
-            "garammasalaItem",
+        "flourItem",
+        "doughItem",
+        "cornmealItem",
+        "freshwaterItem",
+        "pastaItem",
+        "vanillaItem",
+        "butterItem",
+        "heavycreamItem",
+        "saltItem",
+        "freshmilkItem",
+        "mayoItem",
+        "cocoapowderItem",
+        "ketchupItem",
+        "vinegarItem",
+        "mustardItem",
+        "blackpepperItem",
+        "groundcinnamonItem",
+        "groundnutmegItem",
+        "saladdressingItem",
+        "batterItem",
+        "oliveoilItem",
+        "carrotcakeItem",
+        "cheesecakeItem",
+        "cherrycheesecakeItem",
+        "pineappleupsidedowncakeItem",
+        "chocolatesprinklecakeItem",
+        "redvelvetcakeItem",
+        "lamingtonItem",
+        "pavlovaItem",
+        "holidaycakeItem",
+        "pumpkincheesecakeItem",
+        //            "toastedsesameseedsItem", // no usage
+        "bubblywaterItem",
+        "currypowderItem",
+        "soysauceItem",
+        "garammasalaItem",
     };
 
     private static final String[] OVEN_RECIPES = new String[] {
-            "turkeyrawItem", "turkeycookedItem",
-            "rabbitrawItem", "rabbitcookedItem",
-            "venisonrawItem", "venisoncookedItem"
+        "turkeyrawItem", "turkeycookedItem",
+        "rabbitrawItem", "rabbitcookedItem",
+        "venisonrawItem", "venisoncookedItem"
     };
 
     private static final String[] TOOLS = new String[] {
-            "cuttingboardItem",
-            "potItem",
-            "skilletItem",
-            "saucepanItem",
-            "bakewareItem",
-            "mortarandpestleItem",
-            "mixingbowlItem",
-            "juicerItem"
+        "cuttingboardItem",
+        "potItem",
+        "skilletItem",
+        "saucepanItem",
+        "bakewareItem",
+        "mortarandpestleItem",
+        "mixingbowlItem",
+        "juicerItem"
     };
 
     private static final String TOAST_ITEM = "toastItem";
@@ -162,17 +162,17 @@ public class HarvestCraftAddon {
 
         CookingForBlockheadsAPI.addOvenFuel(GameRegistry.findItemStack("harvestcraft", "oliveoilItem", 1), 1600);
 
-        for(int i = 0; i < OVEN_RECIPES.length; i += 2) {
+        for (int i = 0; i < OVEN_RECIPES.length; i += 2) {
             ItemStack source = GameRegistry.findItemStack("harvestcraft", OVEN_RECIPES[i], 1);
             ItemStack result = GameRegistry.findItemStack("harvestcraft", OVEN_RECIPES[i + 1], 1);
-            if(source != null && result != null) {
+            if (source != null && result != null) {
                 CookingForBlockheadsAPI.addOvenRecipe(source, result);
             }
         }
 
-        for(String toolName : TOOLS) {
+        for (String toolName : TOOLS) {
             ItemStack toolItem = GameRegistry.findItemStack("harvestcraft", toolName, 1);
-            if(toolItem != null) {
+            if (toolItem != null) {
                 CookingForBlockheadsAPI.addToolItem(toolItem);
             }
         }
@@ -191,16 +191,16 @@ public class HarvestCraftAddon {
     public void onFoodRegistryInit(FoodRegistryInitEvent event) {
         event.registerNonFoodRecipe(new ItemStack(Items.cake));
         event.registerNonFoodRecipe(new ItemStack(Items.sugar));
-        for(String s : ADDITIONAL_RECIPES) {
+        for (String s : ADDITIONAL_RECIPES) {
             ItemStack itemStack = GameRegistry.findItemStack("harvestcraft", s, 1);
-            if(itemStack != null) {
+            if (itemStack != null) {
                 event.registerNonFoodRecipe(itemStack);
             }
         }
     }
 
     public static boolean isWeirdBrokenRecipe(IRecipe recipe) {
-        if(recipe.getRecipeSize() == 2 && recipe instanceof ShapelessOreRecipe) {
+        if (recipe.getRecipeSize() == 2 && recipe instanceof ShapelessOreRecipe) {
             ShapelessOreRecipe oreRecipe = (ShapelessOreRecipe) recipe;
             Object first = oreRecipe.getInput().get(0);
             Object second = oreRecipe.getInput().get(1);
@@ -222,11 +222,13 @@ public class HarvestCraftAddon {
                     secondItem = (ItemStack) list.get(0);
                 }
             }
-            if (firstItem != null && secondItem != null && ItemStack.areItemStacksEqual(firstItem, secondItem) && oreRecipe.getRecipeOutput().isItemEqual(firstItem)) {
+            if (firstItem != null
+                    && secondItem != null
+                    && ItemStack.areItemStacksEqual(firstItem, secondItem)
+                    && oreRecipe.getRecipeOutput().isItemEqual(firstItem)) {
                 return true;
             }
         }
         return false;
     }
-
 }

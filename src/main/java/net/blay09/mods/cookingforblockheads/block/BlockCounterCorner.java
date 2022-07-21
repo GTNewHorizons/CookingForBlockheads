@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.block;
 
+import java.util.Optional;
 import net.blay09.mods.cookingforblockheads.client.render.block.CounterCornerBlockRenderer;
 import net.blay09.mods.cookingforblockheads.tile.TileCounterCorner;
 import net.blay09.mods.cookingforblockheads.utils.DyeUtils;
@@ -15,8 +16,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.Optional;
 
 public class BlockCounterCorner extends BlockBaseKitchen {
 
@@ -51,20 +50,16 @@ public class BlockCounterCorner extends BlockBaseKitchen {
         }
     }
 
+    @Override
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
-
-    @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return true;
     }
 
@@ -89,10 +84,11 @@ public class BlockCounterCorner extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
 
-        if(heldItem != null && DyeUtils.isDye(heldItem)) {
+        if (heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
             if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
                 player.getHeldItem().stackSize--;

@@ -45,48 +45,48 @@ import net.minecraftforge.common.MinecraftForge;
 @SuppressWarnings("unused")
 public class ClientProxy extends CommonProxy {
 
-	public static final IIcon[] ovenToolIcons = new IIcon[4];
+    public static final IIcon[] ovenToolIcons = new IIcon[4];
 
-	@Override
-	public void init(FMLInitializationEvent event) {
-		super.init(event);
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
 
-		MinecraftForge.EVENT_BUS.register(this);
-		FMLCommonHandler.instance().bus().register(this);
+        MinecraftForge.EVENT_BUS.register(this);
+        FMLCommonHandler.instance().bus().register(this);
 
-		ClientRegistry.bindTileEntitySpecialRenderer(TileFridge.class, new TileEntityFridgeRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCounter.class, new TileEntityCounterRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCounterCorner.class, new TileEntityCounterCornerRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCabinet.class, new TileEntityCabinetRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCabinetCorner.class, new TileEntityCabinetCornerRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileToolRack.class, new TileEntityToolRackRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileOven.class, new TileEntityOvenRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileSink.class, new TileEntitySinkRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCookingTable.class, new TileEntityCookingTableRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileToaster.class, new TileEntityToasterRenderer());
-		
-		RenderingRegistry.registerBlockHandler(FridgeBlockRenderer.RENDER_ID, new FridgeBlockRenderer());
-		RenderingRegistry.registerBlockHandler(CounterBlockRenderer.RENDER_ID, new CounterBlockRenderer());
-		RenderingRegistry.registerBlockHandler(CounterCornerBlockRenderer.RENDER_ID, new CounterCornerBlockRenderer());
-		RenderingRegistry.registerBlockHandler(CabinetBlockRenderer.RENDER_ID, new CabinetBlockRenderer());
-		RenderingRegistry.registerBlockHandler(CabinetCornerBlockRenderer.RENDER_ID, new CabinetCornerBlockRenderer());
-		RenderingRegistry.registerBlockHandler(ToolRackBlockRenderer.RENDER_ID, new ToolRackBlockRenderer());
-		RenderingRegistry.registerBlockHandler(OvenBlockRenderer.RENDER_ID, new OvenBlockRenderer());
-		RenderingRegistry.registerBlockHandler(SinkBlockRenderer.RENDER_ID, new SinkBlockRenderer());
-		RenderingRegistry.registerBlockHandler(CookingTableBlockRenderer.RENDER_ID, new CookingTableBlockRenderer());
-		RenderingRegistry.registerBlockHandler(ToasterBlockRenderer.RENDER_ID, new ToasterBlockRenderer());
-	}
+        ClientRegistry.bindTileEntitySpecialRenderer(TileFridge.class, new TileEntityFridgeRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCounter.class, new TileEntityCounterRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCounterCorner.class, new TileEntityCounterCornerRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCabinet.class, new TileEntityCabinetRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCabinetCorner.class, new TileEntityCabinetCornerRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileToolRack.class, new TileEntityToolRackRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileOven.class, new TileEntityOvenRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSink.class, new TileEntitySinkRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileCookingTable.class, new TileEntityCookingTableRenderer());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileToaster.class, new TileEntityToasterRenderer());
 
-	@SubscribeEvent
-	public void keyInput(InputEvent.KeyInputEvent event) {}
+        RenderingRegistry.registerBlockHandler(FridgeBlockRenderer.RENDER_ID, new FridgeBlockRenderer());
+        RenderingRegistry.registerBlockHandler(CounterBlockRenderer.RENDER_ID, new CounterBlockRenderer());
+        RenderingRegistry.registerBlockHandler(CounterCornerBlockRenderer.RENDER_ID, new CounterCornerBlockRenderer());
+        RenderingRegistry.registerBlockHandler(CabinetBlockRenderer.RENDER_ID, new CabinetBlockRenderer());
+        RenderingRegistry.registerBlockHandler(CabinetCornerBlockRenderer.RENDER_ID, new CabinetCornerBlockRenderer());
+        RenderingRegistry.registerBlockHandler(ToolRackBlockRenderer.RENDER_ID, new ToolRackBlockRenderer());
+        RenderingRegistry.registerBlockHandler(OvenBlockRenderer.RENDER_ID, new OvenBlockRenderer());
+        RenderingRegistry.registerBlockHandler(SinkBlockRenderer.RENDER_ID, new SinkBlockRenderer());
+        RenderingRegistry.registerBlockHandler(CookingTableBlockRenderer.RENDER_ID, new CookingTableBlockRenderer());
+        RenderingRegistry.registerBlockHandler(ToasterBlockRenderer.RENDER_ID, new ToasterBlockRenderer());
+    }
 
-	@SubscribeEvent
-	public void registerIcons(TextureStitchEvent.Pre event) {
-		if(event.map.getTextureType() == 1) {
-			ovenToolIcons[0] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":bakeware");
-			ovenToolIcons[1] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":pot");
-			ovenToolIcons[2] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":saucepan");
-			ovenToolIcons[3] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":skillet");
-		}
-	}
+    @SubscribeEvent
+    public void keyInput(InputEvent.KeyInputEvent event) {}
+
+    @SubscribeEvent
+    public void registerIcons(TextureStitchEvent.Pre event) {
+        if (event.map.getTextureType() == 1) {
+            ovenToolIcons[0] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":bakeware");
+            ovenToolIcons[1] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":pot");
+            ovenToolIcons[2] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":saucepan");
+            ovenToolIcons[3] = event.map.registerIcon(CookingForBlockheads.MOD_ID + ":skillet");
+        }
+    }
 }

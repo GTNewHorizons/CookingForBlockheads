@@ -13,7 +13,8 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
 
-    private static final ResourceLocation texture = new ResourceLocation(CookingForBlockheads.MOD_ID, "textures/entity/ModelToaster.png");
+    private static final ResourceLocation texture =
+            new ResourceLocation(CookingForBlockheads.MOD_ID, "textures/entity/ModelToaster.png");
 
     private ModelToaster model = new ModelToaster();
 
@@ -21,7 +22,7 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float delta) {
         GL11.glPushMatrix();
         int metadata = 0;
-        if(tileEntity.hasWorldObj()) {
+        if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
         } else {
             GL11.glScalef(2f, 2f, 2f);
@@ -29,7 +30,7 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
         }
         TileToaster tileToaster = (TileToaster) tileEntity;
         boolean oldRescaleNormal = GL11.glIsEnabled(GL12.GL_RESCALE_NORMAL);
-        if(oldRescaleNormal) {
+        if (oldRescaleNormal) {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glColor4f(1f, 1f, 1f, 1f);
@@ -42,7 +43,7 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
         model.renderAll();
         GL11.glRotatef(180f, 0f, 0f, 1f);
 
-        if(tileToaster.isActive()) {
+        if (tileToaster.isActive()) {
             model.ToasterButtonThingy.offsetY = 0.17f;
         } else {
             model.ToasterButtonThingy.offsetY = 0;
@@ -52,7 +53,7 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
         GL11.glTranslatef(0.0575f, 0.025f - (tileToaster.isActive() ? 0.08f : 0f), -0.05f);
         GL11.glScalef(0.75f, 0.75f, 0.75f);
         GL11.glRotatef(90f, 0f, 1f, 0f);
-        if(tileToaster.getStackInSlot(0) != null) {
+        if (tileToaster.getStackInSlot(0) != null) {
             RenderManager.instance.renderEntityWithPosYaw(tileToaster.getRenderItem(0), 0d, 0d, 0d, 0f, 0f);
         }
         GL11.glPopMatrix();
@@ -61,15 +62,14 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
         GL11.glTranslatef(-0.0625f, 0.025f - (tileToaster.isActive() ? 0.08f : 0f), -0.05f);
         GL11.glScalef(0.75f, 0.75f, 0.75f);
         GL11.glRotatef(90f, 0f, 1f, 0f);
-        if(tileToaster.getStackInSlot(1) != null) {
+        if (tileToaster.getStackInSlot(1) != null) {
             RenderManager.instance.renderEntityWithPosYaw(tileToaster.getRenderItem(1), 0, 0, 0, 0f, 0f);
         }
         GL11.glPopMatrix();
-        if(!oldRescaleNormal) {
+        if (!oldRescaleNormal) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glPopMatrix();
         GL11.glColor4f(1f, 1f, 1f, 1f);
     }
-
 }

@@ -1,11 +1,10 @@
 package net.blay09.mods.cookingforblockheads.api.event;
 
 import cpw.mods.fml.common.eventhandler.Event;
-import net.minecraft.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import net.minecraft.item.ItemStack;
 
 public class FoodRegistryInitEvent extends Event {
 

@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.block;
 
+import java.util.Optional;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.GuiHandler;
 import net.blay09.mods.cookingforblockheads.client.render.block.FridgeBlockRenderer;
@@ -19,8 +20,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.Optional;
-
 public class BlockFridge extends BlockBaseKitchen {
 
     public BlockFridge() {
@@ -39,8 +38,7 @@ public class BlockFridge extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     protected void findOrientation(World world, int x, int y, int z) {
         if (!world.isRemote) {
@@ -66,14 +64,12 @@ public class BlockFridge extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return false;
     }
 
@@ -94,25 +90,26 @@ public class BlockFridge extends BlockBaseKitchen {
             return false;
         }
         fridge.setColor(colour);
-        if(fridge.findNeighbourFridge() != null) {
+        if (fridge.findNeighbourFridge() != null) {
             fridge.findNeighbourFridge().setColor(colour);
         }
         return true;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
 
-        if(heldItem != null && DyeUtils.isDye(heldItem)) {
+        if (heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
             if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
                 player.getHeldItem().stackSize--;
                 return true;
             }
         }
-        if(!world.isRemote) {
-            if(player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBlockFridge) {
+        if (!world.isRemote) {
+            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBlockFridge) {
                 return false;
             }
             player.openGui(CookingForBlockheads.instance, GuiHandler.FRIDGE, world, x, y, z);
@@ -124,13 +121,13 @@ public class BlockFridge extends BlockBaseKitchen {
     public boolean canPlaceBlockAt(World world, int x, int y, int z) {
         boolean below = world.getBlock(x, y - 1, z) == CookingForBlockheads.blockFridge;
         boolean above = world.getBlock(x, y + 1, z) == CookingForBlockheads.blockFridge;
-        if(below && above) {
+        if (below && above) {
             return false;
         }
-        if(below && world.getBlock(x, y - 2, z) == CookingForBlockheads.blockFridge) {
+        if (below && world.getBlock(x, y - 2, z) == CookingForBlockheads.blockFridge) {
             return false;
         }
-        if(above && world.getBlock(x, y + 2, z) == CookingForBlockheads.blockFridge) {
+        if (above && world.getBlock(x, y + 2, z) == CookingForBlockheads.blockFridge) {
             return false;
         }
         return super.canPlaceBlockAt(world, x, y, z);
@@ -141,6 +138,7 @@ public class BlockFridge extends BlockBaseKitchen {
         super.onBlockAdded(world, x, y, z);
         findOrientation(world, x, y, z);
     }
+
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack itemStack) {
         double blockRotation = (double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D;
@@ -165,7 +163,7 @@ public class BlockFridge extends BlockBaseKitchen {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
         TileFridge tileFridge = (TileFridge) world.getTileEntity(x, y, z);
-        if(tileFridge != null) {
+        if (tileFridge != null) {
             tileFridge.breakBlock();
         }
         super.breakBlock(world, x, y, z, block, metadata);
@@ -174,7 +172,7 @@ public class BlockFridge extends BlockBaseKitchen {
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
         super.onNeighborBlockChange(world, x, y, z, block);
-        if(block == CookingForBlockheads.blockFridge) {
+        if (block == CookingForBlockheads.blockFridge) {
             ((TileFridge) world.getTileEntity(x, y, z)).updateMultiblock();
         }
     }

@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.block;
 
+import java.util.Optional;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.GuiHandler;
 import net.blay09.mods.cookingforblockheads.client.render.block.CounterBlockRenderer;
@@ -18,10 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.Optional;
-
 public class BlockCounter extends BlockBaseKitchen {
-    
 
     public BlockCounter() {
         super(Material.iron);
@@ -37,18 +35,15 @@ public class BlockCounter extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
     @Override
-    public boolean renderAsNormalBlock()
-    {
+    public boolean renderAsNormalBlock() {
         return true;
     }
 
@@ -73,17 +68,18 @@ public class BlockCounter extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack heldItem = player.getHeldItem();
 
-        if(heldItem != null && DyeUtils.isDye(heldItem)) {
+        if (heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
             if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
                 player.getHeldItem().stackSize--;
                 return true;
             }
         }
-        if(!world.isRemote) {
+        if (!world.isRemote) {
             player.openGui(CookingForBlockheads.instance, GuiHandler.COUNTER, world, x, y, z);
         }
         return true;
@@ -99,6 +95,7 @@ public class BlockCounter extends BlockBaseKitchen {
         super.onBlockAdded(world, x, y, z);
         findOrientation(world, x, y, z);
     }
+
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack itemStack) {
         double blockRotation = (double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D;
@@ -123,7 +120,7 @@ public class BlockCounter extends BlockBaseKitchen {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
         TileCounter tileCounter = (TileCounter) world.getTileEntity(x, y, z);
-        if(tileCounter != null) {
+        if (tileCounter != null) {
             tileCounter.breakBlock();
         }
         super.breakBlock(world, x, y, z, block, metadata);

@@ -19,5 +19,4 @@ public class ContainerFridge extends ContainerWithInventory {
         super.onContainerClosed(player);
         inventory.closeInventory();
     }
-
 }

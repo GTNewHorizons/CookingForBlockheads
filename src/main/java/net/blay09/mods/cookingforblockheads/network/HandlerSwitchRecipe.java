@@ -11,14 +11,13 @@ public class HandlerSwitchRecipe implements IMessageHandler<MessageSwitchRecipe,
     @Override
     public IMessage onMessage(MessageSwitchRecipe message, MessageContext ctx) {
         Container container = ctx.getServerHandler().playerEntity.openContainer;
-        if(container instanceof ContainerRecipeBook) {
-            if(message.getDirection() == 1) {
+        if (container instanceof ContainerRecipeBook) {
+            if (message.getDirection() == 1) {
                 ((ContainerRecipeBook) container).nextRecipe();
-            } else if(message.getDirection() == -1) {
+            } else if (message.getDirection() == -1) {
                 ((ContainerRecipeBook) container).prevRecipe();
             }
         }
         return null;
     }
-
 }

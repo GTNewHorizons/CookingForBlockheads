@@ -6,11 +6,11 @@ import net.minecraft.item.ItemStack;
 
 public class InventoryNormal implements IInventory {
     private final String inventoryName;
-    
+
     public InventoryNormal(String inventoryName) {
         this.inventoryName = inventoryName;
     }
-    
+
     private ItemStack[] inventory = new ItemStack[27];
 
     @Override
@@ -25,7 +25,7 @@ public class InventoryNormal implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int i, int count) {
-        if(inventory[i] != null) {
+        if (inventory[i] != null) {
             ItemStack itemStack;
             if (inventory[i].stackSize <= count) {
                 itemStack = inventory[i];

@@ -12,10 +12,9 @@ public class HandlerSyncList implements IMessageHandler<MessageSyncList, IMessag
     @Override
     public IMessage onMessage(MessageSyncList message, MessageContext ctx) {
         Container container = FMLClientHandler.instance().getClientPlayerEntity().openContainer;
-        if(container instanceof ContainerRecipeBook) {
+        if (container instanceof ContainerRecipeBook) {
             ((ContainerRecipeBook) container).setAvailableItems(message.sortedRecipes, message.availableRecipes);
         }
         return null;
     }
-
 }

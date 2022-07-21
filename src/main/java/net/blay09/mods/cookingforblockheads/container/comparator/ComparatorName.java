@@ -1,8 +1,7 @@
 package net.blay09.mods.cookingforblockheads.container.comparator;
 
-import net.minecraft.item.ItemStack;
-
 import java.util.Comparator;
+import net.minecraft.item.ItemStack;
 
 public class ComparatorName implements Comparator<ItemStack> {
 
@@ -12,5 +11,4 @@ public class ComparatorName implements Comparator<ItemStack> {
         String s2 = o2.getDisplayName();
         return s1.compareToIgnoreCase(s2);
     }
-
 }

@@ -15,7 +15,8 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntityCabinetRenderer extends TileEntityRendererBase {
 
-    private static final ResourceLocation textureSmall = new ResourceLocation("cookingforblockheads", "textures/entity/ModelCabinet.png");
+    private static final ResourceLocation textureSmall =
+            new ResourceLocation("cookingforblockheads", "textures/entity/ModelCabinet.png");
 
     private ModelCabinet model = new ModelCabinet();
 
@@ -25,13 +26,13 @@ public class TileEntityCabinetRenderer extends TileEntityRendererBase {
         TileCabinet tileCabinet = (TileCabinet) tileEntity;
         final boolean isDoorFlipped = tileCabinet.isFlipped();
         final int dye = tileCabinet.getColor();
-        if(tileEntity.hasWorldObj()) {
+        if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
         }
 
         GL11.glPushMatrix();
         boolean oldRescaleNormal = GL11.glIsEnabled(GL12.GL_RESCALE_NORMAL);
-        if(oldRescaleNormal) {
+        if (oldRescaleNormal) {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glTranslatef((float) x, (float) y + 1f, (float) z);
@@ -40,31 +41,32 @@ public class TileEntityCabinetRenderer extends TileEntityRendererBase {
         GL11.glColor4f(1f, 1f, 1f, 1f);
         GL11.glRotatef(angle, 0f, 1f, 0f);
         GL11.glRotatef(180f, 0f, 0f, 1f);
-        float doorAngle = tileCabinet.getPrevDoorAngle() + (tileCabinet.getDoorAngle() - tileCabinet.getPrevDoorAngle()) * delta;
+        float doorAngle =
+                tileCabinet.getPrevDoorAngle() + (tileCabinet.getDoorAngle() - tileCabinet.getPrevDoorAngle()) * delta;
         doorAngle = 1.0f - doorAngle;
         doorAngle = 1.0f - doorAngle * doorAngle * doorAngle;
-        
+
         bindTexture(textureSmall);
 
         model.setFlipped(isDoorFlipped);
-        if(isDoorFlipped) {
+        if (isDoorFlipped) {
             model.DoorFlipped.rotateAngleY = -(float) ((Math.PI / 2f) * doorAngle);
             model.DoorHandleFlipped.rotateAngleY = -(float) ((Math.PI / 2f) * doorAngle);
         } else {
             model.Door.rotateAngleY = (float) ((Math.PI / 2f) * doorAngle);
             model.DoorHandle.rotateAngleY = (float) ((Math.PI / 2f) * doorAngle);
         }
-        
+
         model.renderUncolored();
         GL11.glColor4f(colorTable[dye][0], colorTable[dye][1], colorTable[dye][2], 1f);
         model.renderColored();
-        
-        if(doorAngle > 0f) {
+
+        if (doorAngle > 0f) {
             GL11.glColor4f(1f, 1f, 1f, 1f);
             model.renderInterior();
             GL11.glRotatef(180f, 0f, 0f, -1f);
             GL11.glScalef(0.5f, 0.5f, 0.5f);
-            if(!CookingConfig.disableItemRender && Minecraft.getMinecraft().gameSettings.fancyGraphics) {
+            if (!CookingConfig.disableItemRender && Minecraft.getMinecraft().gameSettings.fancyGraphics) {
                 RenderItem.renderInFrame = true;
                 for (int i = 0; i < tileCabinet.getSizeInventory(); i++) {
                     final ItemStack itemStack = tileCabinet.getStackInSlot(i);
@@ -75,28 +77,30 @@ public class TileEntityCabinetRenderer extends TileEntityRendererBase {
                         if (i > tileCabinet.getSizeInventory() / 2) {
                             relSlot -= tileCabinet.getSizeInventory() / 2;
                         }
-                        itemX = (relSlot > 8) ? Math.min(4f / 5f, (relSlot - 9) / 5f) : Math.min(8f / 9f, (float) relSlot / 9f);
+                        itemX = (relSlot > 8)
+                                ? Math.min(4f / 5f, (relSlot - 9) / 5f)
+                                : Math.min(8f / 9f, (float) relSlot / 9f);
                         itemY = -2f + ((i > tileCabinet.getSizeInventory() / 2) ? -0.7f : 0.01f);
                         itemZ = (relSlot > 8) ? -0.8f : -0.1f;
                         partialTickTime = 0f;
-                         
+
                         if (relSlot % 2 == 0) {
                             itemZ -= 0.1f;
                         }
 
                         tileCabinet.getRenderItem().setEntityItemStack(itemStack);
-                        RenderManager.instance.renderEntityWithPosYaw(tileCabinet.getRenderItem(), 0.45f - itemX, itemY, 0.5f + itemZ, 0f, partialTickTime);
+                        RenderManager.instance.renderEntityWithPosYaw(
+                                tileCabinet.getRenderItem(), 0.45f - itemX, itemY, 0.5f + itemZ, 0f, partialTickTime);
                     }
                 }
                 RenderItem.renderInFrame = false;
             }
         }
 
-        if(!oldRescaleNormal) {
+        if (!oldRescaleNormal) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glPopMatrix();
         GL11.glColor4f(1f, 1f, 1f, 1f);
     }
-
 }

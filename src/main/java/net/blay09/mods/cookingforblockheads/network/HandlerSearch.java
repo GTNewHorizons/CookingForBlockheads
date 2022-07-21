@@ -11,10 +11,9 @@ public class HandlerSearch implements IMessageHandler<MessageSearch, IMessage> {
     @Override
     public IMessage onMessage(MessageSearch message, MessageContext ctx) {
         Container container = ctx.getServerHandler().playerEntity.openContainer;
-        if(container instanceof ContainerRecipeBook) {
+        if (container instanceof ContainerRecipeBook) {
             ((ContainerRecipeBook) container).search(message.getTerm());
         }
         return null;
     }
-
 }

@@ -2,6 +2,7 @@ package net.blay09.mods.cookingforblockheads.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.GuiHandler;
 import net.blay09.mods.cookingforblockheads.client.render.block.OvenBlockRenderer;
@@ -24,8 +25,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.util.Random;
-
 public class BlockOven extends BlockBaseKitchen {
 
     private final Random random = new Random();
@@ -46,11 +45,8 @@ public class BlockOven extends BlockBaseKitchen {
         findOrientation(worldIn, x, y, z);
     }
 
-
-
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
@@ -65,8 +61,7 @@ public class BlockOven extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
     public IIcon getIcon(int side, int metadata) {
@@ -74,26 +69,39 @@ public class BlockOven extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
-        if(side == ForgeDirection.UP.ordinal()) {
-            if(CookingRegistry.isToolItem(player.getHeldItem())) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+        if (side == ForgeDirection.UP.ordinal()) {
+            if (CookingRegistry.isToolItem(player.getHeldItem())) {
                 int metadata = world.getBlockMetadata(x, y, z);
                 float hitX = subX;
                 float hitZ = subZ;
-                switch(metadata) {
-                    case 2: hitX = 1f - subX; hitZ = 1f - subZ; break;
-                    case 3: hitX = subX; hitZ = subZ; break;
-                    case 4: hitZ = 1f - subX; hitX = subZ; break;
-                    case 5: hitZ = subX; hitX = 1f - subZ; break;
+                switch (metadata) {
+                    case 2:
+                        hitX = 1f - subX;
+                        hitZ = 1f - subZ;
+                        break;
+                    case 3:
+                        hitX = subX;
+                        hitZ = subZ;
+                        break;
+                    case 4:
+                        hitZ = 1f - subX;
+                        hitX = subZ;
+                        break;
+                    case 5:
+                        hitZ = subX;
+                        hitX = 1f - subZ;
+                        break;
                 }
                 int slotId = -1;
-                if(hitX < 0.5f && hitZ < 0.5f) {
+                if (hitX < 0.5f && hitZ < 0.5f) {
                     slotId = 1;
-                } else if(hitX >= 0.5f && hitZ < 0.5f) {
+                } else if (hitX >= 0.5f && hitZ < 0.5f) {
                     slotId = 0;
-                } else if(hitX < 0.5f && hitZ >= 0.5f) {
+                } else if (hitX < 0.5f && hitZ >= 0.5f) {
                     slotId = 2;
-                } else if(hitX >= 0.5f && hitZ >= 0.5f) {
+                } else if (hitX >= 0.5f && hitZ >= 0.5f) {
                     slotId = 3;
                 }
                 slotId += 16;
@@ -105,15 +113,14 @@ public class BlockOven extends BlockBaseKitchen {
                 return true;
             }
         }
-        if(!world.isRemote) {
+        if (!world.isRemote) {
             player.openGui(CookingForBlockheads.instance, GuiHandler.COOKING_OVEN, world, x, y, z);
         }
         return true;
     }
 
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta)
-    {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new TileOven();
     }
 
@@ -153,10 +160,16 @@ public class BlockOven extends BlockBaseKitchen {
                         }
 
                         itemstack.stackSize -= j1;
-                        EntityItem entityitem = new EntityItem(world, (double) ((float) x + f), (double) ((float) y + f1), (double) ((float) z + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+                        EntityItem entityitem = new EntityItem(
+                                world,
+                                (double) ((float) x + f),
+                                (double) ((float) y + f1),
+                                (double) ((float) z + f2),
+                                new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
 
                         if (itemstack.hasTagCompound()) {
-                            entityitem.getEntityItem().setTagCompound((NBTTagCompound) itemstack.getTagCompound().copy());
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)
+                                    itemstack.getTagCompound().copy());
                         }
 
                         float f3 = 0.05F;
@@ -178,9 +191,9 @@ public class BlockOven extends BlockBaseKitchen {
         TileOven tileEntity = (TileOven) world.getTileEntity(x, y, z);
         if (tileEntity.isBurning()) {
             int l = world.getBlockMetadata(x, y, z);
-            float f = (float)x + 0.5F;
-            float f1 = (float)y + 0.0F + random.nextFloat() * 6.0F / 16.0F;
-            float f2 = (float)z + 0.5F;
+            float f = (float) x + 0.5F;
+            float f1 = (float) y + 0.0F + random.nextFloat() * 6.0F / 16.0F;
+            float f2 = (float) z + 0.5F;
             float f3 = 0.52F;
             float f4 = random.nextFloat() * 0.6F - 0.3F;
 
@@ -205,5 +218,4 @@ public class BlockOven extends BlockBaseKitchen {
     public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
         return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(x, y, z));
     }
-
 }

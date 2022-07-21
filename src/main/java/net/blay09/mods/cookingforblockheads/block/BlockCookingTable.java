@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads.block;
 
+import java.util.Optional;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.GuiHandler;
 import net.blay09.mods.cookingforblockheads.client.render.block.CookingTableBlockRenderer;
@@ -16,8 +17,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.Optional;
 
 public class BlockCookingTable extends BlockBaseKitchen {
 
@@ -37,7 +36,6 @@ public class BlockCookingTable extends BlockBaseKitchen {
         findOrientation(worldIn, x, y, z);
     }
 
-
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack itemStack) {
         int l = MathHelper.floor_double((double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
@@ -56,8 +54,7 @@ public class BlockCookingTable extends BlockBaseKitchen {
     }
 
     @Override
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
         return false;
     }
 
@@ -72,8 +69,7 @@ public class BlockCookingTable extends BlockBaseKitchen {
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister iconRegister) {
-    }
+    public void registerBlockIcons(IIconRegister iconRegister) {}
 
     @Override
     public IIcon getIcon(int side, int metadata) {
@@ -89,36 +85,39 @@ public class BlockCookingTable extends BlockBaseKitchen {
         table.setColor(colour);
         return true;
     }
-    
+
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
+    public boolean onBlockActivated(
+            World world, int x, int y, int z, EntityPlayer player, int side, float subX, float subY, float subZ) {
         ItemStack heldItem = player.getHeldItem();
         TileCookingTable table = (TileCookingTable) world.getTileEntity(x, y, z);
 
-        if(heldItem != null && DyeUtils.isDye(heldItem)) {
+        if (heldItem != null && DyeUtils.isDye(heldItem)) {
             Optional<Integer> dyeColor = DyeUtils.colorFromStack(heldItem);
             if (dyeColor.isPresent() && recolourBlock(world, x, y, z, ForgeDirection.UNKNOWN, dyeColor.get())) {
                 player.getHeldItem().stackSize--;
                 return true;
             }
         }
-        
-        if(heldItem != null) {
-            if(!table.hasNoFilterBook() && heldItem.getItem() == CookingForBlockheads.itemRecipeBook && heldItem.getItemDamage() == 3) {
+
+        if (heldItem != null) {
+            if (!table.hasNoFilterBook()
+                    && heldItem.getItem() == CookingForBlockheads.itemRecipeBook
+                    && heldItem.getItemDamage() == 3) {
                 table.setNoFilterBook(heldItem.splitStack(1));
                 return true;
             }
-        } else if(player.isSneaking()) {
+        } else if (player.isSneaking()) {
             ItemStack noFilterBook = table.getNoFilterBook();
-            if(noFilterBook != null) {
-                if(!player.inventory.addItemStackToInventory(noFilterBook)) {
+            if (noFilterBook != null) {
+                if (!player.inventory.addItemStackToInventory(noFilterBook)) {
                     player.dropPlayerItemWithRandomChoice(noFilterBook, false);
                 }
                 table.setNoFilterBook(null);
                 return true;
             }
         }
-        if(!world.isRemote) {
+        if (!world.isRemote) {
             player.openGui(CookingForBlockheads.instance, GuiHandler.COOKING_TABLE, world, x, y, z);
         }
         return true;

@@ -19,5 +19,4 @@ public class SlotOven extends Slot {
     public boolean isItemValid(ItemStack stack) {
         return false;
     }
-
 }

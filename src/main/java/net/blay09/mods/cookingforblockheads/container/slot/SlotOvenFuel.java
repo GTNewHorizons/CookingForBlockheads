@@ -15,5 +15,4 @@ public class SlotOvenFuel extends Slot {
     public boolean isItemValid(ItemStack itemStack) {
         return TileOven.isItemFuel(itemStack);
     }
-
 }

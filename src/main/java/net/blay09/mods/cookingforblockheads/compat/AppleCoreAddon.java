@@ -21,5 +21,4 @@ public class AppleCoreAddon implements FoodStatsProvider {
     public int getFoodLevel(ItemStack itemStack, EntityPlayer entityPlayer) {
         return FoodValues.get(itemStack, entityPlayer).hunger;
     }
-
 }

@@ -20,13 +20,14 @@ public class TileCookingTable extends TileEntity implements IMultiblockKitchen {
         super();
         this.color = 0;
     }
+
     @Override
     public void setWorldObj(World world) {
         super.setWorldObj(world);
 
         renderItem = new EntityItem(world, 0, 0, 0);
         renderItem.hoverStart = 0f;
-        if(noFilterBook != null) {
+        if (noFilterBook != null) {
             renderItem.setEntityItemStack(noFilterBook);
         }
     }
@@ -45,7 +46,7 @@ public class TileCookingTable extends TileEntity implements IMultiblockKitchen {
 
     public void setNoFilterBook(ItemStack noFilterBook) {
         this.noFilterBook = noFilterBook;
-        if(renderItem != null) {
+        if (renderItem != null) {
             renderItem.setEntityItemStack(noFilterBook);
         }
     }
@@ -55,7 +56,7 @@ public class TileCookingTable extends TileEntity implements IMultiblockKitchen {
         super.writeToNBT(tagCompound);
         NBTTagCompound itemCompound = new NBTTagCompound();
         tagCompound.setByte("Color", (byte) color);
-        if(noFilterBook != null) {
+        if (noFilterBook != null) {
             noFilterBook.writeToNBT(itemCompound);
         }
         tagCompound.setTag("NoFilterBook", itemCompound);
@@ -65,7 +66,7 @@ public class TileCookingTable extends TileEntity implements IMultiblockKitchen {
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
         color = tagCompound.getByte("Color");
-        if(tagCompound.hasKey("NoFilterBook")) {
+        if (tagCompound.hasKey("NoFilterBook")) {
             setNoFilterBook(ItemStack.loadItemStackFromNBT(tagCompound.getCompoundTag("NoFilterBook")));
         }
     }
@@ -76,7 +77,6 @@ public class TileCookingTable extends TileEntity implements IMultiblockKitchen {
         writeToNBT(tagCompound);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tagCompound);
     }
-
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
@@ -94,5 +94,4 @@ public class TileCookingTable extends TileEntity implements IMultiblockKitchen {
     public int getColor() {
         return color;
     }
-    
 }

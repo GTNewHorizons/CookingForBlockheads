@@ -10,7 +10,8 @@ import org.lwjgl.opengl.GL12;
 
 public class TileEntitySinkRenderer extends TileEntityRendererBase {
 
-    private static final ResourceLocation texture = new ResourceLocation("cookingforblockheads", "textures/entity/ModelSink.png");
+    private static final ResourceLocation texture =
+            new ResourceLocation("cookingforblockheads", "textures/entity/ModelSink.png");
 
     private ModelSink model = new ModelSink();
 
@@ -19,12 +20,12 @@ public class TileEntitySinkRenderer extends TileEntityRendererBase {
         TileSink tileSink = (TileSink) tileEntity;
         final int dye = tileSink.getColor();
         int metadata = 0;
-        if(tileEntity.hasWorldObj()) {
+        if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
         }
         GL11.glPushMatrix();
         boolean oldRescaleNormal = GL11.glIsEnabled(GL12.GL_RESCALE_NORMAL);
-        if(oldRescaleNormal) {
+        if (oldRescaleNormal) {
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glColor4f(1f, 1f, 1f, 1f);
@@ -34,16 +35,15 @@ public class TileEntitySinkRenderer extends TileEntityRendererBase {
         GL11.glRotatef(angle, 0f, 1f, 0f);
         GL11.glRotatef(180f, 0f, 0f, 1f);
         bindTexture(texture);
-        
+
         model.renderUncolored();
         GL11.glColor4f(colorTable[dye][0], colorTable[dye][1], colorTable[dye][2], 1f);
         model.renderColored();
-        
-        if(!oldRescaleNormal) {
+
+        if (!oldRescaleNormal) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         }
         GL11.glPopMatrix();
         GL11.glColor4f(1f, 1f, 1f, 1f);
     }
-
 }

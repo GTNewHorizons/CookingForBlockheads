@@ -1,8 +1,7 @@
 package net.blay09.mods.cookingforblockheads.registry.food;
 
-import net.minecraft.item.ItemStack;
-
 import java.util.List;
+import net.minecraft.item.ItemStack;
 
 public abstract class FoodRecipe {
 
@@ -30,5 +29,4 @@ public abstract class FoodRecipe {
     public int getRecipeHeight() {
         return recipeHeight;
     }
-
 }

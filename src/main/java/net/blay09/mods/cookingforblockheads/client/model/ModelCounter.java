@@ -22,8 +22,7 @@ public class ModelCounter extends ModelBase {
     public ModelRenderer LeftStick;
     public ModelRenderer RightStick;
 
-    public ModelCounter()
-    {
+    public ModelCounter() {
         this.textureWidth = 128;
         this.textureHeight = 64;
         this.LeftWall = new ModelRenderer(this, 0, 20);
@@ -45,7 +44,7 @@ public class ModelCounter extends ModelBase {
         this.BackSplash = new ModelRenderer(this, 62, 33);
         this.BackSplash.setRotationPoint(8.0F, 9.0F, 6.5F);
         this.BackSplash.addBox(-16.0F, -2.0F, 0.0F, 16, 2, 1, 0.0F);
-        
+
         this.InnerBoard = new ModelRenderer(this, 62, 36);
         this.InnerBoard.setRotationPoint(7.0F, 17.5F, -5.7F);
         this.InnerBoard.addBox(-14.0F, -1.0F, 0.0F, 14, 1, 13, 0.0F);
@@ -73,27 +72,27 @@ public class ModelCounter extends ModelBase {
         this.BottomWall = new ModelRenderer(this, 62, 50);
         this.BottomWall.setRotationPoint(-7.0F, 24.0F, -5.5F);
         this.BottomWall.addBox(0.0F, -1.0F, 0.0F, 14, 1, 13, 0.0F);
-        
     }
 
     public void renderUncolored() {
         float f5 = 0.0625f;
         this.BackSplash.render(f5);
         this.TopWall.render(f5);
-        if(isFlipped) {
+        if (isFlipped) {
             this.DoorHandleFlipped.render(f5);
         } else {
             this.DoorHandle.render(f5);
         }
     }
+
     public void renderColored() {
         float f5 = 0.0625f;
-        if(isFlipped) {
+        if (isFlipped) {
             this.DoorFlipped.render(f5);
         } else {
             this.Door.render(f5);
         }
-        
+
         this.BottomWall.render(f5);
         this.RightWall.render(f5);
         this.LeftWall.render(f5);
@@ -103,14 +102,13 @@ public class ModelCounter extends ModelBase {
         this.LeftStick.render(f5);
         this.RightStick.render(f5);
     }
-    
+
     public void renderInterior() {
         float f5 = 0.0625f;
         this.InnerBoard.render(f5);
     }
-     
+
     public void setFlipped(boolean doorFlipped) {
         this.isFlipped = doorFlipped;
     }
- 
 }

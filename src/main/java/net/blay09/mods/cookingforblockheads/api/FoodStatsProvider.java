@@ -6,6 +6,6 @@ import net.minecraft.item.ItemStack;
 public interface FoodStatsProvider {
 
     float getSaturation(ItemStack itemStack, EntityPlayer entityPlayer);
-    int getFoodLevel(ItemStack itemStack, EntityPlayer entityPlayer);
 
+    int getFoodLevel(ItemStack itemStack, EntityPlayer entityPlayer);
 }

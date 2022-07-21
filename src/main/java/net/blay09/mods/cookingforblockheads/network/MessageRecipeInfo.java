@@ -15,7 +15,8 @@ public class MessageRecipeInfo implements IMessage {
 
     public MessageRecipeInfo() {}
 
-    public MessageRecipeInfo(int slotIndex, FoodRecipe recipe, boolean isMissingTools, boolean hasVariants, boolean canSmelt) {
+    public MessageRecipeInfo(
+            int slotIndex, FoodRecipe recipe, boolean isMissingTools, boolean hasVariants, boolean canSmelt) {
         this.slotIndex = slotIndex;
         this.recipe = recipe;
         this.isMissingTools = isMissingTools;
@@ -26,7 +27,7 @@ public class MessageRecipeInfo implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         slotIndex = buf.readShort();
-        if(slotIndex != -1) {
+        if (slotIndex != -1) {
             recipe = RemoteCraftingFood.read(buf);
         }
         isMissingTools = buf.readBoolean();
