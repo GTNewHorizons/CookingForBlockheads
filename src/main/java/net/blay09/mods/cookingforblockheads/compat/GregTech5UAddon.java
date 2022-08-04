@@ -52,6 +52,7 @@ public class GregTech5UAddon {
         GT_MetaGenerated_Tool_01.KNIFE,
         GT_MetaGenerated_Tool_01.BUTCHERYKNIFE,
         GT_MetaGenerated_Tool_01.ROLLING_PIN,
+        GT_MetaGenerated_Tool_01.MORTAR,
     };
 
     public GregTech5UAddon() {
