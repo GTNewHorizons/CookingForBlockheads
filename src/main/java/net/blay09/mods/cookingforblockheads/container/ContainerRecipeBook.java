@@ -116,15 +116,14 @@ public class ContainerRecipeBook extends Container {
     }
 
     public void setCraftMatrix(FoodRecipe recipe) {
-        for (SlotCraftMatrix previewSlot : craftMatrixSlots) {
-            previewSlot.setIngredient(null);
-            previewSlot.setEnabled(false);
-            if (!isClientSide) {
-                previewSlot.updateVisibleStacks();
-            }
-        }
-
         if (recipe != null) {
+            for (SlotCraftMatrix previewSlot : craftMatrixSlots) {
+                previewSlot.setIngredient(null);
+                previewSlot.setEnabled(false);
+                if (!isClientSide) {
+                    previewSlot.updateVisibleStacks();
+                }
+            }
             isFurnaceRecipe = recipe.isSmeltingRecipe();
             if (isFurnaceRecipe) {
                 craftMatrixSlots[4].setIngredient(recipe.getCraftMatrix().get(0));
