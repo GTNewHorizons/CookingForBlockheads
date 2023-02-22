@@ -20,11 +20,6 @@ public class TileFridge extends BaseKitchenTileWithInventory {
     }
 
     @Override
-    public boolean receiveClientEvent(int id, int value) {
-        return super.receiveClientEvent(id, value);
-    }
-
-    @Override
     public AxisAlignedBB getRenderBoundingBox() {
         return AxisAlignedBB.getBoundingBox(xCoord - 1, yCoord, zCoord - 1, xCoord + 2, yCoord + 2, zCoord + 2);
     }
