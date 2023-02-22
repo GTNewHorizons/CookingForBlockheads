@@ -11,6 +11,11 @@ public class TileCabinetCorner extends BaseKitchenTileWithInventory {
     }
 
     @Override
+    public boolean hasInventory() {
+        return false;
+    }
+
+    @Override
     public void readFromNBT(NBTTagCompound tagCompound) {
         super.readFromNBT(tagCompound);
 

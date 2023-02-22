@@ -142,61 +142,68 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
         }
     }
 
+    public boolean hasInventory() {
+        return true;
+    }
+
     @Override
     public void openInventory() {
+        if (!hasInventory()) return;
         numPlayersUsing++;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 1, numPlayersUsing);
     }
 
     @Override
     public void closeInventory() {
+        if (!hasInventory()) return;
         numPlayersUsing--;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, getBlockType(), 1, numPlayersUsing);
     }
 
     @Override
     public boolean isItemValidForSlot(int i, ItemStack itemStack) {
-        return true;
+        return hasInventory();
     }
 
     @Override
     public int getSizeInventory() {
-        return sharedInventory.getSizeInventory();
+        return hasInventory() ? sharedInventory.getSizeInventory() : 0;
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
-        return sharedInventory.getStackInSlot(i);
+        return hasInventory() ? sharedInventory.getStackInSlot(i) : null;
     }
 
     @Override
     public ItemStack decrStackSize(int i, int amount) {
-        return sharedInventory.decrStackSize(i, amount);
+        return hasInventory() ? sharedInventory.decrStackSize(i, amount) : null;
     }
 
     @Override
     public ItemStack getStackInSlotOnClosing(int i) {
-        return sharedInventory.getStackInSlotOnClosing(i);
+        return hasInventory() ? sharedInventory.getStackInSlotOnClosing(i) : null;
     }
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemStack) {
+        if (!hasInventory()) return;
         sharedInventory.setInventorySlotContents(i, itemStack);
     }
 
     @Override
     public String getInventoryName() {
-        return sharedInventory.getInventoryName();
+        return hasInventory() ? sharedInventory.getInventoryName() : "";
     }
 
     @Override
     public boolean hasCustomInventoryName() {
-        return sharedInventory.hasCustomInventoryName();
+        return hasInventory() && sharedInventory.hasCustomInventoryName();
     }
 
     @Override
     public int getInventoryStackLimit() {
-        return sharedInventory.getInventoryStackLimit();
+        return hasInventory() ? sharedInventory.getInventoryStackLimit() : 0;
     }
 
     @Override
@@ -273,7 +280,7 @@ public class BaseKitchenTileWithInventory extends TileEntity implements IInvento
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer entityPlayer) {
-        return true;
+        return hasInventory();
     }
 
     public float getDoorAngle() {
