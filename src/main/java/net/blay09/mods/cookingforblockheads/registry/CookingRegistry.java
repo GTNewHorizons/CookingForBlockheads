@@ -32,11 +32,11 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import squeek.applecore.api.AppleCoreAPI;
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import squeek.applecore.api.AppleCoreAPI;
 
 public class CookingRegistry {
 

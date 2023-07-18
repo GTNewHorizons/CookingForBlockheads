@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.google.common.collect.Sets;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class KitchenMultiBlock {

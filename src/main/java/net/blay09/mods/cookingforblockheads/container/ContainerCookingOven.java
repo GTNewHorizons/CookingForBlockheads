@@ -16,8 +16,6 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-import squeek.applecore.api.AppleCoreAPI;
-
 import com.google.common.collect.Maps;
 
 import cpw.mods.fml.common.Optional;
@@ -25,6 +23,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
+import squeek.applecore.api.AppleCoreAPI;
 
 public class ContainerCookingOven extends Container {
 

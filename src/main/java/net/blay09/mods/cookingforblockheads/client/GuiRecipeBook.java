@@ -21,10 +21,10 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import yalter.mousetweaks.api.IMTModGuiContainer;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import yalter.mousetweaks.api.IMTModGuiContainer;
 
 @Optional.Interface(modid = "MouseTweaks", iface = "yalter.mousetweaks.api.IMTModGuiContainer")
 public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
