@@ -3,13 +3,13 @@
 dependencies {
     api("com.github.GTNewHorizons:AppleCore:3.2.10:dev")
 
-    implementation("com.github.GTNewHorizons:SpiceOfLife:2.0.9-carrot:dev") {transitive=false}
+    implementation("com.github.GTNewHorizons:SpiceOfLife:2.1.0-carrot:dev") {transitive=false}
 
-    compileOnly("com.github.GTNewHorizons:NotEnoughItems:2.3.32-GTNH:dev") {transitive=false}
+    compileOnly("com.github.GTNewHorizons:NotEnoughItems:2.3.76-GTNH:dev") {transitive=false}
     compileOnly("com.github.GTNewHorizons:inventory-tweaks:1.5.16:dev") {transitive=false}
-    compileOnly("com.github.GTNewHorizons:CraftTweaker:3.2.11:dev") {transitive=false}
+    compileOnly("com.github.GTNewHorizons:CraftTweaker:3.2.13:dev") {transitive=false}
     compileOnly("com.github.GTNewHorizons:MouseTweaks:2.4.8-GTNH:dev") {transitive=false}
-    compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.09.41.289:dev") {transitive=false}
+    api("com.github.GTNewHorizons:GT5-Unofficial:5.09.43.131:dev")
 
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.3.32-GTNH:dev")
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.3.76-GTNH:dev")
 }
