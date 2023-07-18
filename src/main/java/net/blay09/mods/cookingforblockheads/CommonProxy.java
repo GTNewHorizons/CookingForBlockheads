@@ -484,7 +484,7 @@ public class CommonProxy {
         if (CookingConfig.moduleDreamcraft) {
             event.buildSoftDependProxy("dreamcraft", "net.blay09.mods.cookingforblockheads.compat.DreamcraftAddon");
         }
-        if (CookingConfig.moduleGrectech5U) {
+        if (CookingConfig.moduleGrectech5U && !Loader.isModLoaded("gregapi_post")) {
             event.buildSoftDependProxy("gregtech", "net.blay09.mods.cookingforblockheads.compat.GregTech5UAddon");
         }
 
