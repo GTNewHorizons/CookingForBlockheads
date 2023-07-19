@@ -19,6 +19,7 @@ import net.blay09.mods.cookingforblockheads.utils.DyeUtils;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import cpw.mods.fml.common.Loader;
@@ -34,6 +35,13 @@ public class CommonProxy {
     private boolean mineTweakerHasPostReload;
 
     public void preInit(FMLPreInitializationEvent event) {}
+
+    private static void registerTileEntity(Class<? extends TileEntity> tileEntityClass, String id) {
+        // Register with the old modid to ensure data doesn't get lost on world conversion
+        GameRegistry.registerTileEntity(tileEntityClass, "cookingbook:" + id);
+        // Newest ID must be last to ensure the correct canonical mapping
+        GameRegistry.registerTileEntity(tileEntityClass, CookingForBlockheads.MOD_ID + ":" + id);
+    }
 
     public void init(FMLInitializationEvent event) {
         GameRegistry.registerItem(CookingForBlockheads.itemRecipeBook, "recipebook");
@@ -94,16 +102,16 @@ public class CommonProxy {
                 "toaster",
                 new Object[] { "toaster", false });
 
-        GameRegistry.registerTileEntity(TileOven.class, CookingForBlockheads.MOD_ID + ":cookingoven");
-        GameRegistry.registerTileEntity(TileFridge.class, CookingForBlockheads.MOD_ID + ":fridge");
-        GameRegistry.registerTileEntity(TileCounter.class, CookingForBlockheads.MOD_ID + ":counter");
-        GameRegistry.registerTileEntity(TileCounterCorner.class, CookingForBlockheads.MOD_ID + ":countercorner");
-        GameRegistry.registerTileEntity(TileCabinet.class, CookingForBlockheads.MOD_ID + ":cabinet");
-        GameRegistry.registerTileEntity(TileCabinetCorner.class, CookingForBlockheads.MOD_ID + ":cabinetcorner");
-        GameRegistry.registerTileEntity(TileToolRack.class, CookingForBlockheads.MOD_ID + ":toolrack");
-        GameRegistry.registerTileEntity(TileSink.class, CookingForBlockheads.MOD_ID + ":sink");
-        GameRegistry.registerTileEntity(TileCookingTable.class, CookingForBlockheads.MOD_ID + ":cookingtable");
-        GameRegistry.registerTileEntity(TileToaster.class, CookingForBlockheads.MOD_ID + ":toaster");
+        registerTileEntity(TileOven.class, "cookingoven");
+        registerTileEntity(TileFridge.class, "fridge");
+        registerTileEntity(TileCounter.class, "counter");
+        registerTileEntity(TileCounterCorner.class, "countercorner");
+        registerTileEntity(TileCabinet.class, "cabinet");
+        registerTileEntity(TileCabinetCorner.class, "cabinetcorner");
+        registerTileEntity(TileToolRack.class, "toolrack");
+        registerTileEntity(TileSink.class, "sink");
+        registerTileEntity(TileCookingTable.class, "cookingtable");
+        registerTileEntity(TileToaster.class, "toaster");
 
         // #NoFilter Edition
         if (CookingConfig.enableNoFilter) {
