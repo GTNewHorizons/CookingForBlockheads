@@ -35,9 +35,9 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @Mod(modid = CookingForBlockheads.MOD_ID, version = CookingForBlockheads.VERSION, name = CookingForBlockheads.NAME)
 public class CookingForBlockheads {
 
-    public static final String VERSION = "GRADLETOKEN_VERSION";
-    public static final String NAME = "GRADLETOKEN_MODNAME";
-    public static final String MOD_ID = "GRADLETOKEN_MODID";
+    public static final String VERSION = Tags.VERSION;
+    public static final String NAME = "Cooking For Blockheads";
+    public static final String MOD_ID = "cookingforblockheads";
 
     public static CreativeTabs creativeTab = new CreativeTabs(MOD_ID) {
 
