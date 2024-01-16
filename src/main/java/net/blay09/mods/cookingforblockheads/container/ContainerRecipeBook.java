@@ -330,6 +330,10 @@ public class ContainerRecipeBook extends Container {
         }
     }
 
+    public void markSelectionDirty() {
+        isSelectionDirty = true;
+    }
+
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int i) {
         ItemStack itemStack = null;

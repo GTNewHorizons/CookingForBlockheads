@@ -24,6 +24,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
@@ -495,7 +496,9 @@ public class CommonProxy {
         if (CookingConfig.moduleGrectech5U && !Loader.isModLoaded("gregapi_post")) {
             event.buildSoftDependProxy("gregtech", "net.blay09.mods.cookingforblockheads.compat.GregTech5UAddon");
         }
+    }
 
+    public void loadComplete(FMLLoadCompleteEvent event) {
         CookingRegistry.initFoodRegistry();
     }
 

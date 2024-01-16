@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.blay09.mods.cookingforblockheads.api.kitchen.IKitchenItemProvider;
+import net.blay09.mods.cookingforblockheads.container.ContainerRecipeBook;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodIngredient;
 import net.blay09.mods.cookingforblockheads.registry.food.FoodRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -23,6 +23,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 public class InventoryCraftBook extends InventoryCrafting {
 
+    private final ContainerRecipeBook containerRecipeBook;
     private final int[] sourceInventories = new int[9];
     private final int[] sourceInventorySlots = new int[9];
     private final List<IKitchenItemProvider> sourceProviders = new ArrayList<>();
@@ -31,8 +32,9 @@ public class InventoryCraftBook extends InventoryCrafting {
     private List<IInventory> inventories;
     private List<IKitchenItemProvider> itemProviders;
 
-    public InventoryCraftBook(Container container) {
+    public InventoryCraftBook(ContainerRecipeBook container) {
         super(container, 3, 3);
+        this.containerRecipeBook = container;
     }
 
     public IRecipe prepareRecipe(EntityPlayer player, FoodRecipe recipe) {
@@ -88,6 +90,9 @@ public class InventoryCraftBook extends InventoryCrafting {
     public ItemStack craft(EntityPlayer player, FoodRecipe recipe) {
         prepareRecipe(player, recipe);
         if (currentRecipe == null) {
+            // Recipe was not found. This is probably caused by missing tool.
+            // In case the tool has just been depleted after initial recipe selection, update tooltip.
+            containerRecipeBook.markSelectionDirty();
             return null;
         }
         if (currentRecipe.matches(this, player.worldObj)) {
@@ -126,9 +131,9 @@ public class InventoryCraftBook extends InventoryCrafting {
                             }
                         }
 
-                        if (sourceInventories[i] != -1 && sourceInventorySlots[i] != -1 && getStackInSlot(i) == null) {
+                        if (sourceInventories[i] != -1 && sourceInventorySlots[i] != -1) {
                             inventories.get(sourceInventories[i])
-                                    .setInventorySlotContents(sourceInventorySlots[i], null);
+                                    .setInventorySlotContents(sourceInventorySlots[i], this.getStackInSlot(i));
                         }
                     }
                 }
