@@ -1,7 +1,6 @@
 package net.blay09.mods.cookingforblockheads;
 
 import net.blay09.mods.cookingforblockheads.compat.VanillaAddon;
-import net.blay09.mods.cookingforblockheads.container.comparator.ComparatorSoL;
 import net.blay09.mods.cookingforblockheads.item.ItemBlockFridge;
 import net.blay09.mods.cookingforblockheads.item.ItemBlockGenericKitchen;
 import net.blay09.mods.cookingforblockheads.network.NetworkHandler;
@@ -31,7 +30,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import squeek.spiceoflife.foodtracker.FoodHistory;
 
 public class CommonProxy {
 
@@ -473,15 +471,6 @@ public class CommonProxy {
         if (CookingConfig.moduleVanilla) {
             new VanillaAddon();
         }
-        if (Loader.isModLoaded("SpiceOfLife")) {
-            try {
-                FoodHistory.class.getDeclaredMethod("getHistory");
-                ComparatorSoL.spiceCompat = true;
-            } catch (NoSuchMethodException e) {
-                ComparatorSoL.spiceCompat = false;
-            }
-        }
-
         try {
             Class<?> mtClass = Class.forName("minetweaker.MineTweakerImplementationAPI");
             mtClass.getMethod("onPostReload", Class.forName("minetweaker.util.IEventHandler"));
