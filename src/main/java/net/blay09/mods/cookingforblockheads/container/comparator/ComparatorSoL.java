@@ -29,8 +29,8 @@ public class ComparatorSoL implements Comparator<ItemStack> {
                 try {
                     return ((FoodQueue) getHistoryCompat.invokeExact(history)).stream()
                             .anyMatch(foodEaten -> foodEaten.itemStack.isItemEqual(itemstack));
-                } catch (Throwable ignored) {
-                    return false;
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
                 }
             };
         } catch (NoSuchMethodException | SecurityException e) {
