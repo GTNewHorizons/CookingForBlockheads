@@ -4,6 +4,7 @@ import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
 import net.blay09.mods.cookingforblockheads.client.render.block.ToasterBlockRenderer;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.blay09.mods.cookingforblockheads.tile.TileToaster;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,8 +12,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockToaster extends BlockBaseKitchen {
@@ -31,8 +34,24 @@ public class BlockToaster extends BlockBaseKitchen {
     public void onBlockAdded(World worldIn, int x, int y, int z) {
         super.onBlockAdded(worldIn, x, y, z);
         findOrientation(worldIn, x, y, z);
+        if (worldIn.getBlock(x, y - 1, z) == CookingForBlockheads.blockCounterCorner || worldIn.getBlock(x, y - 1, z) == CookingForBlockheads.blockCounter)
+        {
+            setBlockBounds(0.275f, -.0625f, 0.275f, 0.725f, 0.3375f, 0.725f);
+        }
     }
 
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block neighborBlock) {
+        if (world.getBlock(x, y - 1, z) == CookingForBlockheads.blockCounterCorner || world.getBlock(x, y - 1, z) == CookingForBlockheads.blockCounter)
+        {
+            setBlockBounds(0.275f, -.0625f, 0.275f, 0.725f, 0.3375f, 0.725f);
+        }
+        else
+        {
+            setBlockBounds(0.275f, 0f, 0.275f, 0.725f, 0.4f, 0.725f);
+        }
+    }
+    
     @Override
     public boolean isOpaqueCube() {
         return false;
