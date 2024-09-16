@@ -27,8 +27,11 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
         boolean counterBelow = false;
         if (tileEntity.hasWorldObj()) {
             metadata = tileEntity.getBlockMetadata();
-            counterBelow = tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord - 1, tileEntity.zCoord) == CookingForBlockheads.blockCounter ||
-                    tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord - 1, tileEntity.zCoord) == CookingForBlockheads.blockCounterCorner;
+            counterBelow = tileEntity.getWorldObj()
+                    .getBlock(tileEntity.xCoord, tileEntity.yCoord - 1, tileEntity.zCoord)
+                    == CookingForBlockheads.blockCounter
+                    || tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord - 1, tileEntity.zCoord)
+                            == CookingForBlockheads.blockCounterCorner;
         } else {
             GL11.glScalef(2f, 2f, 2f);
             GL11.glTranslatef(0, 0.25f, 0);
@@ -41,8 +44,7 @@ public class TileEntityToasterRenderer extends TileEntitySpecialRenderer {
         GL11.glColor4f(1f, 1f, 1f, 1f);
         GL11.glTranslatef((float) x, (float) y, (float) z);
         GL11.glTranslatef(0.5f, 0.065f, 0.5f);
-        if (counterBelow)
-        {
+        if (counterBelow) {
             GL11.glTranslatef(0f, -0.0625F, 0f);
         }
         float angle = RenderUtils.getAngle(metadata);
