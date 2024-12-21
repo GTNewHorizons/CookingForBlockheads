@@ -1,15 +1,18 @@
 // Add your dependencies here
 
 dependencies {
-    api("com.github.GTNewHorizons:AppleCore:3.3.2:dev")
+    api("com.github.GTNewHorizons:AppleCore:3.3.4:dev")
 
     implementation("com.github.GTNewHorizons:SpiceOfLife:2.1.12-carrot:dev") {transitive=false}
 
-    compileOnly("com.github.GTNewHorizons:NotEnoughItems:2.6.38-GTNH:dev") {transitive=false}
+
+    compileOnly("com.github.GTNewHorizons:NotEnoughItems:2.7.0-GTNH:dev") {transitive=false}
     compileOnly("com.github.GTNewHorizons:inventory-tweaks:1.7.0:dev") {transitive=false}
     compileOnly("com.github.GTNewHorizons:CraftTweaker:3.4.0:dev") {transitive=false}
-    compileOnly("com.github.GTNewHorizons:MouseTweaks:2.4.17-GTNH:dev") {transitive=false}
-    devOnlyNonPublishable("com.github.GTNewHorizons:GT5-Unofficial:5.09.50.05:dev")
+    compileOnly("com.github.GTNewHorizons:MouseTweaks:2.4.20-GTNH:dev") {transitive=false}
+    compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.09.51.13:dev") {transitive=false}
+    devOnlyNonPublishable("com.github.GTNewHorizons:EnderIO:2.8.22:dev")
 
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.6.38-GTNH:dev")
+    devOnlyNonPublishable('com.github.GTNewHorizons:waila:1.8.2:api')
+    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.0-GTNH:dev")
 }

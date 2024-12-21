@@ -41,6 +41,7 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
     }
 
     private static class WaterTank extends FluidTank {
+
         private static final FluidStack MAX_WATER = new FluidStack(FluidRegistry.WATER, Integer.MAX_VALUE);
 
         public WaterTank(int capacity) {
@@ -57,7 +58,7 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
 
         @Override
         public FluidStack drain(int maxDrain, boolean doDrain) {
-            if (!CookingConfig.sinkRequiresWater){
+            if (!CookingConfig.sinkRequiresWater) {
                 return new FluidStack(FluidRegistry.WATER, maxDrain);
             }
             return super.drain(maxDrain, doDrain);
