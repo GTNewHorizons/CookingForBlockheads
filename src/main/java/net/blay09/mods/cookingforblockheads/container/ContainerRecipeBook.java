@@ -23,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 
@@ -292,7 +293,6 @@ public class ContainerRecipeBook extends Container {
         if (recipe.isSmeltingRecipe()) {
             return;
         }
-        craftBook.prepareRecipe(player, recipe);
         if (!isShiftDown) {
             if (craftBook.canMouseItemHold(player, recipe)) {
                 ItemStack craftingResult = craftBook.craft(player, recipe);
@@ -308,26 +308,22 @@ public class ContainerRecipeBook extends Container {
                                 .sendPacket(new S2FPacketSetSlot(-1, 0, craftingResult));
                     }
                 }
-                player.inventory.markDirty();
-                player.inventoryContainer.detectAndSendChanges();
             }
         } else {
-            ItemStack craftingResult;
+            ItemStack craftingResult = craftBook.craft(player, recipe);
             int crafted = 0;
-            while (crafted < 64 && (craftingResult = craftBook.craft(player, recipe)) != null) {
+            while (craftingResult != null && crafted < craftingResult.getMaxStackSize()) {
                 crafted += craftingResult.stackSize;
                 if (!player.inventory.addItemStackToInventory(craftingResult)) {
-                    if (player.inventory.getItemStack() == null) {
-                        player.inventory.setItemStack(craftingResult);
-                    } else {
-                        player.dropPlayerItemWithRandomChoice(craftingResult, false);
-                    }
-                    break;
+                    player.dropPlayerItemWithRandomChoice(craftingResult, false);
                 }
+
+                craftingResult = craftBook.craft(player, recipe);
             }
-            player.inventory.markDirty();
-            player.inventoryContainer.detectAndSendChanges();
         }
+
+        player.inventory.markDirty();
+        player.inventoryContainer.detectAndSendChanges();
     }
 
     public void markSelectionDirty() {
