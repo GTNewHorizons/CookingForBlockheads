@@ -23,7 +23,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2FPacketSetSlot;
 
@@ -315,7 +314,12 @@ public class ContainerRecipeBook extends Container {
             while (craftingResult != null && crafted < craftingResult.getMaxStackSize()) {
                 crafted += craftingResult.stackSize;
                 if (!player.inventory.addItemStackToInventory(craftingResult)) {
-                    player.dropPlayerItemWithRandomChoice(craftingResult, false);
+                    if (player.inventory.getItemStack() == null) {
+                        player.inventory.setItemStack(craftingResult);
+                    } else {
+                        player.dropPlayerItemWithRandomChoice(craftingResult, false);
+                    }
+                    break;
                 }
 
                 craftingResult = craftBook.craft(player, recipe);
