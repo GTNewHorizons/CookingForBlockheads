@@ -83,7 +83,12 @@ public class InventoryCraftBook extends InventoryCrafting {
                 }
             }
         }
+
         currentRecipe = CookingRegistry.findMatchingFoodRecipe(this, player.worldObj);
+        if (currentRecipe != null && currentRecipe.getRecipeOutput() != recipe.getOutputItem()) {
+            currentRecipe = null;
+        }
+
         return currentRecipe;
     }
 
