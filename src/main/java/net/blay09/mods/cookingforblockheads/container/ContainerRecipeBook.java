@@ -292,7 +292,6 @@ public class ContainerRecipeBook extends Container {
         if (recipe.isSmeltingRecipe()) {
             return;
         }
-        craftBook.prepareRecipe(player, recipe);
         if (!isShiftDown) {
             if (craftBook.canMouseItemHold(player, recipe)) {
                 ItemStack craftingResult = craftBook.craft(player, recipe);
@@ -308,13 +307,16 @@ public class ContainerRecipeBook extends Container {
                                 .sendPacket(new S2FPacketSetSlot(-1, 0, craftingResult));
                     }
                 }
-                player.inventory.markDirty();
-                player.inventoryContainer.detectAndSendChanges();
             }
         } else {
             ItemStack craftingResult;
             int crafted = 0;
-            while (crafted < 64 && (craftingResult = craftBook.craft(player, recipe)) != null) {
+            do {
+                craftingResult = craftBook.craft(player, recipe);
+                if (craftingResult == null) {
+                    break;
+                }
+
                 crafted += craftingResult.stackSize;
                 if (!player.inventory.addItemStackToInventory(craftingResult)) {
                     if (player.inventory.getItemStack() == null) {
@@ -324,10 +326,11 @@ public class ContainerRecipeBook extends Container {
                     }
                     break;
                 }
-            }
-            player.inventory.markDirty();
-            player.inventoryContainer.detectAndSendChanges();
+            } while (crafted < craftingResult.getMaxStackSize());
         }
+
+        player.inventory.markDirty();
+        player.inventoryContainer.detectAndSendChanges();
     }
 
     public void markSelectionDirty() {
