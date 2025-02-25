@@ -309,9 +309,14 @@ public class ContainerRecipeBook extends Container {
                 }
             }
         } else {
-            ItemStack craftingResult = craftBook.craft(player, recipe);
+            ItemStack craftingResult;
             int crafted = 0;
-            while (craftingResult != null && crafted < craftingResult.getMaxStackSize()) {
+            do {
+                craftingResult = craftBook.craft(player, recipe);
+                if (craftingResult == null) {
+                    break;
+                }
+
                 crafted += craftingResult.stackSize;
                 if (!player.inventory.addItemStackToInventory(craftingResult)) {
                     if (player.inventory.getItemStack() == null) {
@@ -321,9 +326,7 @@ public class ContainerRecipeBook extends Container {
                     }
                     break;
                 }
-
-                craftingResult = craftBook.craft(player, recipe);
-            }
+            } while (crafted < craftingResult.getMaxStackSize());
         }
 
         player.inventory.markDirty();
