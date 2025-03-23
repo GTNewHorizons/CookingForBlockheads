@@ -161,6 +161,7 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+        // fluid type filtering is already done in the water tank fill method.
         int result = waterTank.fill(resource, doFill);
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, CookingForBlockheads.blockSink, 1, waterTank.getFluidAmount());
         return result;
@@ -168,6 +169,9 @@ public class TileSink extends TileEntity implements IKitchenItemProvider, IFluid
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+        if (!canDrain(from, resource.getFluid())) {
+            return null;
+        }
         return drain(from, resource.amount, doDrain);
     }
 
