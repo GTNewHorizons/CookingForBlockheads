@@ -489,6 +489,11 @@ public class CommonProxy {
                     "StorageDrawers",
                     "net.blay09.mods.cookingforblockheads.compat.StorageDrawersAddon");
         }
+        if (CookingConfig.moduleJabba) {
+            event.buildSoftDependProxy(
+                    "JABBA",
+                    "net.blay09.mods.cookingforblockheads.compat.JabbaAddon");
+        }
         if (CookingConfig.moduleDreamcraft) {
             event.buildSoftDependProxy("dreamcraft", "net.blay09.mods.cookingforblockheads.compat.DreamcraftAddon");
         }
