@@ -26,6 +26,7 @@ public class CookingConfig {
     public static boolean moduleEnviroMine;
     public static boolean moduleAppleCore;
     public static boolean moduleStorageDrawers;
+    public static boolean moduleJabba;
     public static boolean moduleDreamcraft;
     public static boolean moduleGrectech5U;
     public static boolean usePamsToast;
@@ -93,6 +94,7 @@ public class CookingConfig {
         moduleEnviroMine = config.getBoolean("EnviroMine", "modules", true, "Multiblock Kitchen Support (Freezer)");
         moduleAppleCore = config.getBoolean("AppleCore", "modules", true, "Dynamic Food Values");
         moduleStorageDrawers = config.getBoolean("StorageDrawers", "modules", true, "StorageDrawers");
+        moduleJabba = config.getBoolean("Jabba", "modules", true, "Jabba");
         moduleDreamcraft = config.getBoolean("Dreamcraft", "modules", true, "Dreamcraft");
         moduleGrectech5U = config.getBoolean("Gregtech5U", "modules", true, "Gregtech5U");
         usePamsToast = config.getBoolean(
