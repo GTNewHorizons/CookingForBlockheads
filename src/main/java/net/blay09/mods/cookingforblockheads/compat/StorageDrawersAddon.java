@@ -1,7 +1,6 @@
 package net.blay09.mods.cookingforblockheads.compat;
 
 import net.blay09.mods.cookingforblockheads.KitchenMultiBlock;
-import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -16,6 +15,5 @@ public class StorageDrawersAddon {
                 SimpleStorageProvider.class);
 
         KitchenMultiBlock.registerConnectorBlock(GameRegistry.findBlock("StorageDrawers", "trim"));
-        MinecraftForge.EVENT_BUS.register(this);
     }
 }
