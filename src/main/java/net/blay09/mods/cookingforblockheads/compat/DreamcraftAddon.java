@@ -9,7 +9,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class DreamcraftAddon {
 
-    private static final String[] DREAMCRAFT_ITEMS = new String[] { "item.EdibleSalt", "item.WetTofu", };
+    private static final String[] DREAMCRAFT_ITEMS = new String[] { "EdibleSalt", "WetTofu", };
 
     public DreamcraftAddon() {
         MinecraftForge.EVENT_BUS.register(this);
