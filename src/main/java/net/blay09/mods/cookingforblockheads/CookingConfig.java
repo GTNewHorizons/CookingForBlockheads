@@ -29,6 +29,7 @@ public class CookingConfig {
     public static boolean moduleJabba;
     public static boolean moduleDreamcraft;
     public static boolean moduleGrectech5U;
+    public static boolean moduleIC2;
     public static boolean usePamsToast;
 
     public static boolean gregtech5uLoaded;
@@ -97,6 +98,7 @@ public class CookingConfig {
         moduleJabba = config.getBoolean("Jabba", "modules", true, "Jabba");
         moduleDreamcraft = config.getBoolean("Dreamcraft", "modules", true, "Dreamcraft");
         moduleGrectech5U = config.getBoolean("Gregtech5U", "modules", true, "Gregtech5U");
+        moduleIC2 = config.getBoolean("IC2", "modules", true, "IndustrialCraft2");
         usePamsToast = config.getBoolean(
                 "Use Pam's Toast",
                 "modules",
