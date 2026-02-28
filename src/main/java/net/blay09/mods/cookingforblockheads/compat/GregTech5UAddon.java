@@ -45,7 +45,7 @@ public class GregTech5UAddon {
     private static final ItemStack[] ADDITIONAL_RECIPES = new ItemStack[] {
             GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeatRaw, 1L),
             GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeatCooked, 1L),
-            GameRegistry.findItemStack("IC2", "itemCofeePowder", 1), };
+            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coffee, 1L), };
 
     private static final short[] META_TOOLS = new short[] { (short) IDMetaTool01.HARDHAMMER.ID,
             (short) IDMetaTool01.SOFTMALLET.ID, (short) IDMetaTool01.KNIFE.ID, (short) IDMetaTool01.BUTCHERYKNIFE.ID,
