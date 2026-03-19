@@ -291,7 +291,7 @@ public class CommonProxy {
                                 'I',
                                 "plateIron",
                                 'F',
-                                "craftingIronFurnace"));
+                                "craftingBlastFurnace"));
             } else {
                 GameRegistry.addRecipe(
                         new ShapedOreRecipe(
