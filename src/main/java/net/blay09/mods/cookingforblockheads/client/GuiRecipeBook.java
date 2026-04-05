@@ -29,10 +29,16 @@ import yalter.mousetweaks.api.IMTModGuiContainer;
 @Optional.Interface(modid = "MouseTweaks", iface = "yalter.mousetweaks.api.IMTModGuiContainer")
 public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
 
-    private static final int SCROLLBAR_COLOR = 0xFFAAAAAA;
     private static final int SCROLLBAR_Y = 8;
-    private static final int SCROLLBAR_WIDTH = 7;
-    private static final int SCROLLBAR_HEIGHT = 77;
+    private static final int SCROLLBAR_WIDTH = 9;
+    private static final int SCROLLBAR_HEIGHT = 76;
+    private static final int SCROLLBAR_RAIL_U = 159;
+    private static final int SCROLLBAR_RAIL_V = 8;
+    private static final int SCROLLBAR_THUMB_U = 176;
+    private static final int SCROLLBAR_THUMB_TOP_V = 120;
+    private static final int SCROLLBAR_THUMB_MIDDLE_V = 123;
+    private static final int SCROLLBAR_THUMB_BOTTOM_V = 126;
+    private static final int SCROLLBAR_THUMB_SLICE_HEIGHT = 3;
 
     private static final ResourceLocation guiTexture = new ResourceLocation(
             "cookingforblockheads",
@@ -180,13 +186,49 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
     }
 
     public void recalculateScrollBar() {
-        int scrollBarTotalHeight = SCROLLBAR_HEIGHT - 1;
-        this.scrollBarScaledHeight = (int) (scrollBarTotalHeight
-                * Math.min(1f, ((float) VISIBLE_ROWS / (Math.ceil(container.getAvailableRecipeCount() / 3f)))));
-        this.scrollBarXPos = guiLeft + xSize - SCROLLBAR_WIDTH - 9;
+        int scrollBarTotalHeight = SCROLLBAR_HEIGHT;
+        int minThumbHeight = SCROLLBAR_THUMB_SLICE_HEIGHT * 2;
+        this.scrollBarScaledHeight = Math.max(
+                minThumbHeight,
+                (int) (scrollBarTotalHeight * Math
+                        .min(1f, ((float) VISIBLE_ROWS / (Math.ceil(container.getAvailableRecipeCount() / 3f))))));
+        this.scrollBarXPos = guiLeft + xSize - SCROLLBAR_WIDTH - 8;
         this.scrollBarYPos = guiTop + SCROLLBAR_Y
                 + ((scrollBarTotalHeight - scrollBarScaledHeight) * currentOffset
                         / Math.max(1, (int) Math.ceil((container.getAvailableRecipeCount() / 3f)) - VISIBLE_ROWS));
+    }
+
+    private void drawScrollbarThumb(int x, int y, int height) {
+        drawTexturedModalRect(
+                x,
+                y,
+                SCROLLBAR_THUMB_U,
+                SCROLLBAR_THUMB_TOP_V,
+                SCROLLBAR_WIDTH,
+                SCROLLBAR_THUMB_SLICE_HEIGHT);
+
+        int middleHeight = Math.max(0, height - (SCROLLBAR_THUMB_SLICE_HEIGHT * 2));
+        int middleY = y + SCROLLBAR_THUMB_SLICE_HEIGHT;
+        while (middleHeight > 0) {
+            int segmentHeight = Math.min(SCROLLBAR_THUMB_SLICE_HEIGHT, middleHeight);
+            drawTexturedModalRect(
+                    x,
+                    middleY,
+                    SCROLLBAR_THUMB_U,
+                    SCROLLBAR_THUMB_MIDDLE_V,
+                    SCROLLBAR_WIDTH,
+                    segmentHeight);
+            middleY += segmentHeight;
+            middleHeight -= segmentHeight;
+        }
+
+        drawTexturedModalRect(
+                x,
+                y + height - SCROLLBAR_THUMB_SLICE_HEIGHT,
+                SCROLLBAR_THUMB_U,
+                SCROLLBAR_THUMB_BOTTOM_V,
+                SCROLLBAR_WIDTH,
+                SCROLLBAR_THUMB_SLICE_HEIGHT);
     }
 
     @Override
@@ -288,12 +330,14 @@ public class GuiRecipeBook extends GuiContainer implements IMTModGuiContainer {
             drawTexturedModalRect(guiLeft + 23, guiTop + 19, 0, 174, 54, 54);
         }
 
-        GuiContainer.drawRect(
+        drawTexturedModalRect(
                 scrollBarXPos,
-                scrollBarYPos,
-                scrollBarXPos + SCROLLBAR_WIDTH,
-                scrollBarYPos + scrollBarScaledHeight,
-                SCROLLBAR_COLOR);
+                guiTop + SCROLLBAR_Y,
+                SCROLLBAR_RAIL_U,
+                SCROLLBAR_RAIL_V,
+                SCROLLBAR_WIDTH,
+                SCROLLBAR_HEIGHT);
+        drawScrollbarThumb(scrollBarXPos, scrollBarYPos, scrollBarScaledHeight);
 
         if (container.getAvailableRecipeCount() == 0) {
             GuiContainer.drawRect(guiLeft + 97, guiTop + 7, guiLeft + 168, guiTop + 85, 0xAA222222);
