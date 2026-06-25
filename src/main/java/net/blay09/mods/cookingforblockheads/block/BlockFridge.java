@@ -7,6 +7,7 @@ import net.blay09.mods.cookingforblockheads.GuiHandler;
 import net.blay09.mods.cookingforblockheads.client.render.block.FridgeBlockRenderer;
 import net.blay09.mods.cookingforblockheads.item.ItemBlockFridge;
 import net.blay09.mods.cookingforblockheads.tile.TileFridge;
+import net.blay09.mods.cookingforblockheads.utils.DirectionUtils;
 import net.blay09.mods.cookingforblockheads.utils.DyeUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -17,7 +18,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -142,9 +142,8 @@ public class BlockFridge extends BlockBaseKitchen {
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack itemStack) {
-        double blockRotation = (double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D;
-        boolean flipped = Math.abs(blockRotation - (int) blockRotation) < 0.5;
-        int orientation = MathHelper.floor_double(blockRotation) & 3;
+        boolean flipped = DirectionUtils.isHalfDirection(placer.rotationYaw);
+        int orientation = DirectionUtils.getDirection(placer.rotationYaw);
         if (orientation == 0) {
             world.setBlockMetadataWithNotify(x, y, z, 2, 2);
         }
