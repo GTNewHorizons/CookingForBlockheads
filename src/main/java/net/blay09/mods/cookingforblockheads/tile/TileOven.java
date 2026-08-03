@@ -519,8 +519,8 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
                 }
             }
         }
-        furnaceBurnTime = compound.getShort("BurnTime");
-        currentItemBurnTime = compound.getShort("CurrentItemBurnTime");
+        furnaceBurnTime = compound.getInteger("BurnTime");
+        currentItemBurnTime = compound.getInteger("CurrentItemBurnTime");
         slotCookTime = compound.getIntArray("CookTimes");
     }
 
@@ -537,8 +537,8 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
             }
         }
         compound.setTag("Items", tagList);
-        compound.setShort("BurnTime", (short) furnaceBurnTime);
-        compound.setShort("CurrentItemBurnTime", (short) currentItemBurnTime);
+        compound.setInteger("BurnTime", (short) furnaceBurnTime);
+        compound.setInteger("CurrentItemBurnTime", (short) currentItemBurnTime);
         compound.setIntArray("CookTimes", ArrayUtils.clone(slotCookTime));
     }
 
