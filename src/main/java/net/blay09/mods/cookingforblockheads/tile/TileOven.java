@@ -537,8 +537,8 @@ public class TileOven extends TileEntity implements ISidedInventory, IKitchenSme
             }
         }
         compound.setTag("Items", tagList);
-        compound.setInteger("BurnTime", (short) furnaceBurnTime);
-        compound.setInteger("CurrentItemBurnTime", (short) currentItemBurnTime);
+        compound.setInteger("BurnTime", furnaceBurnTime);
+        compound.setInteger("CurrentItemBurnTime", currentItemBurnTime);
         compound.setIntArray("CookTimes", ArrayUtils.clone(slotCookTime));
     }
 
