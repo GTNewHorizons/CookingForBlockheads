@@ -10,7 +10,7 @@ dependencies {
     compileOnly("com.github.GTNewHorizons:inventory-tweaks:1.7.1:dev") {transitive=false}
     compileOnly("com.github.GTNewHorizons:CraftTweaker:3.4.8:dev") {transitive=false}
     compileOnly("com.github.GTNewHorizons:MouseTweaks:2.5.2-GTNH:dev") {transitive=false}
-    compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.99.99-mu2:dev") {transitive=false}
+    compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.99.99-mu4:dev") {transitive=false}
     compileOnly("com.ruling_0:MaterialLib:0.9.0-mu:dev") {transitive=false}
     devOnlyNonPublishable("com.github.GTNewHorizons:EnderIO:2.10.35:dev")
 
