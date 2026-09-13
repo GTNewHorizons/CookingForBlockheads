@@ -143,7 +143,7 @@ public class BlockFridge extends BlockBaseKitchen {
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placer, ItemStack itemStack) {
         double blockRotation = (double) (placer.rotationYaw * 4.0F / 360.0F) + 0.5D;
-        boolean flipped = Math.abs(blockRotation - (int) blockRotation) < 0.5;
+        boolean flipped = blockRotation - MathHelper.floor_double(blockRotation) < 0.5;
         int orientation = MathHelper.floor_double(blockRotation) & 3;
         if (orientation == 0) {
             world.setBlockMetadataWithNotify(x, y, z, 2, 2);
