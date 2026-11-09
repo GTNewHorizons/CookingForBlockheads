@@ -10,11 +10,12 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.ruling_0.materiallib.api.MaterialLibAPI;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.enums.materials.Materials;
+import gregtech.api.enums.materials.Shapes;
 import gregtech.common.items.IDMetaTool01;
 
 public class GregTech5UAddon {
@@ -43,9 +44,9 @@ public class GregTech5UAddon {
     }
 
     private static final ItemStack[] ADDITIONAL_RECIPES = new ItemStack[] {
-            GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeatRaw, 1L),
-            GTOreDictUnificator.get(OrePrefixes.dust, Materials.MeatCooked, 1L),
-            GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coffee, 1L), };
+            MaterialLibAPI.getStack(Materials.MeatRaw, Shapes.dust, 1),
+            MaterialLibAPI.getStack(Materials.MeatCooked, Shapes.dust, 1),
+            MaterialLibAPI.getStack(Materials.Coffee, Shapes.dust, 1), };
 
     private static final short[] META_TOOLS = new short[] { (short) IDMetaTool01.HARDHAMMER.ID,
             (short) IDMetaTool01.SOFTMALLET.ID, (short) IDMetaTool01.KNIFE.ID, (short) IDMetaTool01.BUTCHERYKNIFE.ID,
